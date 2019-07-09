@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">awesomeApp</string>
+    <string name="action_settings">Settings</string>
+   <!--DialogEyeLevel-->
+    <string name="allEyeLevel">نمایش برای همه</string>
+    <string name="friendEyeLevel">نمایش فقط برای دوستان</string>
+    <string name="AlowAllSendMessage">دریافت پیام از همه</string>
+    <string name="AlowFriendSendMessage">دریافت پیام فقط از دوستان</string>
+    <string name="infoEyeLevel">توجه : درصورتی که نمونه کار ثبت کرده باشید پیشنهادات زیادی را از دست خواهی داد!</string>
+    <!--DialogAboutMe-->
+    <string name="aboutMeHint">چیزی درباره خود بنویسید …</string>
+    <string name="aboutMeInfo">توجه : برای همه قابل مشاهده است</string>
+    <!--AllButton-->
+    <string name="btnSave">ثبت</string>
+    <string name="btnCancel">انصراف</string>
+</resources>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
+              android:layoutDirection="rtl"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <ImageView
+                android:layout_alignParentEnd="true"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                app:srcCompat="@drawable/img"
+                android:id="@+id/imgProfile"/>
+        <ir.pepotec.app.awesomeapp.view.student.profile.ProfileHead
+                android:id="@+id/profileHead"
+                android:layout_width="match_parent"
+                android:layout_height="180dp">
+        </ir.pepotec.app.awesomeapp.view.student.profile.ProfileHead>
+        <ImageView
+                android:id="@+id/ELProfileImage"
+                android:layout_alignBottom="@id/profileHead"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/ic_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </RelativeLayout>
+    <LinearLayout
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:id="@+id/profileViewParent" android:alpha="0">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:layout_marginTop="16dp"
+                    android:textSize="@dimen/txt"
+                    android:textColor="@color/colorPrimaryLight"
+                    android:text="9431443"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtMyStudentId"/>
+            <TextView
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="@dimen/txt"
+                    android:textColor="@color/colorPrimaryLight"
+                    android:drawableEnd="@drawable/ic_eye"
+                    android:text="مصطفی قنبری"
+                    android:drawablePadding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtMyName"/>
+            <TextView
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="@dimen/txt"
+                    android:textColor="@color/colorPrimaryLight"
+                    android:drawableEnd="@drawable/ic_eye"
+                    android:text="09157474087"
+                    android:drawablePadding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtMyPhone"/>
+            <TextView
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="@dimen/txt"
+                    android:textColor="@color/colorPrimaryLight"
+                    android:drawableEnd="@drawable/ic_keyboard_arrow_down"
+                    android:text="آیدی صفحات مجازی"
+                    android:drawablePadding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtSocilaListMyProfile"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:layout_marginTop="16dp">
+            <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/colorAccent" android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp" android:layout_marginEnd="8dp" android:layout_marginBottom="16dp"
+                    android:id="@+id/btnFriendListMyProfile">
+                <TextView
+                        android:drawableStart="@drawable/ic_people"
+                        android:drawablePadding="16dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:padding="8dp"
+                        android:text="لیست دوستان" android:textColor="@color/dark"/>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/colorAccent" android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp" android:layout_marginBottom="16dp" android:layout_marginTop="16dp"
+                    android:id="@+id/btnAboutMyProfile">
+                <TextView android:layout_width="wrap_content"
+                          android:drawablePadding="16dp"
+                          android:drawableStart="@drawable/ic_person"
+                          android:layout_gravity="center"
+                          android:layout_height="match_parent"
+                          android:padding="8dp"
+                          android:text="درباره من" android:textColor="@color/dark"/>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+        <androidx.cardview.widget.CardView
+                app:cardBackgroundColor="@color/colorAccent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:layout_marginBottom="16dp"
+                android:layout_marginStart="16dp" android:layout_marginEnd="16dp" android:id="@+id/btnMessageForMi">
+            <TextView
+                    android:drawableStart="@drawable/ic_contact_perm"
+                    android:drawablePadding="16dp"
+                    android:padding="8dp"
+                    android:text="چه کسانی می توانند به شما پیام دهند"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" android:textColor="@color/dark"/>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</LinearLayout>

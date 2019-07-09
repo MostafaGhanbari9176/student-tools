@@ -1,0 +1,6 @@
+<!--   0.75 * source   -->
+<resources>
+    <dimen name="txt">14sp</dimen>
+    <dimen name="txtBig">26sp</dimen>
+    <dimen name="txtSmall">9sp</dimen>
+</resources>

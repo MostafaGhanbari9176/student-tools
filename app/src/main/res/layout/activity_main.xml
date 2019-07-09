@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    android:orientation="vertical"
+    android:background="@color/backGround"
+    tools:context=".view.main.ActivityMain">
+
+    <androidx.appcompat.widget.ContentFrameLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ContentMain">
+    </androidx.appcompat.widget.ContentFrameLayout>
+
+    <ir.pepotec.app.awesomeapp.view.main.CustomBottomNav
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/bottomNavMain"
+            android:background="@color/colorPrimaryDark"
+            android:layout_margin="8dp"
+            android:padding="4dp"
+    />
+</LinearLayout>

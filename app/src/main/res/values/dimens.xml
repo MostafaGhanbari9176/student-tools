@@ -1,0 +1,14 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <dimen name="txt">18sp</dimen>
+    <dimen name="txtBig">26sp</dimen>
+    <dimen name="txtSmall">12sp</dimen>
+    <dimen name="lineSpace">5sp</dimen>
+    <!--ToGether-->
+    <dimen name="radius">20dp</dimen>
+    <dimen name="btnCloseSize">30dp</dimen>
+    <!--VectorStrokeWidth-->
+    <dimen name="stroke">3</dimen>
+    <dimen name="strokeBig">4</dimen>
+</resources>

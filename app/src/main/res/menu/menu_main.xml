@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="ir.pepotec.app.awesomeapp.view.main.ActivityMain">
+    <item
+            android:id="@+id/bottomNavMainHome"
+            android:title="@string/allEyeLevel"
+            android:icon="@drawable/ic_home"
+    />
+
+</menu>

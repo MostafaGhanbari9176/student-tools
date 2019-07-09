@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Original-->
+    <color name="dark">#17262a</color>
+    <color name="light">#fefefe</color>
+    <color name="light1">#edf0f2</color>
+    <color name="light2">#d2dbe0</color>
+    <color name="colorPrimary">#344955</color>
+    <color name="colorPrimaryDark">#232f34</color>
+    <color name="colorPrimaryLight">#4a6572</color>
+    <color name="colorAccent">#ffcc80</color>
+    <color name="redLight">#e57373</color>
+    <color name="redDark">#d32f2f</color>
+    <!--Status-->
+    <color name="status">@color/light1</color>
+    <!--BackGround-->
+    <color name="backGround">@color/light1</color>
+    <!--Dialog-->
+    <color name="dialogBack">@color/dark</color>
+    <color name="dialogText">@color/light</color>
+    <color name="dialogBtn">@color/colorAccent</color>
+    <color name="dialogBtnText">@color/colorPrimaryDark</color>
+    <color name="dialogHint">@color/colorPrimaryLight</color>
+</resources>
