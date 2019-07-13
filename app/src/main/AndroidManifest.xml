@@ -25,6 +25,10 @@
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme"
                 android:name=".view.student.ActivityStudent"/>
+        <activity
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme"
+                android:name=".view.student.profile.friendList.ActivityFriend"/>
     </application>
 
 </manifest>

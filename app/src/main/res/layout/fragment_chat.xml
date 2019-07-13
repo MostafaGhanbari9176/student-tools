@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layoutDirection="rtl"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <TextView
-            android:gravity="center"
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layoutDirection="rtl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<TextView
+        android:visibility="gone"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/redDark"
+        android:textSize="@dimen/txtSmall"
+        android:text="@string/emptyListMessage"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <FrameLayout
+            android:id="@+id/ContentChat"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="CHAT!"
-    />
-</LinearLayout>
+            android:layout_height="match_parent"/>
+
+</RelativeLayout>

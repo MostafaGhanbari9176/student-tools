@@ -1,6 +1,7 @@
 package ir.pepotec.app.awesomeapp.view.student.profile
 
 import android.animation.ValueAnimator
+import android.app.Activity
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
@@ -11,6 +12,7 @@ import android.view.animation.BounceInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.view.student.ActivityStudent
@@ -94,13 +96,14 @@ override fun onDraw(canvas: Canvas?) {
     canvas?.drawCircle(width / 2f, 6 * height / 10f, (circleAnimate?.animatedValue) as Float, transPaint)
 }
 
-fun initialize(img: ImageView) {
+fun initialize(img: ImageView, @ColorRes color:Int) {
     this@ProfileHead.img = img
     val p = Point()
-    (App.instanse as ActivityStudent).windowManager.defaultDisplay.getRealSize(p)
+    (context as Activity).windowManager.defaultDisplay.getRealSize(p)
     layoutParams.height = 4 * (p.x) / 10
     val v = LayoutInflater.from(context).inflate(R.layout.activity_student, null, false)
     y = (v.tabLayoutStudent.height).toFloat()
+    drawPaint.color = ContextCompat.getColor(context, color)
     requestLayout()
 }
 

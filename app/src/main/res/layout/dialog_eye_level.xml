@@ -13,8 +13,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/btnCloseSize"
+                android:layout_height="@dimen/btnCloseSize"
                 app:srcCompat="@drawable/btn_close"
                 android:id="@+id/btnCloseDialogEL"/>
         <TextView

@@ -6,7 +6,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
     <com.google.android.material.tabs.TabLayout
-            android:background="@color/colorPrimary"
+            app:tabIndicatorColor="@color/colorAccent"
+            android:background="@color/tabBack"
             app:tabTextColor="@color/light1"
             app:tabSelectedTextColor="@color/light"
             android:id="@+id/tabLayoutStudent"
@@ -20,5 +21,37 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" android:layout_below="@id/tabLayoutStudent"
             android:background="@color/backGround"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:alpha="0"
+            android:visibility="gone"
+            android:id="@+id/fabStudent"
+            android:layout_alignParentBottom="true"
+            app:srcCompat="@drawable/ic_add"
+            android:layout_margin="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    <TextView
+            android:textColor="@color/redDark"
+            android:textSize="@dimen/txtBig"
+            android:layout_centerInParent="true"
+            android:id="@+id/txtTest1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    <TextView
+            android:layout_below="@id/txtTest1"
+            android:textColor="@color/redDark"
+            android:textSize="@dimen/txtBig"
+            android:layout_centerInParent="true"
+            android:id="@+id/txtTest2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    <TextView
+            android:layout_below="@id/txtTest2"
+            android:textColor="@color/redDark"
+            android:textSize="@dimen/txtBig"
+            android:layout_centerInParent="true"
+            android:id="@+id/txtTest3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
 </RelativeLayout>

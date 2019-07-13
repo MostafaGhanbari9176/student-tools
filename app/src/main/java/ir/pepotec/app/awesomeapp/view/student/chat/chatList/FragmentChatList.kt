@@ -1,17 +1,18 @@
-package ir.pepotec.app.awesomeapp.view.student.profile.friendList
+package ir.pepotec.app.awesomeapp.view.student.chat.chatList
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
-import kotlinx.android.synthetic.main.fragment_friend_profile.*
+import kotlinx.android.synthetic.main.fragment_chat_list.*
 
-class FragmentFriendProfile:MyFragment() {
+class FragmentChatList:MyFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_friend_profile, container, false)
+        return inflater.inflate(R.layout.fragment_chat_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -20,7 +21,7 @@ class FragmentFriendProfile:MyFragment() {
     }
 
     private fun init() {
-        friendProfileHead.initialize(imgFriendProfile, R.color.status)
+        RVChatList.layoutManager = GridLayoutManager(ctx, 1)
+        RVChatList.adapter = AdapterChatList()
     }
-
 }

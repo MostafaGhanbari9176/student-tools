@@ -5,8 +5,12 @@
     <dimen name="txtBig">26sp</dimen>
     <dimen name="txtSmall">12sp</dimen>
     <dimen name="lineSpace">5sp</dimen>
+    <dimen name="margin_32">32dp</dimen>
+    <dimen name="margin_8">8dp</dimen>
     <!--ToGether-->
     <dimen name="radius">20dp</dimen>
+    <dimen name="radiusSmall">10dp</dimen>
+    <dimen name="radiusVSmall">4dp</dimen>
     <dimen name="btnCloseSize">30dp</dimen>
     <!--VectorStrokeWidth-->
     <dimen name="stroke">3</dimen>

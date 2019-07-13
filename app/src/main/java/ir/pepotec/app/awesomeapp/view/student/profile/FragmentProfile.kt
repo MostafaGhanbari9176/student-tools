@@ -3,6 +3,7 @@ package ir.pepotec.app.awesomeapp.view.student.profile
 import android.animation.ObjectAnimator
 import android.app.Activity
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
@@ -13,6 +14,7 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.view.student.ActivityStudent
+import ir.pepotec.app.awesomeapp.view.student.profile.friendList.ActivityFriend
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import kotlinx.android.synthetic.main.activity_student.*
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -35,7 +37,7 @@ class FragmentProfile : MyFragment(), DialogEyeLevel.EyeLevelCouple {
     }
 
     private fun init() {
-        profileHead.initialize(imgProfile)
+        profileHead.initialize(imgProfile, R.color.tabBack)
         animateParent()
         txtMyName.setOnClickListener {
             showDialog()
@@ -63,6 +65,10 @@ class FragmentProfile : MyFragment(), DialogEyeLevel.EyeLevelCouple {
             d.setContentView(v)
             d.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             d.show()
+        }
+
+        btnFriendListMyProfile.setOnClickListener {
+            startActivity(Intent(ctx, ActivityFriend::class.java))
         }
     }
 
@@ -96,4 +102,5 @@ class FragmentProfile : MyFragment(), DialogEyeLevel.EyeLevelCouple {
             start()
         }
     }
+
 }

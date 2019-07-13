@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">awesomeApp</string>
     <string name="action_settings">Settings</string>
+    <string name="emptyListMessage">خالی !!!</string>
    <!--DialogEyeLevel-->
     <string name="allEyeLevel">نمایش برای همه</string>
     <string name="friendEyeLevel">نمایش فقط برای دوستان</string>

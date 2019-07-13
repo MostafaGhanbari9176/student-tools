@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layoutDirection="rtl"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/efabAbility"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton.Icon"
+            app:icon="@drawable/ic_ability"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="اندروید"
+            android:textSize="@dimen/txt"
+            android:layout_margin="16dp"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+</LinearLayout>
