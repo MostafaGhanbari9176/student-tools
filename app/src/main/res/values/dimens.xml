@@ -7,11 +7,15 @@
     <dimen name="lineSpace">5sp</dimen>
     <dimen name="margin_32">32dp</dimen>
     <dimen name="margin_8">8dp</dimen>
+    <!--Image-->
+    <dimen name="img">64dp</dimen>
+    <dimen name="imgSmall">32dp</dimen>
+    <dimen name="imgBig">128dp</dimen>
     <!--ToGether-->
     <dimen name="radius">20dp</dimen>
+    <dimen name="btnCloseSize">30dp</dimen>
     <dimen name="radiusSmall">10dp</dimen>
     <dimen name="radiusVSmall">4dp</dimen>
-    <dimen name="btnCloseSize">30dp</dimen>
     <!--VectorStrokeWidth-->
     <dimen name="stroke">3</dimen>
     <dimen name="strokeBig">4</dimen>

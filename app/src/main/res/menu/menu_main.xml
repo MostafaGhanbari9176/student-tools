@@ -1,11 +1,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools"
-      tools:context="ir.pepotec.app.awesomeapp.view.main.ActivityMain">
+      xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-            android:id="@+id/bottomNavMainHome"
-            android:title="@string/allEyeLevel"
+            app:showAsAction="always"
+            android:id="@+id/mainMenuHome"
+            android:title="خانه"
             android:icon="@drawable/ic_home"
     />
-
+    <item
+            app:showAsAction="always"
+            android:id="@+id/mainMenuSearch"
+            android:title="جستوجو"
+            android:icon="@drawable/ic_search"
+    />
+    <item
+            app:showAsAction="ifRoom"
+            android:id="@+id/mainMenuNews"
+            android:title="اخبار"
+            android:icon="@drawable/ic_subtitles"
+    />
+    <item
+            app:showAsAction="never"
+            android:id="@+id/mainMenuAd"
+            android:title="تبلیغات"
+            android:icon="@drawable/ic_subtitles"
+    />
 </menu>

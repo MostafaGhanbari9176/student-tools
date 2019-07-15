@@ -1,6 +1,7 @@
 package ir.pepotec.app.awesomeapp.view.uses
 
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
 abstract class MyFragment : Fragment() {

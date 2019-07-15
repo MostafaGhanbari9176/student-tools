@@ -22,8 +22,8 @@
         <ir.pepotec.app.awesomeapp.view.uses.CircularIMG
                 android:layout_margin="16dp"
                 app:srcCompat="@drawable/img"
-                android:layout_width="64dp"
-                android:layout_height="64dp"/>
+                android:layout_width="@dimen/img"
+                android:layout_height="@dimen/img"/>
         <LinearLayout
                 android:gravity="center_vertical"
                 android:orientation="vertical"
