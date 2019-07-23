@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
@@ -37,8 +38,11 @@ class FragmentProfile : MyFragment(), DialogEyeLevel.EyeLevelCouple {
     }
 
     private fun init() {
-        profileHead.initialize(imgProfile, R.color.tabBack)
+        profileHead.initialize(imgProfile, R.color.tabBack, R.color.colorPrimaryDark)
         animateParent()
+        imgProfile.setOnClickListener {
+            DialogProfileImg()
+        }
         txtMyName.setOnClickListener {
             showDialog()
         }
@@ -46,30 +50,17 @@ class FragmentProfile : MyFragment(), DialogEyeLevel.EyeLevelCouple {
             DialogEyeLevel(getString(R.string.allEyeLevel), getString(R.string.friendEyeLevel), this, false, phone).defaultChose(false)
 
         }
-        btnMessageForMi.setOnClickListener {
-            DialogEyeLevel(
-                getString(R.string.AlowAllSendMessage),
-                getString(R.string.AlowFriendSendMessage),
-                this,
-                true,
-                message
-            ).defaultChose(true)
-        }
         btnAboutMyProfile.setOnClickListener {
             showDialogAboutMe()
         }
-
-        txtSocilaListMyProfile.setOnClickListener {
-            val d = Dialog(ctx)
-            val v = LayoutInflater.from(ctx).inflate(R.layout.dialog_social_link, null, false)
-            d.setContentView(v)
-            d.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            d.show()
-        }
-
         btnFriendListMyProfile.setOnClickListener {
             startActivity(Intent(ctx, ActivityFriend::class.java))
         }
+    }
+
+    fun changeImg(b:Bitmap)
+    {
+        imgProfile.setImageBitmap(b)
     }
 
     private fun showDialogAboutMe() {

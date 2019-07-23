@@ -7,11 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ir.pepotec.app.awesomeapp.R
+import ir.pepotec.app.awesomeapp.model.user.UserData
+import ir.pepotec.app.awesomeapp.presenter.UserPresenter
 import ir.pepotec.app.awesomeapp.view.main.ActivityMain
+import ir.pepotec.app.awesomeapp.view.uses.DialogProgress
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import kotlinx.android.synthetic.main.fragment_new_pass.*
 
-class FragmentNewPass:MyFragment() {
+class FragmentNewPass : MyFragment(), UserPresenter.UserPresenterListener {
+
+    val progress = DialogProgress()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_new_pass, container, false)
     }
@@ -22,9 +28,9 @@ class FragmentNewPass:MyFragment() {
     }
 
     private fun init() {
-    btnSubmitNewPass.setOnClickListener {
-        checkData()
-    }
+        btnSubmitNewPass.setOnClickListener {
+            checkData()
+        }
     }
 
     private fun checkData() {
@@ -44,8 +50,8 @@ class FragmentNewPass:MyFragment() {
             }
             return
         }
-        val pass = txtNewPass.text.toString()
-        val passAgain = txtNewPassAgain.text.toString()
+        val pass = txtNewPass.text.toString().trim()
+        val passAgain = txtNewPassAgain.text.toString().trim()
         if (!pass.equals(passAgain)) {
             txtNewPass.apply {
                 setError("این دو مقدار باید یکسان باشند")
@@ -56,7 +62,21 @@ class FragmentNewPass:MyFragment() {
             }
         }
 
-        startActivity(Intent(ctx, ActivityMain::class.java))
-        (ctx as ActivityAccount).finish()
+        sendPassToServer(pass)
     }
+
+    private fun sendPassToServer(pass: String) {
+        progress.show()
+        UserPresenter(this).newPass(pass)
+    }
+
+    override fun resultFromUser(ok: Boolean, message: String) {
+        progress.cancel()
+        if (ok) {
+            startActivity(Intent(ctx, ActivityMain::class.java))
+            (ctx as ActivityAccount).finish()
+        }else
+        toast(message)
+    }
+
 }

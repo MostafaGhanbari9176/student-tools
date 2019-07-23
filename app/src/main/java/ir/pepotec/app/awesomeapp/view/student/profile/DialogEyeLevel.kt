@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.VectorDrawable
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +12,6 @@ import androidx.core.content.ContextCompat
 import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.view.uses.App
 import kotlinx.android.synthetic.main.dialog_eye_level.*
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 
 class DialogEyeLevel(
     private var messageAll: String,

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layoutDirection="rtl"
+>
+    <ScrollView
+            android:layout_alignParentTop="true"
+            android:id="@+id/SVShowAbility"
+            android:background="@color/colorPrimaryDark"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+    >
+        <LinearLayout
+                android:gravity="center_horizontal"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:id="@+id/txtNewsShowAbility"
+                        android:layout_weight="1"
+                        android:padding="8dp"
+                        android:layout_gravity="start"
+                        android:textColor="@color/redLight"
+                        android:text="در صف انتشار"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+                <TextView
+                        android:id="@+id/txtDateShowAbility"
+                        android:padding="8dp"
+                        android:layout_gravity="start"
+                        android:textColor="@color/colorAccent"
+                        android:text="1397/02/01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <ImageView
+                    android:tint="@color/colorAccent"
+                    app:srcCompat="@drawable/ic_ability"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="@dimen/imgBig"
+                    android:layout_height="@dimen/imgBig"/>
+            <TextView
+                    android:textSize="@dimen/txt"
+                    android:textColor="@color/colorAccent"
+                    android:text="عنوان مهارت"
+                    android:layout_marginBottom="32dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            <com.google.android.material.card.MaterialCardView
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    app:shapeAppearanceOverlay="@style/CVTopRound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <LinearLayout
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/radius"
+                        android:padding="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <TextView
+                            android:layout_marginBottom="16dp"
+                            android:text="سوابق کاری"
+                            android:background="@drawable/txt_border"
+                            android:textColor="@color/light"
+                            android:textSize="@dimen/txt"
+                            android:padding="16dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    <TextView
+                            android:layout_marginBottom="32dp"
+                            android:text="توضیحات"
+                            android:background="@drawable/txt_border"
+                            android:textColor="@color/light"
+                            android:textSize="@dimen/txt"
+                            android:padding="16dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    <TextView
+                            android:layout_gravity="end"
+                            android:text="1/2"
+                            android:textColor="@color/colorPrimaryLight"
+                            android:textSize="@dimen/txtSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    <LinearLayout
+                            android:background="@color/colorPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/RVWorkSample"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    <LinearLayout
+                            android:background="@color/colorPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"/>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="72dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </ScrollView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabShowAbility"
+            app:srcCompat="@drawable/ic_edit"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+</RelativeLayout>

@@ -1,10 +1,13 @@
 package ir.pepotec.app.awesomeapp.view.account
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ir.pepotec.app.awesomeapp.R
+import ir.pepotec.app.awesomeapp.view.main.ActivityMain
+import ir.pepotec.app.awesomeapp.view.uses.DialogProgress
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import kotlinx.android.synthetic.main.fragment_log_sign.*
 
@@ -24,6 +27,10 @@ class FragmentLogSign :MyFragment() {
         }
         btnChoseLogIn.setOnClickListener {
             changeView(FragmentLogIn())
+        }
+        btnChoseLogIn.setOnLongClickListener {
+            startActivity(Intent(ctx, ActivityMain()::class.java))
+            true
         }
     }
 

@@ -11,10 +11,10 @@
     <dimen name="img">64dp</dimen>
     <dimen name="imgSmall">32dp</dimen>
     <dimen name="imgBig">128dp</dimen>
-    <!--ToGether-->
-    <dimen name="radius">20dp</dimen>
-    <dimen name="btnCloseSize">30dp</dimen>
-    <dimen name="radiusSmall">10dp</dimen>
+    <!--ToGether 1.5 -->
+    <dimen name="radius">16dp</dimen>
+    <dimen name="btnCloseSize">24dp</dimen>
+    <dimen name="radiusSmall">8dp</dimen>
     <dimen name="radiusVSmall">4dp</dimen>
     <!--VectorStrokeWidth-->
     <dimen name="stroke">3</dimen>

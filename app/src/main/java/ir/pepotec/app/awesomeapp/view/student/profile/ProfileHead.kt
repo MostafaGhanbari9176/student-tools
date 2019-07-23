@@ -96,7 +96,7 @@ override fun onDraw(canvas: Canvas?) {
     canvas?.drawCircle(width / 2f, 6 * height / 10f, (circleAnimate?.animatedValue) as Float, transPaint)
 }
 
-fun initialize(img: ImageView, @ColorRes color:Int) {
+fun initialize(img: ImageView, @ColorRes color:Int, @ColorRes back:Int) {
     this@ProfileHead.img = img
     val p = Point()
     (context as Activity).windowManager.defaultDisplay.getRealSize(p)
@@ -104,6 +104,7 @@ fun initialize(img: ImageView, @ColorRes color:Int) {
     val v = LayoutInflater.from(context).inflate(R.layout.activity_student, null, false)
     y = (v.tabLayoutStudent.height).toFloat()
     drawPaint.color = ContextCompat.getColor(context, color)
+    backPaint.color = ContextCompat.getColor(context, back)
     requestLayout()
 }
 

@@ -6,13 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ir.pepotec.app.awesomeapp.R
+import ir.pepotec.app.awesomeapp.model.user.UserData
+import ir.pepotec.app.awesomeapp.presenter.UserPresenter
+import ir.pepotec.app.awesomeapp.view.uses.DialogProgress
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import kotlinx.android.synthetic.main.fragment_get_phone.*
 
-class FragmentGetPhone :MyFragment(){
+class FragmentGetPhone :MyFragment(), UserPresenter.UserPresenterListener{
 
     var signUp = true
-
+    val progress = DialogProgress()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_get_phone, container, false)
     }
@@ -31,12 +34,10 @@ class FragmentGetPhone :MyFragment(){
     }
 
     private fun checkData() {
-        val v = txtGetPhone.text.toString()
+        val v = txtGetPhone.text.toString().trim()
         if(v.length == 11 && v[0] == '0' && TextUtils.isDigitsOnly(v))
         {
-            val f = FragmentConfirmPhone()
-            f.signUp = this@FragmentGetPhone.signUp
-            (ctx as ActivityAccount).changeView(f)
+            sendPhoneToServer(v)
         }
         else
             txtGetPhone.apply {
@@ -44,6 +45,23 @@ class FragmentGetPhone :MyFragment(){
                 setError("لطفا شماره همراه خود را صحیح وارد کنید")
             }
 
+    }
+
+    private fun sendPhoneToServer(v: String) {
+        progress.show()
+        (UserPresenter(this)).createVerifyCode(v)
+    }
+
+    override fun resultFromUser(ok: Boolean, message: String) {
+        progress.cancel()
+        if(ok)
+        {
+            val f = FragmentConfirmPhone()
+            f.signUp = this@FragmentGetPhone.signUp
+            (ctx as ActivityAccount).changeView(f)
+        }
+        else
+        toast(message)
     }
 
 }

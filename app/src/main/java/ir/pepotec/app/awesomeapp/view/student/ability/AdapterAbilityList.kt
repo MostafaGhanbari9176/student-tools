@@ -12,26 +12,23 @@ import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.view.uses.App
 import kotlinx.android.synthetic.main.item_ability.view.*
 
-class AdapterAbilityList : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class AdapterAbilityList(private val listener:(position:Int) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
         return if (position == 0) 2 else 1
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == 1) MyHolder(
-            LayoutInflater.from(App.instanse).inflate(
-                R.layout.item_ability,
-                null,
-                false
-            )
-        )
-        else AddHolder(LayoutInflater.from(App.instanse).inflate(R.layout.item_ability, null, false))
+        return if (viewType == 1) MyHolder(LayoutInflater.from(App.instanse).inflate(R.layout.item_ability, parent, false))
+        else AddHolder(LayoutInflater.from(App.instanse).inflate(R.layout.item_ability, parent, false))
     }
 
     override fun getItemCount(): Int = 5 + 1
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        holder.itemView.fabAbility.setOnClickListener {
+            listener(position)
+        }
         if (position == 0) {
             (holder as AddHolder).onBind()
             return
@@ -44,11 +41,10 @@ class AdapterAbilityList : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     {
         fun onBind()
         {
-            itemView.efabAbility.apply {
-                text = "افزودن"
+            itemView.fabAbility.apply {
+                text = "افزودن مهارت"
                 icon = ContextCompat.getDrawable(App.instanse, R.drawable.ic_add)
                 setBackgroundColor(Color.WHITE)
-
             }
         }
     }

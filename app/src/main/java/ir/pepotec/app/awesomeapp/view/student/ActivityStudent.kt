@@ -1,5 +1,9 @@
 package ir.pepotec.app.awesomeapp.view.student
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +21,8 @@ import org.jetbrains.anko.toast
 class ActivityStudent : AppCompatActivity() {
 
     private var lastOffset = 0f
+    private lateinit var  fragmentProfile:FragmentProfile
+    private lateinit var  fragmentChat: FragmentChat
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +39,10 @@ class ActivityStudent : AppCompatActivity() {
         tabLayoutStudent.setupWithViewPager(VPStudent)
         val adapter = AdapterVPStudent(supportFragmentManager)
         adapter.addData(VPModel(FragmentAbility(), "مهارت ها"))
-        adapter.addData(VPModel(FragmentProfile(), "پروفایل"))
-        adapter.addData(VPModel(FragmentChat(), "گفتوگو"))
+        fragmentProfile = FragmentProfile()
+        adapter.addData(VPModel(fragmentProfile, "پروفایل"))
+        fragmentChat = FragmentChat()
+        adapter.addData(VPModel(fragmentChat, "گفتوگو"))
         VPStudent.adapter = adapter
         VPStudent.setCurrentItem(1)
         VPStudent.offscreenPageLimit = 3
@@ -65,8 +73,55 @@ class ActivityStudent : AppCompatActivity() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        App.instanse = this@ActivityStudent
+        if (resultCode == Activity.RESULT_OK) {
+            when(requestCode)
+            {
+                1 -> {
+                    cropImage(data?.data)
+                }
+                2 -> {
+                    setImage(data)
+                }
+            }
+        }
+    }
+
+    private fun setImage(data: Intent?) {
+        val extra = data?.extras
+        val bitmap : Bitmap = extra!!.getParcelable("data")
+        fragmentProfile.changeImg(bitmap)
+
+    }
+
+    private fun cropImage(data: Uri?) {
+        val cropIntent = Intent("com.android.camera.action.CROP", data)
+        cropIntent.putExtra("crop", "true")
+        // indicate aspect of desired crop
+        cropIntent.putExtra("aspectX", 1)
+        cropIntent.putExtra("aspectY", 1)
+        // indicate output X and Y
+        cropIntent.putExtra("outputX", 280)
+        cropIntent.putExtra("outputY", 280)
+        cropIntent.putExtra("return-data", true)
+        startActivityForResult(cropIntent, 2)
+    }
+
     override fun onResume() {
         super.onResume()
         App.instanse = this
     }
+
+    override fun onBackPressed() {
+        if(VPStudent.currentItem == 2) {
+            if(fragmentChat.onBackPresed())
+            {
+                super.onBackPressed()
+                this.finish()
+            }
+        }
+    }
+
 }

@@ -17,12 +17,18 @@
 
     <style name="CVTopRound" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerFamilyTopLeft">rounded</item>
-        <item name="cornerFamilyTopRight">rounded</item>
         <item name="cornerSizeTopLeft">@dimen/radius</item>
         <item name="cornerSizeBottomLeft">0dp</item>
         <item name="cornerSizeTopRight">@dimen/radius</item>
         <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+    <style name="CVBottomRound" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomLeft">@dimen/radius</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeBottomRight">@dimen/radius</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

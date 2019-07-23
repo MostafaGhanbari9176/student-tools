@@ -1,0 +1,76 @@
+<animated-vector xmlns:aapt="http://schemas.android.com/aapt"
+                 xmlns:android="http://schemas.android.com/apk/res/android">
+    <aapt:attr name="android:drawable">
+        <vector
+                android:width="24dp"
+                android:height="24dp"
+                android:viewportWidth="24.0"
+                android:viewportHeight="24.0">
+            <path
+                    android:strokeAlpha="0.2"
+                    android:strokeWidth="14"
+                    android:strokeLineCap="round"
+                    android:strokeColor="@color/colorAccent"
+                    android:pathData="M12,13 h0.01"
+            />
+            <group
+                    android:pivotX="12"
+                    android:pivotY="12"
+                    android:scaleY="0.9"
+                    android:scaleX="0.9"
+            >
+                <path
+                        android:fillColor="@color/colorAccent"
+                        android:pathData="M22,5.72l-4.6,-3.86 -1.29,1.53 4.6,3.86L22,5.72zM7.88,3.39L6.6,1.86 2,5.71l1.29,1.53 4.59,-3.85zM12,4c-4.97,0 -9,4.03 -9,9s4.02,9 9,9c4.97,0 9,-4.03 9,-9s-4.03,-9 -9,-9zM12,20c-3.87,0 -7,-3.13 -7,-7s3.13,-7 7,-7 7,3.13 7,7 -3.13,7 -7,7z"/>
+            </group>
+            <group
+                    android:name="h"
+                    android:pivotX="12"
+                    android:pivotY="13"
+            >
+                <path
+                        android:strokeColor="@color/light"
+                        android:strokeWidth="1.2"
+                        android:strokeLineCap="round"
+                        android:pathData="M12,13 v-3"
+                />
+            </group>
+            <group
+                    android:name="m"
+                    android:pivotX="12"
+                    android:pivotY="13"
+            >
+                <path
+                        android:strokeColor="@color/light"
+                        android:strokeWidth="1.5"
+                        android:strokeLineCap="round"
+                        android:pathData="M12,13 v-5"
+                />
+            </group>
+        </vector>
+    </aapt:attr>
+    <target android:name="h">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                    android:propertyName="rotation"
+                    android:duration="1800"
+                    android:valueFrom="0"
+                    android:valueTo="360"
+                    android:valueType="floatType"
+                    android:repeatCount="infinite"
+            />
+        </aapt:attr>
+    </target>
+    <target android:name="m">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                    android:propertyName="rotation"
+                    android:duration="300"
+                    android:valueFrom="0"
+                    android:valueTo="360"
+                    android:valueType="floatType"
+                    android:repeatCount="infinite"
+            />
+        </aapt:attr>
+    </target>
+</animated-vector>

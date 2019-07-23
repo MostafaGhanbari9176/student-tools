@@ -22,7 +22,6 @@
                 android:layout_width="@dimen/imgBig"
                 android:layout_height="@dimen/imgBig"/>
         <TextView
-                android:id="@+id/txtTtlGetPhone"
                 android:layout_marginBottom="32dp"
                 android:textSize="@dimen/txt"
                 android:textColor="@color/colorAccent"

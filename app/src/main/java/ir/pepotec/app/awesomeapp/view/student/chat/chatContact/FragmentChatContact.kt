@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.view.student.chat.FragmentChat
 import ir.pepotec.app.awesomeapp.view.student.chat.chatList.FragmentChatList
@@ -25,7 +27,7 @@ class FragmentChatContact:MyFragment() {
     }
 
     private fun init() {
-        RVChatContact.layoutManager = GridLayoutManager(ctx, 1)
+        RVChatContact.layoutManager = LinearLayoutManager(ctx, LinearLayoutManager.VERTICAL, false)
         RVChatContact.adapter = AdapterChatContact(){
             parent.changeView(FragmentChatList())
         }

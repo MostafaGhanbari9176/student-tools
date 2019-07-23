@@ -20,7 +20,7 @@ class FragmentFriendProfile:MyFragment() {
     }
 
     private fun init() {
-        friendProfileHead.initialize(imgFriendProfile, R.color.status)
+        friendProfileHead.initialize(imgFriendProfile, R.color.status, R.color.light1)
     }
 
 }
