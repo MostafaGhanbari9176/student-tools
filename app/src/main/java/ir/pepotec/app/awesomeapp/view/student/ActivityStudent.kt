@@ -83,17 +83,16 @@ class ActivityStudent : AppCompatActivity() {
                     cropImage(data?.data)
                 }
                 2 -> {
-                    setImage(data)
+                    changeImage(data)
                 }
             }
         }
     }
 
-    private fun setImage(data: Intent?) {
+    private fun changeImage(data: Intent?) {
         val extra = data?.extras
         val bitmap : Bitmap = extra!!.getParcelable("data")
         fragmentProfile.changeImg(bitmap)
-
     }
 
     private fun cropImage(data: Uri?) {

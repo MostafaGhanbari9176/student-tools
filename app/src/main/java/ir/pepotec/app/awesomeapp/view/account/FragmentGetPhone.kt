@@ -6,13 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ir.pepotec.app.awesomeapp.R
-import ir.pepotec.app.awesomeapp.model.user.UserData
 import ir.pepotec.app.awesomeapp.presenter.UserPresenter
 import ir.pepotec.app.awesomeapp.view.uses.DialogProgress
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import kotlinx.android.synthetic.main.fragment_get_phone.*
 
-class FragmentGetPhone :MyFragment(), UserPresenter.UserPresenterListener{
+class FragmentGetPhone :MyFragment(), UserPresenter.UserResult{
 
     var signUp = true
     val progress = DialogProgress()

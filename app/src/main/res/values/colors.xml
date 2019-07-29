@@ -15,6 +15,7 @@
     <color name="light3">#a1a9ae</color>
     <color name="redLight">#e57373</color>
     <color name="redDark">#d32f2f</color>
+    <color name="error">#f44336</color>
     <!--Status-->
     <color name="status">@color/light3</color>
     <!--BackGround-->

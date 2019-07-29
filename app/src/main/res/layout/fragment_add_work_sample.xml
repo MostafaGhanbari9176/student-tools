@@ -82,28 +82,125 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" android:id="@+id/txtdescriptAddWorkSample"/>
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                        android:id="@+id/LLAddWorkSample1"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <ir.pepotec.app.awesomeapp.view.uses.CircularIMG
+                            app:topLeft="@dimen/radius"
+                            app:topRight="@dimen/radius"
+                            android:layout_marginEnd="16dp"
+                            android:layout_width="@dimen/img"
+                            android:layout_height="@dimen/img"
+                            app:srcCompat="@drawable/img"
+                            android:id="@+id/imgAddWorkSample1"
+                    />
+                    <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnAddWorkSample1"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            app:strokeColor="@color/light"
+                            android:text="تغییر عکس کاور"
+                            android:textColor="@color/light"
+                            android:textSize="@dimen/txt"
+                            android:padding="8dp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:id="@+id/LLAddWorkSample2"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <ir.pepotec.app.awesomeapp.view.uses.CircularIMG
+                            app:topLeft="@dimen/radius"
+                            app:topRight="@dimen/radius"
+                            android:layout_marginEnd="16dp"
+                            android:layout_width="@dimen/img"
+                            android:layout_height="@dimen/img"
+                            app:srcCompat="@drawable/img"
+                            android:id="@+id/imgAddWorkSample2"
+                    />
+                    <com.google.android.material.button.MaterialButton
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:id="@+id/btnAddWorkSample2"
+                            app:strokeColor="@color/light"
+                            android:text="تغییر عکس"
+                            android:textColor="@color/light"
+                            android:textSize="@dimen/txt"
+                            android:padding="8dp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="1"/>
+                    <com.google.android.material.button.MaterialButton
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:id="@+id/btnDeleteAddWorkSample2"
+                            app:strokeColor="@color/redLight"
+                            android:text="حذف"
+                            android:textColor="@color/light"
+                            android:textSize="@dimen/txt"
+                            android:padding="8dp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="1"
+                            android:layout_marginStart="8dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:id="@+id/LLAddWorkSample3"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <ir.pepotec.app.awesomeapp.view.uses.CircularIMG
+                            app:topLeft="@dimen/radius"
+                            app:topRight="@dimen/radius"
+                            android:layout_marginEnd="16dp"
+                            android:layout_width="@dimen/img"
+                            android:layout_height="@dimen/img"
+                            app:srcCompat="@drawable/img"
+                            android:id="@+id/imgAddWorkSample3"
+                    />
+                    <com.google.android.material.button.MaterialButton
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:id="@+id/btnAddWorkSample3"
+                            app:strokeColor="@color/light"
+                            android:text="تغییر عکس"
+                            android:textColor="@color/light"
+                            android:textSize="@dimen/txt"
+                            android:padding="8dp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="1"/>
+                    <com.google.android.material.button.MaterialButton
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:id="@+id/btnDeleteAddWorkSample3"
+                            app:strokeColor="@color/redLight"
+                            android:text="حذف"
+                            android:textColor="@color/light"
+                            android:textSize="@dimen/txt"
+                            android:padding="8dp"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="1"
+                            android:layout_marginStart="8dp"/>
+                </LinearLayout>
+
                 <com.google.android.material.button.MaterialButton
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:id="@+id/btnSelectCoverImg"
-                        android:text="انتخاب عکس کاور"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:id="@+id/btnChooseImgAddWorkSample"
+                        app:strokeColor="@color/light"
+                        android:text="انتخاب عکس کاور (الزامی)"
                         android:textColor="@color/light"
                         android:textSize="@dimen/txt"
                         android:layout_marginTop="16dp"
                         android:padding="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
-
-                <com.google.android.material.button.MaterialButton
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:id="@+id/btnSelectWorkSampleImg"
-                        android:text="انتخاب حداکثر سه عکس دیگر"
-                        android:textColor="@color/light"
-                        android:textSize="@dimen/txt"
-                        android:layout_marginTop="16dp"
-                        android:padding="8dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
                 <com.google.android.material.button.MaterialButton
                         android:text="@string/btnSave"
                         android:backgroundTint="@color/colorAccent"
@@ -112,7 +209,7 @@
                         android:layout_marginTop="16dp"
                         android:padding="8dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" android:id="@+id/btnSaveWorkSample"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>

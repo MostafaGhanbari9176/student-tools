@@ -6,7 +6,11 @@ data class UserData(
     val kind: Int
 )
 
-/*
-* kind = 1 -> student
-* */
+class UserKind
+{
+    companion object
+    {
+        val student:Int = 1
+    }
+}
 

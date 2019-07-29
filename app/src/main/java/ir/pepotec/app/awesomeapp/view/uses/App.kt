@@ -3,6 +3,7 @@ package ir.pepotec.app.awesomeapp.view.uses
 import android.app.Application
 import android.content.Context
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class App : Application() {
@@ -24,6 +25,10 @@ class App : Application() {
                 }
 
             }
+        }
+        fun apiCodeError()
+        {
+            Toast.makeText(instanse,"ApiCodeError", Toast.LENGTH_LONG).show()
         }
     }
 

@@ -29,7 +29,16 @@
                 android:text="نمایش برای همه"
                 android:textColor="@color/dialogText"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" android:visibility="gone"/>
+        <ProgressBar
+                android:layout_marginBottom="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pBarImgEL"
+        />
         <TextView
                 android:id="@+id/txtFriendProfileImg"
                 android:layout_marginTop="16dp"
@@ -43,7 +52,7 @@
                 android:text="نمایش فقط برای دوستان"
                 android:textColor="@color/dialogText"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" android:visibility="gone"/>
         <com.google.android.material.card.MaterialCardView
                 app:shapeAppearanceOverlay="@style/CVBottomRound"
                 android:backgroundTint="@color/colorAccent"

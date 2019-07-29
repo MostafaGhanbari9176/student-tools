@@ -13,7 +13,7 @@ import ir.pepotec.app.awesomeapp.view.uses.DialogProgress
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import kotlinx.android.synthetic.main.fragment_log_in.*
 
-class FragmentLogIn : MyFragment(), UserPresenter.UserPresenterListener {
+class FragmentLogIn : MyFragment(), UserPresenter.UserResult {
 
     val progress = DialogProgress()
 

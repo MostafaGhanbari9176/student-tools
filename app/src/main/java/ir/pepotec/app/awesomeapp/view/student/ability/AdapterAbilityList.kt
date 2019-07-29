@@ -9,10 +9,11 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import ir.pepotec.app.awesomeapp.R
+import ir.pepotec.app.awesomeapp.model.student.ability.AbilityList
 import ir.pepotec.app.awesomeapp.view.uses.App
 import kotlinx.android.synthetic.main.item_ability.view.*
 
-class AdapterAbilityList(private val listener:(position:Int) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class AdapterAbilityList(private val data:ArrayList<AbilityList>, private val listener:(abilityId:String) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
         return if (position == 0) 2 else 1
@@ -23,15 +24,18 @@ class AdapterAbilityList(private val listener:(position:Int) -> Unit) : Recycler
         else AddHolder(LayoutInflater.from(App.instanse).inflate(R.layout.item_ability, parent, false))
     }
 
-    override fun getItemCount(): Int = 5 + 1
+    override fun getItemCount(): Int = data.size + 1
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.fabAbility.setOnClickListener {
-            listener(position)
+            listener(if(position == 0) "" else data.get(position -1 ).id)
         }
         if (position == 0) {
             (holder as AddHolder).onBind()
             return
+        }
+        (holder as MyHolder).itemView.apply {
+            fabAbility.text = data.get(position-1).subject
         }
 
     }

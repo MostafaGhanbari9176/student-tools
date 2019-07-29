@@ -58,7 +58,7 @@
                     android:text="عنوان نمونه کار"
                     android:layout_marginBottom="32dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" android:id="@+id/txtSubjectShowWorkSample"/>
             <com.google.android.material.card.MaterialCardView
                     android:backgroundTint="@color/colorPrimaryDark"
                     app:shapeAppearanceOverlay="@style/CVTopRound"
@@ -79,12 +79,17 @@
                             android:textSize="@dimen/txt"
                             android:padding="16dp"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-                <ir.pepotec.app.awesomeapp.view.uses.CircularIMG
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtDescriptionShowWorkSample"/>
+                <LinearLayout
+                        android:id="@+id/LLParentWorkSampleImages"
+                        android:orientation="vertical"
                         android:layout_marginBottom="16dp"
-                        app:srcCompat="@drawable/work"
-                        android:layout_width="wrap_content"
-                        android:layout_height="400dp"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                >
+
+                </LinearLayout>
                     <LinearLayout android:layout_width="0dp" android:layout_height="72dp"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

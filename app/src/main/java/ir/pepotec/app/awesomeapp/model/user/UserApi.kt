@@ -26,5 +26,5 @@ interface UserApi {
 
     @FormUrlEncoded
     @POST("logOut")
-    fun logOut(@Field("phone") phone: String, @Field("apiCode") apiCode: String): Call<ServerRes>
+    fun logOut(@Field("phone") phone: String, @Field("ac") apiCode: String): Call<ServerRes>
 }

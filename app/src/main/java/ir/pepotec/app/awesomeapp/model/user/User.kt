@@ -6,9 +6,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class User (private val listener:UserListener){
+class User (private val listener:UserResponse){
 
-    interface UserListener{
+    interface UserResponse{
         fun createVerifyCodeRes(res:ServerRes?)
         fun checkVerifyCodeRes(res:ServerRes?)
         fun logInRes(res:ServerRes?)

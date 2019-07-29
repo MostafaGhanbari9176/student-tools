@@ -6,13 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ir.pepotec.app.awesomeapp.R
-import ir.pepotec.app.awesomeapp.model.user.UserData
 import ir.pepotec.app.awesomeapp.presenter.UserPresenter
 import ir.pepotec.app.awesomeapp.view.uses.DialogProgress
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import kotlinx.android.synthetic.main.fragment_confirm_phone.*
 
-class FragmentConfirmPhone:MyFragment() ,UserPresenter.UserPresenterListener{
+class FragmentConfirmPhone:MyFragment() ,UserPresenter.UserResult{
 
     var signUp = true
     val progress = DialogProgress()
@@ -52,7 +51,7 @@ class FragmentConfirmPhone:MyFragment() ,UserPresenter.UserPresenterListener{
     override fun resultFromUser(ok: Boolean, message: String) {
         progress.cancel()
         if(ok) {
-            (ctx as ActivityAccount).changeView(if (signUp) FragmentCompleteAccount() else FragmentNewPass())
+            (ctx as ActivityAccount).changeView(if (signUp) FragmentGetStudentData() else FragmentNewPass())
         }
         else
             toast(message)

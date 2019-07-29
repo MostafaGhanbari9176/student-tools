@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layoutDirection="rtl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/dark_back_0a5"
+>
+
+    <ImageView
+            android:layout_centerInParent="true"
+            android:layout_width="@dimen/imgBig"
+            android:layout_height="@dimen/imgBig"
+            android:src="@drawable/ic_progress"
+            android:id="@+id/imgProgressInjection"
+    />
+    <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/LLProgressInjection"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:layout_margin="16dp"
+                android:textSize="@dimen/txt"
+                android:text="خطا !"
+                android:textStyle="bold|italic"
+                android:textColor="@color/light"
+                android:padding="8dp"
+                android:gravity="center"
+                android:id="@+id/txtProgressInjection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+        />
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnProgressInjection"
+                android:text="تلاش مجدد"
+                android:padding="8dp"
+                android:backgroundTint="@color/dark"
+                android:textColor="@color/light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+</RelativeLayout>

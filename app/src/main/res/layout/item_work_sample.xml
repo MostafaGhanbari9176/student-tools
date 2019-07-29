@@ -18,7 +18,7 @@
         <ir.pepotec.app.awesomeapp.view.uses.CircularIMG
                 app:srcCompat="@drawable/img"
                 android:layout_width="@dimen/imgBig"
-                android:layout_height="@dimen/imgBig"/>
+                android:layout_height="@dimen/imgBig" android:id="@+id/imgItemWorkSample"/>
         <LinearLayout
                 android:gravity="end"
                 android:padding="8dp"
@@ -34,7 +34,7 @@
                     android:textColor="@color/light1"
                     android:textSize="@dimen/txtSmall"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" android:id="@+id/txtEyeNumberItemWorkSample"/>
             <TextView
                     android:drawableTint="@color/light1"
                     android:gravity="center"
@@ -44,7 +44,7 @@
                     android:textColor="@color/light1"
                     android:textSize="@dimen/txtSmall"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" android:id="@+id/txtLikeNumberItemWorkSample"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

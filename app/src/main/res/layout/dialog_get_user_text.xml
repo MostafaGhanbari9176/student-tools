@@ -12,10 +12,11 @@
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-        <ImageView
-                app:srcCompat="@drawable/btn_close"
-                android:layout_width="@dimen/btnCloseSize"
-                android:layout_height="@dimen/btnCloseSize"/>
+        <ProgressBar
+                android:id="@+id/pBarAboutMe"
+                android:layout_margin="32dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         <EditText
                 android:lineSpacingExtra="@dimen/lineSpace"
                 android:gravity="start"
@@ -32,11 +33,11 @@
                 android:background="@drawable/txt_border"
                 android:textSize="@dimen/txt"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" android:id="@+id/txtAboutMe" android:visibility="gone"/>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content" android:id="@+id/LLBtnAboutMe" android:visibility="gone">
             <Button
                     android:textSize="@dimen/txt"
                     android:layout_weight="1"
@@ -48,7 +49,7 @@
                     android:textColor="@color/dialogBtnText"
                     android:backgroundTint="@color/colorAccent"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" android:id="@+id/btnSaveAboutMe"/>
             <Button
                     android:textSize="@dimen/txt"
                     android:layout_weight="1"
@@ -60,7 +61,7 @@
                     android:textColor="@color/dialogBtnText"
                     android:backgroundTint="@color/colorAccent"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" android:id="@+id/btnCancellAboutMe"/>
 
         </LinearLayout>
         <TextView

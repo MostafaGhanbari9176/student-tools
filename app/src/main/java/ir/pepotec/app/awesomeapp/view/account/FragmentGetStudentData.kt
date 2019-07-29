@@ -7,12 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ir.pepotec.app.awesomeapp.R
+import ir.pepotec.app.awesomeapp.presenter.student.StudentProfilePresenter
 import ir.pepotec.app.awesomeapp.view.main.ActivityMain
+import ir.pepotec.app.awesomeapp.view.uses.DialogProgress
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import kotlinx.android.synthetic.main.fragment_complete_account.*
 import java.util.regex.Pattern
 
-class FragmentCompleteAccount : MyFragment() {
+class FragmentGetStudentData : MyFragment() {
+
+    private val progress = DialogProgress()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_complete_account, container, false)
     }
@@ -29,7 +34,7 @@ class FragmentCompleteAccount : MyFragment() {
     }
 
     private fun checkData() {
-        var text = txtGetStudentId.text.toString()
+        var text = txtGetStudentId.text.toString().trim()
         if (text.length != 7 || text[6] != '3') {
             txtGetStudentId.apply {
                 requestFocus()
@@ -46,7 +51,7 @@ class FragmentCompleteAccount : MyFragment() {
             }
             return
         }
-        text = txtGetPass.text.toString()
+        text = txtGetPass.text.toString().trim()
         if (text.length == 0 || !TextUtils.isDigitsOnly(text)) {
             txtGetPass.apply {
                 requestFocus()
@@ -54,7 +59,7 @@ class FragmentCompleteAccount : MyFragment() {
             }
             return
         }
-        text = txtGetPassAgain.text.toString()
+        text = txtGetPassAgain.text.toString().trim()
         if (text.length == 0 || !TextUtils.isDigitsOnly(text)) {
             txtGetPassAgain.apply {
                 requestFocus()
@@ -62,8 +67,8 @@ class FragmentCompleteAccount : MyFragment() {
             }
             return
         }
-        val pass = txtGetPass.text.toString()
-        val passAgain = txtGetPassAgain.text.toString()
+        val pass = txtGetPass.text.toString().trim()
+        val passAgain = txtGetPassAgain.text.toString().trim()
         if (!pass.equals(passAgain)) {
             txtGetPass.apply {
                 setError("این دو مقدار باید یکسان باشند")
@@ -74,7 +79,25 @@ class FragmentCompleteAccount : MyFragment() {
             }
         }
 
-        startActivity(Intent(ctx, ActivityMain::class.java))
-        (ctx as ActivityAccount).finish()
+        saveData()
+    }
+
+    private fun saveData() {
+        progress.show()
+        val name = txtGetName.text.toString().trim()
+        val sId = txtGetStudentId.text.toString().trim()
+        val pass = txtGetPass.text.toString().trim()
+
+        StudentProfilePresenter(object : StudentProfilePresenter.StudentProfileResult {
+            override fun addStudentRes(ok: Boolean, message: String) {
+                progress.cancel()
+                if (ok) {
+                    startActivity(Intent(ctx, ActivityMain::class.java))
+                    (ctx as ActivityAccount).finish()
+                } else
+                    toast(message)
+            }
+        }).addStudent(sId, name, pass)
+
     }
 }
