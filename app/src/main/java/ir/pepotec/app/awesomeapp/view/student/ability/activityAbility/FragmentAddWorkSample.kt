@@ -1,6 +1,5 @@
 package ir.pepotec.app.awesomeapp.view.student.ability.activityAbility
 
-import android.content.ClipDescription
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -8,26 +7,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.annotation.IdRes
 import androidx.core.app.ActivityCompat
-import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import ir.pepotec.app.awesomeapp.R
-import ir.pepotec.app.awesomeapp.presenter.student.StudentProfilePresenter
 import ir.pepotec.app.awesomeapp.presenter.student.WorkSamplePresenter
-import ir.pepotec.app.awesomeapp.view.student.ActivityStudent
 import ir.pepotec.app.awesomeapp.view.uses.AbsoluteFunctions
 import ir.pepotec.app.awesomeapp.view.uses.DialogProgress
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import kotlinx.android.synthetic.main.fragment_add_work_sample.*
 import java.io.File
-import javax.security.auth.Subject
 
 class FragmentAddWorkSample : MyFragment() {
 
     var subject = ""
     var description = ""
-    var workSampleId = ""
-
+    var workSampleId = -1
+    var abilityId: Int = 0
     private val imgList = ArrayList<File>()
     private val progress = DialogProgress()
 
@@ -41,11 +36,11 @@ class FragmentAddWorkSample : MyFragment() {
     }
 
     private fun init() {
-        if (!workSampleId.isEmpty())
+        if (workSampleId != -1)
             setData()
 
         btnChooseImgAddWorkSample.setOnClickListener {
-            choseImage()
+            choseImage(imgList.size + 1)
         }
         btnSaveWorkSample.setOnClickListener {
             checkData()
@@ -53,48 +48,61 @@ class FragmentAddWorkSample : MyFragment() {
         btnDeleteAddWorkSample2.setOnClickListener {
             imgList.remove(imgList.get(1))
             LLAddWorkSample2.visibility = View.GONE
+            btnChooseImgAddWorkSample.visibility = View.VISIBLE
         }
         btnDeleteAddWorkSample3.setOnClickListener {
-            imgList.remove(imgList.get(2))
+            imgList.remove(imgList.get(if (imgList.size == 3) 2 else 1))
             LLAddWorkSample3.visibility = View.GONE
+            btnChooseImgAddWorkSample.visibility = View.VISIBLE
         }
+        btnAddWorkSample1.setOnClickListener {
+            imgList.remove(imgList.get(0))
+            choseImage(1)
+        }
+        btnAddWorkSample2.setOnClickListener {
+            imgList.remove(imgList.get(1))
+            choseImage(2)
+        }
+        btnAddWorkSample3.setOnClickListener {
+            imgList.remove(imgList.get(2))
+            choseImage(3)
+        }
+
     }
 
-    private fun choseImage() {
-        val pickPhoto = Intent(
-            Intent.ACTION_PICK,
-            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+    private fun choseImage(imgNumber: Int) {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        ActivityCompat.startActivityForResult(
+            ctx as ActivityAbility,
+            Intent.createChooser(intent, "Select Picture"),
+            imgNumber,
+            null
         )
-        startActivityForResult(pickPhoto, imgList.size + 1)
     }
 
     fun image1(b: Bitmap) {
-        val file = AbsoluteFunctions().convertBitMapToFile(b, ctx)
+        val file = AbsoluteFunctions().convertBitMapToFile(b, ctx, "image1")
         imgList.add(file)
         btnChooseImgAddWorkSample.text = "انتخاب عکس دیگر (الزامی نیست)"
-        setImage(file, imgAddWorkSample1)
+        AbsoluteFunctions().setImage(imgAddWorkSample1, file)
         LLAddWorkSample1.visibility = View.VISIBLE
     }
 
     fun image2(b: Bitmap) {
-        val file = AbsoluteFunctions().convertBitMapToFile(b, ctx)
+        val file = AbsoluteFunctions().convertBitMapToFile(b, ctx, "image2")
         imgList.add(file)
-        setImage(file, imgAddWorkSample2)
+        AbsoluteFunctions().setImage(imgAddWorkSample2, file)
         LLAddWorkSample2.visibility = View.VISIBLE
     }
 
     fun image3(b: Bitmap) {
-        val file = AbsoluteFunctions().convertBitMapToFile(b, ctx)
+        val file = AbsoluteFunctions().convertBitMapToFile(b, ctx, "image3")
         imgList.add(file)
         btnChooseImgAddWorkSample.visibility = View.GONE
-        setImage(file, imgAddWorkSample3)
+        AbsoluteFunctions().setImage(imgAddWorkSample3, file)
         LLAddWorkSample3.visibility = View.VISIBLE
-    }
-
-    private fun setImage(f: File, v: ImageView) {
-        Glide.with(ctx)
-            .load(f)
-            .into(v)
     }
 
     private fun checkData() {
@@ -129,7 +137,7 @@ class FragmentAddWorkSample : MyFragment() {
 
     private fun saveData(subject: String, description: String) {
         progress.show()
-        if (workSampleId.isEmpty())
+        if (workSampleId == -1) {
             WorkSamplePresenter(object : WorkSamplePresenter.WorkSampleResult {
                 override fun addWorkSampleResult(ok: Boolean, message: String) {
                     progress.cancel()
@@ -137,8 +145,8 @@ class FragmentAddWorkSample : MyFragment() {
                     if (ok)
                         (ctx as ActivityAbility).onBackPressed()
                 }
-            }).addWorkSample(subject, description, imgList)
-        else
+            }).addWorkSample(abilityId, subject, description, imgList)
+        } else {
             WorkSamplePresenter(object : WorkSamplePresenter.WorkSampleResult {
                 override fun editWorkSampleResult(ok: Boolean, message: String) {
                     progress.cancel()
@@ -147,6 +155,7 @@ class FragmentAddWorkSample : MyFragment() {
                         (ctx as ActivityAbility).onBackPressed()
                 }
             }).editWorkSample(workSampleId, subject, description, imgList)
+        }
     }
 
     private fun setData() {

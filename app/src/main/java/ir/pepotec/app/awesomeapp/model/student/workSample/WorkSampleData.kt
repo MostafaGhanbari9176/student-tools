@@ -11,19 +11,19 @@ package ir.pepotec.app.awesomeapp.model.student.workSample
 *     }
 * */
 data class WorkSampleData(
-    val id: String,
+    val work_sample_id: String,
     val subject: String,
     val description: String,
-    val date: String,
-    val state: Int,
-    val eyeNumber: Int,
-    val likeNumber: Int,
-    val imgId: ArrayList<String>
+    val add_date: String,
+    val status: Int,
+    val seen_num: Int,
+    val like_num: Int,
+    val liked: Boolean,
+    val img_num: Int
 )
 
 data class workSampleList(
-    val id: String,
-    val imgId: String,
-    val eyeNumber:Int,
-    val likeNumber:Int
+    val work_sample_id: Int,
+    val seen_num:Int,
+    val like_num:Int
 )

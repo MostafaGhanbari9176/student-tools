@@ -12,12 +12,12 @@ import ir.pepotec.app.awesomeapp.view.uses.DialogProgress
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import kotlinx.android.synthetic.main.fragment_add_ability.*
 
-class FragmentAddAbility : MyFragment(), AbilityPresenter.AbilityResult {
+class FragmentAddAbility : MyFragment() {
 
     var subject = ""
     var resume = ""
     var description = ""
-    private var add = true
+    var abilityId = -1
     private val progress = DialogProgress()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_add_ability, container, false)
@@ -32,10 +32,9 @@ class FragmentAddAbility : MyFragment(), AbilityPresenter.AbilityResult {
         btnSaveAddAbility.setOnClickListener {
             checkData()
         }
-        if (subject.length > 0) {
-            add = false
+        if (abilityId != -1)
             setData()
-        }
+
 
     }
 
@@ -60,9 +59,21 @@ class FragmentAddAbility : MyFragment(), AbilityPresenter.AbilityResult {
     }
 
     private fun saveData(subject: String, description: String) {
+        progress.show()
         val resume = txtResumeAddAbility.text.toString().trim()
-        AbilityPresenter(this)
-            .addAbility(subject, if (resume.isEmpty()) "" else resume, description)
+        AbilityPresenter(object : AbilityPresenter.AbilityResult {
+            override fun resultFromAbility(ok: Boolean, message: String) {
+                progress.cancel()
+                toast(message)
+                if (ok)
+                    (ctx as ActivityAbility).onBackPressed()
+            }
+        }).apply {
+            if (abilityId == -1)
+                addAbility(subject, if (resume.isEmpty()) "" else resume, description)
+            else
+                editAbility(abilityId, subject, if (resume.isEmpty()) "" else resume, description)
+        }
     }
 
     private fun setData() {
@@ -71,26 +82,4 @@ class FragmentAddAbility : MyFragment(), AbilityPresenter.AbilityResult {
         txtResumeAddAbility.setText(resume)
         txtDescriptAddAbility.setText(description)
     }
-
-    override fun abilityData(ok: Boolean, message: String, data: AbilityData?) {
-
-    }
-
-    override fun abilityListData(ok: Boolean, message: String, data: ArrayList<AbilityList>?) {
-
-    }
-
-    override fun abilityDeleteResult(ok: Boolean, message: String) {
-
-    }
-
-    override fun resultFromAbility(ok: Boolean, message: String) {
-        progress.cancel()
-        toast(message)
-/*        if(ok) {
-            onActivityResult()
-        }*/
-
-    }
-
 }

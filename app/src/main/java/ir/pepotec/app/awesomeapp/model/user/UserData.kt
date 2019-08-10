@@ -2,7 +2,7 @@ package ir.pepotec.app.awesomeapp.model.user
 
 data class UserData(
     val phone: String,
-    val apiCode: String,
+    val api_code: String,
     val kind: Int
 )
 
@@ -10,7 +10,7 @@ class UserKind
 {
     companion object
     {
-        val student:Int = 1
+        const val student:Int = 1
     }
 }
 

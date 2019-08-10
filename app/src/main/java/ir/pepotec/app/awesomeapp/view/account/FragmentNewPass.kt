@@ -66,7 +66,7 @@ class FragmentNewPass : MyFragment(), UserPresenter.UserResult {
 
     private fun sendPassToServer(pass: String) {
         progress.show()
-        UserPresenter(this).newPass(pass)
+        UserPresenter(this).changePass(pass)
     }
 
     override fun resultFromUser(ok: Boolean, message: String) {

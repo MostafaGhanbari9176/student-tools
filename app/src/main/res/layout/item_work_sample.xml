@@ -16,9 +16,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         <ir.pepotec.app.awesomeapp.view.uses.CircularIMG
-                app:srcCompat="@drawable/img"
+                app:srcCompat="@drawable/ic_work_sample"
                 android:layout_width="@dimen/imgBig"
-                android:layout_height="@dimen/imgBig" android:id="@+id/imgItemWorkSample"/>
+                android:layout_height="@dimen/imgBig"
+                android:id="@+id/imgItemWorkSample"
+        />
         <LinearLayout
                 android:gravity="end"
                 android:padding="8dp"

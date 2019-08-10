@@ -3,37 +3,41 @@ package ir.pepotec.app.awesomeapp.model.student.profile
 import ir.pepotec.app.awesomeapp.model.ApiClient
 import ir.pepotec.app.awesomeapp.model.ServerRes
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class StudentProfile(private val listener:StudentProfileResponse) {
+class StudentProfile(private val listener: StudentProfileResponse) {
 
-    interface StudentProfileResponse
-    {
-        fun addStudentRes(res:ServerRes?)
-        fun studentData(res:ServerRes?)
-        fun studentImgData(data:ByteArray?)
-        fun upStudentImgRes(ok:Boolean)
-        fun friendListData(res:ServerRes?)
-        fun addFriendRes(res:ServerRes?)
-        fun saveAboutMeRes(res:ServerRes?)
-        fun aboutMeData(res:ServerRes?)
-        fun elNameRes(res:ServerRes?)
-        fun elPhoneRes(res:ServerRes?)
-        fun elImgRes(res:ServerRes?)
-        fun error(message:String?)
+    companion object {
+        const val baseUrl = "student/profile/index.php/";
     }
 
-    fun addStudent(phone:String, apiCode:String, sId:String, name:String, pass:String)
-    {
-        val api:StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
+    interface StudentProfileResponse {
+        fun addStudentRes(res: ServerRes?)
+        fun studentData(res: ServerRes?)
+        fun otherProfileData(res: ServerRes?)
+        fun studentImgData(data: ByteArray?)
+        fun upStudentImgRes(ok: Boolean)
+        fun friendListData(res: ServerRes?)
+        fun addFriendRes(res: ServerRes?)
+        fun saveAboutMeRes(res: ServerRes?)
+        fun aboutMeData(res: ServerRes?)
+        fun elNameRes(res: ServerRes?)
+        fun elPhoneRes(res: ServerRes?)
+        fun elImgRes(res: ServerRes?)
+        fun searchRes(res: ServerRes?)
+    }
+
+    fun addStudent(phone: String, apiCode: String, sId: String, name: String, pass: String) {
+        val api: StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
         val req = api.addStudent(phone, apiCode, sId, name, pass)
 
-        req.enqueue(object: Callback<ServerRes>{
+        req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.error(t.message)
+                listener.addStudentRes(null)
             }
 
             override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
@@ -42,28 +46,26 @@ class StudentProfile(private val listener:StudentProfileResponse) {
         })
     }
 
-    fun getStudent(phone:String, ac:String)
-    {
-        val api:StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
-        val req = api.getStudent(phone, ac)
+    fun myProfile(phone: String, ac: String) {
+        val api: StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
+        val req = api.myProfile(phone, ac)
 
-        req.enqueue(object: Callback<ServerRes>{
+        req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.error(t.message)
+                listener.studentData(null)
             }
 
             override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
-               listener.studentData(response.body())
+                listener.studentData(response.body())
             }
         })
     }
 
-    fun downStudentImg(phone:String, ac:String)
-    {
-        val api:StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
-        val req = api.downStudentImg(phone, ac)
+    fun downMyImg(phone: String, ac: String) {
+        val api: StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
+        val req = api.downMyImg(phone, ac)
 
-        req.enqueue(object: Callback<ResponseBody>{
+        req.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 //listener.error(t.message)
             }
@@ -74,30 +76,43 @@ class StudentProfile(private val listener:StudentProfileResponse) {
         })
     }
 
-    fun upStudentImg(phone:String, ac:String, file:MultipartBody.Part)
-    {
-        val api:StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
-        val req = api.upStudentImg(phone, ac, file)
+    fun downOtherImg(phone: String, ac: String, userId: Int) {
+        val api: StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
+        val req = api.downOtherImg(phone, ac, userId)
 
-        req.enqueue(object: Callback<ServerRes>{
+        req.enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                //listener.error(t.message)
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                listener.studentImgData(response.body()?.bytes())
+            }
+        })
+    }
+
+    fun upMyImg(phone: RequestBody, ac: RequestBody, file: MultipartBody.Part) {
+        val api: StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
+        val req = api.upMyImg(phone, ac, file)
+
+        req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {
                 //listener.error(t.message)
             }
 
             override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
-               listener.upStudentImgRes(response.isSuccessful)
+                listener.upStudentImgRes(response.isSuccessful)
             }
         })
     }
 
-    fun getFriendList(phone:String, ac:String)
-    {
-        val api:StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
+    fun getFriendList(phone: String, ac: String) {
+        val api: StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
         val req = api.friendList(phone, ac)
 
-        req.enqueue(object: Callback<ServerRes>{
+        req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.error(t.message)
+                listener.friendListData(null)
             }
 
             override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
@@ -106,14 +121,13 @@ class StudentProfile(private val listener:StudentProfileResponse) {
         })
     }
 
-    fun addFriend(phone:String, ac:String, friendId:String)
-    {
-        val api:StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
+    fun addFriend(phone: String, ac: String, friendId: Int) {
+        val api: StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
         val req = api.addFriend(phone, ac, friendId)
 
-        req.enqueue(object: Callback<ServerRes>{
+        req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.error(t.message)
+                listener.addFriendRes(null)
             }
 
             override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
@@ -122,46 +136,58 @@ class StudentProfile(private val listener:StudentProfileResponse) {
         })
     }
 
-    fun saveAboutMe(phone:String, ac:String, text:String)
-    {
-        val api:StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
+    fun deleteFriend(phone: String, ac: String, friendId: Int) {
+        val api: StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
+        val req = api.deleteFriend(phone, ac, friendId)
+
+        req.enqueue(object : Callback<ServerRes> {
+            override fun onFailure(call: Call<ServerRes>, t: Throwable) {
+                listener.addFriendRes(null)
+            }
+
+            override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
+                listener.addFriendRes(response.body())
+            }
+        })
+    }
+
+    fun saveAboutMe(phone: String, ac: String, text: String) {
+        val api: StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
         val req = api.saveAboutMe(phone, ac, text)
 
-        req.enqueue(object: Callback<ServerRes>{
+        req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {
                 //listener.error(t.message)
             }
 
             override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
-               //listener.saveAboutMeRes(response.body())
+                //listener.saveAboutMeRes(response.body())
             }
         })
     }
 
-    fun getAboutMe(phone:String, ac:String)
-    {
-        val api:StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
+    fun getAboutMe(phone: String, ac: String) {
+        val api: StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
         val req = api.getAboutMe(phone, ac)
 
-        req.enqueue(object: Callback<ServerRes>{
+        req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.error(t.message)
+                listener.aboutMeData(null)
             }
 
             override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
-            listener.aboutMeData(response.body())
+                listener.aboutMeData(response.body())
             }
         })
     }
 
-    fun eLName(phone:String, ac:String, code:Int)
-    {
-        val api:StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
+    fun eLName(phone: String, ac: String, code: Int) {
+        val api: StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
         val req = api.eLName(phone, ac, code)
 
-        req.enqueue(object: Callback<ServerRes>{
+        req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                //listener.error(t.message)
+                listener.elNameRes(null)
             }
 
             override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
@@ -170,14 +196,13 @@ class StudentProfile(private val listener:StudentProfileResponse) {
         })
     }
 
-    fun eLPhone(phone:String, ac:String, code:Int)
-    {
-        val api:StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
+    fun eLPhone(phone: String, ac: String, code: Int) {
+        val api: StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
         val req = api.eLPhone(phone, ac, code)
 
-        req.enqueue(object: Callback<ServerRes>{
+        req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                //listener.error(t.message)
+                listener.elPhoneRes(null)
             }
 
             override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
@@ -186,14 +211,13 @@ class StudentProfile(private val listener:StudentProfileResponse) {
         })
     }
 
-    fun eLImg(phone:String, ac:String, code:Int)
-    {
-        val api:StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
+    fun eLImg(phone: String, ac: String, code: Int) {
+        val api: StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
         val req = api.eLImg(phone, ac, code)
 
-        req.enqueue(object: Callback<ServerRes>{
+        req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.error(t.message)
+                listener.elImgRes(null)
             }
 
             override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
@@ -202,5 +226,34 @@ class StudentProfile(private val listener:StudentProfileResponse) {
         })
     }
 
+    fun search(phone: String, ac: String, key: String, num: Int, step: Int) {
+        val api: StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
+        val req = api.search(phone, ac, key, num, step)
+
+        req.enqueue(object : Callback<ServerRes> {
+            override fun onFailure(call: Call<ServerRes>, t: Throwable) {
+                listener.searchRes(null)
+            }
+
+            override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
+                listener.searchRes(response.body())
+            }
+        })
+    }
+
+    fun getOtherProfile(phone: String, ac: String, userId: Int) {
+        val api: StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
+        val req = api.getOtherProfile(phone, ac, userId)
+
+        req.enqueue(object : Callback<ServerRes> {
+            override fun onFailure(call: Call<ServerRes>, t: Throwable) {
+                listener.otherProfileData(null)
+            }
+
+            override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
+                listener.otherProfileData(response.body())
+            }
+        })
+    }
 
 }

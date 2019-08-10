@@ -35,7 +35,7 @@ class DialogEyeLevel(
     }
 
     private fun getDefData() {
-        if(flag === "name")
+        if(flag === "user_name")
         {
             StudentProfilePresenter(object:StudentProfilePresenter.StudentProfileResult{
                 override fun elNameRes(ok: Boolean, message: String, data: Int?) {
@@ -76,7 +76,7 @@ class DialogEyeLevel(
     }
 
     private fun changeEyeLevel(code:Int) {
-        if(flag === "name")
+        if(flag === "user_name")
         {
             StudentProfilePresenter(object:StudentProfilePresenter.StudentProfileResult{
                 override fun elNameRes(ok: Boolean, message: String, data: Int?) {

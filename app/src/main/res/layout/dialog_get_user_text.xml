@@ -18,6 +18,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <EditText
+                android:inputType="textLongMessage"
+                android:autofillHints="ok"
+                android:maxLength="100"
                 android:lineSpacingExtra="@dimen/lineSpace"
                 android:gravity="start"
                 android:layout_marginBottom="16dp"
@@ -32,8 +35,10 @@
                 android:textColorHint="@color/dialogHint"
                 android:background="@drawable/txt_border"
                 android:textSize="@dimen/txt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/txtAboutMe" android:visibility="gone"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtAboutMe"
+                android:visibility="gone"/>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"

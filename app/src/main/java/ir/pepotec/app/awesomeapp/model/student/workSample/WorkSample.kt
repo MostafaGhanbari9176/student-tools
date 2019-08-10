@@ -3,12 +3,17 @@ package ir.pepotec.app.awesomeapp.model.student.workSample
 import ir.pepotec.app.awesomeapp.model.ApiClient
 import ir.pepotec.app.awesomeapp.model.ServerRes
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class WorkSample(private val listener: WorkSampleRes) {
+
+    companion object {
+        const val baseUrl = "student/workSample/index.php/"
+    }
 
     interface WorkSampleRes {
         fun addWorkSampleRes(res: ServerRes?)
@@ -18,22 +23,22 @@ class WorkSample(private val listener: WorkSampleRes) {
         fun eyeCloseWorkSampleRes(res: ServerRes?)
         fun deleteWorkSampleRes(res: ServerRes?)
         fun workSampleImgData(res: ByteArray?)
-        fun error(message: String?)
     }
 
     fun addWorkSample(
-        phone: String,
-        apiCode: String,
-        subject: String,
-        description: String,
+        phone: RequestBody,
+        apiCode: RequestBody,
+        abilityId: RequestBody,
+        subject: RequestBody,
+        description: RequestBody,
         files: ArrayList<MultipartBody.Part>
     ) {
         val api: WorkSampleApi = ApiClient.getClient().create(WorkSampleApi::class.java)
-        val req = api.addWorkSample(phone, apiCode, subject, description, files)
+        val req = api.addWorkSample(phone, apiCode, abilityId, subject, description, files)
 
         req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.error(t.message)
+                listener.addWorkSampleRes(null)
             }
 
             override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
@@ -44,13 +49,15 @@ class WorkSample(private val listener: WorkSampleRes) {
         })
     }
 
-    fun getWorkSampleList(phone: String, apiCode: String, abilityId: String) {
+    fun getWorkSampleList(phone: String, apiCode: String, abilityId: Int, itsMy: Boolean) {
         val api: WorkSampleApi = ApiClient.getClient().create(WorkSampleApi::class.java)
-        val req = api.getWorkSampleList(phone, apiCode, abilityId)
-
+        val req = when (itsMy) {
+            true -> api.getMyWorkSampleList(phone, apiCode, abilityId)
+            else -> api.getOtherWorkSampleList(phone, apiCode, abilityId)
+        }
         req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.error(t.message)
+                listener.workSampleListData(null)
             }
 
             override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
@@ -59,13 +66,16 @@ class WorkSample(private val listener: WorkSampleRes) {
         })
     }
 
-    fun getWorkSample(id: String, phone: String, apiCode: String) {
-        val api: WorkSampleApi = ApiClient.getClient().create(WorkSampleApi::class.java)
-        val req = api.getWorkSample(id, phone, apiCode)
 
+    fun getWorkSample(id: Int, phone: String, apiCode: String, itsMy: Boolean) {
+        val api: WorkSampleApi = ApiClient.getClient().create(WorkSampleApi::class.java)
+        val req = when (itsMy) {
+            true -> api.getMyWorkSample(id, phone, apiCode)
+            else -> api.getOtherWorkSample(id, phone, apiCode)
+        }
         req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.error(t.message)
+                listener.workSampleData(null)
             }
 
             override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
@@ -74,12 +84,25 @@ class WorkSample(private val listener: WorkSampleRes) {
         })
     }
 
+    fun increaseSeen(id: Int, phone: String, apiCode: String) {
+        val api: WorkSampleApi = ApiClient.getClient().create(WorkSampleApi::class.java)
+        val req =api.increaseSeen(id, phone, apiCode)
+
+        req.enqueue(object : Callback<ServerRes> {
+            override fun onFailure(call: Call<ServerRes>, t: Throwable) {
+            }
+
+            override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
+            }
+        })
+    }
+
     fun editWorkSample(
-        id: String,
-        phone: String,
-        apiCode: String,
-        subject: String,
-        description: String,
+        id: RequestBody,
+        phone: RequestBody,
+        apiCode: RequestBody,
+        subject: RequestBody,
+        description: RequestBody,
         files: ArrayList<MultipartBody.Part>
     ) {
         val api: WorkSampleApi = ApiClient.getClient().create(WorkSampleApi::class.java)
@@ -87,7 +110,7 @@ class WorkSample(private val listener: WorkSampleRes) {
 
         req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.error(t.message)
+                listener.editWorkSampleRes(null)
             }
 
             override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
@@ -96,32 +119,32 @@ class WorkSample(private val listener: WorkSampleRes) {
         })
     }
 
-    fun eyeCloseWorkSample(id: String, phone: String, apiCode: String) {
-        val api: WorkSampleApi = ApiClient.getClient().create(WorkSampleApi::class.java)
-        val req = api.eyeCloseWorkSample(id, phone, apiCode)
-
-        req.enqueue(object : Callback<ServerRes> {
-            override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.error(t.message)
-            }
-
-            override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
-                listener.eyeCloseWorkSampleRes(response.body())
-            }
-        })
-    }
-
-    fun deleteWorkSample(id: String, phone: String, apiCode: String) {
+    fun deleteWorkSample(id: Int, phone: String, apiCode: String) {
         val api: WorkSampleApi = ApiClient.getClient().create(WorkSampleApi::class.java)
         val req = api.deleteWorkSample(id, phone, apiCode)
 
         req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.error(t.message)
+                listener.deleteWorkSampleRes(null)
             }
 
             override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
                 listener.deleteWorkSampleRes(response.body())
+            }
+        })
+    }
+
+    fun likeWorkSample(id: Int, phone: String, apiCode: String) {
+        val api: WorkSampleApi = ApiClient.getClient().create(WorkSampleApi::class.java)
+        val req = api.likeWorkSample(id, phone, apiCode)
+
+        req.enqueue(object : Callback<ServerRes> {
+            override fun onFailure(call: Call<ServerRes>, t: Throwable) {
+
+            }
+
+            override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
+
             }
         })
     }
@@ -132,7 +155,7 @@ class WorkSample(private val listener: WorkSampleRes) {
 
         req.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-               // listener.error(t.message)
+                listener.workSampleImgData(null)
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

@@ -4,14 +4,14 @@ import ir.pepotec.app.awesomeapp.model.Pref
 
 class StudentProfileDb {
 
-    val sId = "studentId"
+    val sId = "s_id"
     val name = "studentName"
 
     fun saveData(data:StudentProfileData)
     {
         Pref().apply {
-            saveStringValue(sId, data.studentId)
-            saveStringValue(name, data.name)
+            saveStringValue(sId, data.s_id)
+            saveStringValue(name, data.user_name)
         }
     }
 

@@ -9,12 +9,6 @@
     <item
             app:showAsAction="always"
             android:icon="@drawable/ic_edit"
-            android:id="@+id/menuAbilityHide"
-            android:title="عدم نمایش"
-    />
-    <item
-            app:showAsAction="always"
-            android:icon="@drawable/ic_edit"
             android:id="@+id/menuAbilityEdit"
             android:title="ویرایش"
     />

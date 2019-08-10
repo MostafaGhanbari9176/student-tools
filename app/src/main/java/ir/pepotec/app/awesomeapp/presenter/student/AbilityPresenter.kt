@@ -14,7 +14,6 @@ class AbilityPresenter(private val listener: AbilityResult) : Ability.AbilityRes
     interface AbilityResult {
         fun abilityData(ok:Boolean, message:String, data: AbilityData?){}
         fun abilityListData(ok:Boolean, message:String, data: ArrayList<AbilityList>?){}
-        fun abilityDeleteResult(ok: Boolean, message: String){}
         fun resultFromAbility(ok: Boolean, message: String){}
     }
 
@@ -24,32 +23,32 @@ class AbilityPresenter(private val listener: AbilityResult) : Ability.AbilityRes
         Ability(this).addAbility(phone, ac, subject, resume, description)
     }
 
-    fun getAbilityList() {
+    fun getMyList() {
         val phone = UserDb().getUserPhone()
         val ac = UserDb().getUserApiCode()
-        Ability(this).getAbilityList(phone, ac)
+        Ability(this).getMyList(phone, ac)
     }
 
-    fun getAbility(id: String) {
+    fun getSingle(id: Int, itsMy:Boolean) {
         val phone = UserDb().getUserPhone()
         val ac = UserDb().getUserApiCode()
-        Ability(this).getAbility(id, phone, ac)
+        Ability(this).getSingle(id, phone, ac, itsMy)
     }
 
-    fun editAbility(id: String, subject: String, resume: String, description: String) {
+    fun increaseSeen(id: Int) {
+        val phone = UserDb().getUserPhone()
+        val ac = UserDb().getUserApiCode()
+        Ability(this).increaseSeen(id, phone, ac)
+    }
+
+    fun editAbility(id: Int, subject: String, resume: String, description: String) {
         val phone = UserDb().getUserPhone()
         val ac = UserDb().getUserApiCode()
         Ability(this)
             .editAbility(id, phone, ac, subject, resume, description)
     }
 
-    fun eyeCloseAbility(id: String) {
-        val phone = UserDb().getUserPhone()
-        val ac = UserDb().getUserApiCode()
-        Ability(this).eyeCloseAbility(id, phone, ac)
-    }
-
-    fun deleteAbility(id: String) {
+    fun deleteAbility(id: Int) {
         val phone = UserDb().getUserPhone()
         val ac = UserDb().getUserApiCode()
         Ability(this).deleteAbility(id, phone, ac)
@@ -62,7 +61,7 @@ class AbilityPresenter(private val listener: AbilityResult) : Ability.AbilityRes
                 false,
                 "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!"
             )
-            ServerResConst.ok -> listener.resultFromAbility(true, "عملیات موفق بود.")
+            ServerResConst.ok -> listener.resultFromAbility(true, "ثبت شد.")
             ServerResConst.apiCodeError -> App.apiCodeError()
         }
     }
@@ -77,11 +76,9 @@ class AbilityPresenter(private val listener: AbilityResult) : Ability.AbilityRes
             )
             ServerResConst.ok -> {
                 val data = ArrayList<AbilityList>()
-                val dataArray = res?.data
-                for (i in 0..(dataArray?.length() ?: 0)) {
-                    val json = (dataArray)?.getJSONObject(i).toString()
-                    data.add(Gson().fromJson(json, AbilityList::class.java))
-                }
+                val dataArray = res!!.data
+                for (o in dataArray)
+                    data.add(Gson().fromJson(o, AbilityList::class.java))
                 listener.abilityListData(true, "", data)
             }
             ServerResConst.apiCodeError -> App.apiCodeError()
@@ -97,7 +94,7 @@ class AbilityPresenter(private val listener: AbilityResult) : Ability.AbilityRes
                 null
             )
             ServerResConst.ok -> {
-                val json = (res?.data)?.getJSONObject(0).toString()
+                val json = res!!.data[0]
                 val data = Gson().fromJson(json, AbilityData::class.java)
                 listener.abilityData(true, "", data)
             }
@@ -105,16 +102,16 @@ class AbilityPresenter(private val listener: AbilityResult) : Ability.AbilityRes
         }
     }
 
-    override fun deleteAbilityRes(res: ServerRes?) {
+    override fun changeStatusRes(res: ServerRes?) {
         when (res?.code ?: -1) {
-            -1 -> listener.abilityDeleteResult(false, "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!")
+            -1 -> listener.resultFromAbility(false, "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!")
 
-            ServerResConst.error -> listener.abilityDeleteResult(
+            ServerResConst.error -> listener.resultFromAbility(
                 false,
                 "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!"
             )
 
-            ServerResConst.ok -> listener.abilityDeleteResult(true, "با موفقیت حذف شد.")
+            ServerResConst.ok -> listener.resultFromAbility(true, "با موفقیت انجام شد.")
 
             ServerResConst.apiCodeError -> App.apiCodeError()
         }
@@ -133,25 +130,6 @@ class AbilityPresenter(private val listener: AbilityResult) : Ability.AbilityRes
 
             ServerResConst.apiCodeError -> App.apiCodeError()
         }
-    }
-
-    override fun eyeCloseAbilityRes(res: ServerRes?) {
-        when (res?.code ?: -1) {
-            -1 -> listener.resultFromAbility(false, "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!")
-
-            ServerResConst.error -> listener.resultFromAbility(
-                false,
-                "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!"
-            )
-
-            ServerResConst.ok -> listener.resultFromAbility(true, "با موفقیت انجام شد.")
-
-            ServerResConst.apiCodeError -> App.apiCodeError()
-        }
-    }
-
-    override fun abilityError(message: String?) {
-        listener.resultFromAbility(false, "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!")
     }
 
 }

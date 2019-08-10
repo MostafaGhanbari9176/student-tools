@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        xmlns:tools="http://schemas.android.com/tools" android:background="@color/colorPrimaryDark"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+                android:layoutDirection="rtl"
+        android:layout_height="match_parent"
+>
+<RelativeLayout
+        android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+>
+    <TextView
+            android:textSize="@dimen/txtSmall"
+            android:textColor="@color/colorAccent"
+            android:layout_margin="8dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:text="ساعاتی پیش"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtLastSeenOtherProfile"
+    />
+    <TextView
+            android:visibility="gone"
+            android:textSize="@dimen/txtSmall"
+            android:textColor="@color/colorAccent"
+            android:layout_margin="8dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="دوست"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtFriendOtherProfile"
+    />
+    <LinearLayout
+            android:gravity="top|center_horizontal"
+            android:padding="16dp"
+            android:layout_below="@id/txtLastSeenOtherProfile"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/LLHeadOtherProfile">
+        <ir.pepotec.app.awesomeapp.view.uses.CircularIMG
+                app:srcCompat="@drawable/ic_profile_def"
+                app:rectCorner="@dimen/radius"
+                android:layout_width="@dimen/imgBig"
+                android:layout_height="@dimen/imgBig"
+                android:id="@+id/imgOtherProfile"
+        />
+        <TextView
+                android:visibility="gone"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:text="@string/test2"
+                android:gravity="start"
+                android:textSize="@dimen/txt"
+                android:textColor="@color/txtPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtAboutMeOtherProfile"/>
+    </LinearLayout>
+    <LinearLayout
+            android:paddingTop="@dimen/radius"
+            android:orientation="vertical"
+            android:layout_below="@id/LLHeadOtherProfile"
+            android:background="@drawable/rounded_top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/LLInfOtherProfile">
+        <TextView
+                android:text="9433333"
+                android:id="@+id/txtSIdOtherProfile"
+                android:textSize="@dimen/txt"
+                android:textColor="@color/txtPrimary"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:text="حمیدامیری"
+                android:id="@+id/txtNameOtherProfile"
+                android:textSize="@dimen/txt"
+                android:textColor="@color/txtPrimary"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:autoLink="phone"
+                android:text="09155405034"
+                android:id="@+id/txtPhoneOtherProfile"
+                android:textSize="@dimen/txt"
+                android:textColor="@color/txtPrimary"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:autoLink="email"
+                android:text="hamid945@gmail.com"
+                android:id="@+id/txtEmailOtherProfile"
+                android:textSize="@dimen/txt"
+                android:textColor="@color/txtPrimary"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+        />
+        <LinearLayout
+                android:layout_marginTop="16dp"
+                android:padding="16dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+        >
+            <com.google.android.material.button.MaterialButton
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:id="@+id/btnChatOtherProfile"
+                    android:text="ارسال پیام"
+                    android:padding="8dp"
+                    android:textColor="@color/dark"
+                    android:backgroundTint="@color/colorAccent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+            />
+            <com.google.android.material.button.MaterialButton
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:id="@+id/btnAddFriendOtherProfile"
+                    android:text="افزودن به دوستان"
+                    android:padding="8dp"
+                    android:textColor="@color/dark"
+                    android:backgroundTint="@color/colorAccent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+            />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/LLAbilityHeadOtherProfile">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="1dp"
+                          android:background="@color/colorAccent" android:layout_weight="1"/>
+            <TextView
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="مهارت ها"
+                    android:textSize="@dimen/txt"
+                    android:textColor="@color/txtPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+            />
+            <LinearLayout android:layout_width="match_parent" android:layout_height="1dp"
+                          android:background="@color/colorAccent" android:layout_weight="1"/>
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RVAbilityOtherProfile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+        />
+    </LinearLayout>
+
+</RelativeLayout>
+</ScrollView>

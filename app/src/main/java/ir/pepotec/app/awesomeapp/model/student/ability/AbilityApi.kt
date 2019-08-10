@@ -9,55 +9,63 @@ import retrofit2.http.POST
 interface AbilityApi {
 
     @FormUrlEncoded
-    @POST("addAbility")
+    @POST("${Ability.baseUrl}addAbility")
     fun addAbility(
         @Field("phone") phone: String,
-        @Field("ac") apiCode: String,
+        @Field("apiCode") apiCode: String,
         @Field("subject") subject: String,
         @Field("resume") resume: String,
         @Field("description") description: String
     ): Call<ServerRes>
 
     @FormUrlEncoded
-    @POST("getAbilityList")
-    fun getAbilityList(
+    @POST("${Ability.baseUrl}getMyList")
+    fun getMyList(
         @Field("phone") phone: String,
-        @Field("ac") apiCode: String
+        @Field("apiCode") apiCode: String
     ): Call<ServerRes>
 
     @FormUrlEncoded
-    @POST("getAbility")
-    fun getAbility(
-        @Field("id") id: String,
+    @POST("${Ability.baseUrl}getMySingle")
+    fun getMySingle(
+        @Field("abilityId") id: Int,
         @Field("phone") phone: String,
-        @Field("ac") apiCode: String
+        @Field("apiCode") apiCode: String
     ): Call<ServerRes>
 
     @FormUrlEncoded
-    @POST("editAbility")
+    @POST("${Ability.baseUrl}seen")
+    fun increaseSeen(
+        @Field("abilityId") id: Int,
+        @Field("phone") phone: String,
+        @Field("apiCode") apiCode: String
+    ): Call<ServerRes>
+
+    @FormUrlEncoded
+    @POST("${Ability.baseUrl}getSingle")
+    fun getOtherSingle(
+        @Field("abilityId") id: Int,
+        @Field("phone") phone: String,
+        @Field("apiCode") apiCode: String
+    ): Call<ServerRes>
+
+    @FormUrlEncoded
+    @POST("${Ability.baseUrl}editAbility")
     fun editAbility(
-        @Field("id") id: String,
+        @Field("abilityId") id: Int,
         @Field("phone") phone: String,
-        @Field("ac") apiCode: String,
+        @Field("apiCode") apiCode: String,
         @Field("subject") subject: String,
         @Field("resume") resume: String,
         @Field("description") description: String
     ): Call<ServerRes>
 
     @FormUrlEncoded
-    @POST("eyeCloseAbility")
-    fun eyeCloseAbility(
-        @Field("id") id: String,
-        @Field("phone") phone: String,
-        @Field("ac") apiCode: String
-    ): Call<ServerRes>
-
-    @FormUrlEncoded
-    @POST("deleteAbility")
+    @POST("${Ability.baseUrl}delete")
     fun deleteAbility(
-        @Field("id") id: String,
+        @Field("abilityId") id: Int,
         @Field("phone") phone: String,
-        @Field("ac") apiCode: String
+        @Field("apiCode") apiCode: String
     ): Call<ServerRes>
 
 }

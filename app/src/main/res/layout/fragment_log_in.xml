@@ -84,7 +84,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/txtPassLogIn"
                                 android:maxLength="12"
-                                android:inputType="number"
+                                android:inputType="numberPassword"
                                 android:textColor="@color/light"
                                 android:textSize="@dimen/txt"
                                 android:layout_width="match_parent"

@@ -8,15 +8,15 @@ import ir.pepotec.app.awesomeapp.R
 
 class CircularIMG : AppCompatImageView {
 
-    private var maskBitmap: Bitmap? = null
     private var paint: Paint? = null
     private var maskPaint: Paint? = null
-    private var cornerRadius: Float = 0.toFloat()
 
     private var topLeft = 0f
     private var topRight = 0f
     private var bottomLeft = 0f
     private var bottomRight = 0f
+    private var rectCorner = 0f
+    private var circular = false
 
     constructor(context: Context) : super(context) {
         init(context, null, 0)
@@ -32,7 +32,6 @@ class CircularIMG : AppCompatImageView {
 
     private fun init(context: Context, attrs: AttributeSet?, defStyle: Int) {
         setUpAttr(attrs)
-        cornerRadius = context.resources.getDimension(R.dimen.radius)
         paint = Paint(Paint.ANTI_ALIAS_FLAG)
         maskPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
         maskPaint!!.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
@@ -46,20 +45,20 @@ class CircularIMG : AppCompatImageView {
         topRight = attrList.getDimension(R.styleable.CircularIMG_topRight, topRight)
         bottomLeft = attrList.getDimension(R.styleable.CircularIMG_bottomLeft, bottomLeft)
         bottomRight = attrList.getDimension(R.styleable.CircularIMG_bottomRight, bottomRight)
+        rectCorner = attrList.getDimension(R.styleable.CircularIMG_rectCorner, rectCorner)
+        circular = attrList.getBoolean(R.styleable.CircularIMG_circular, false)
         invalidate()
     }
 
     override fun draw(canvas: Canvas) {
-        val offscreenBitmap = Bitmap.createBitmap(canvas.width, canvas.height, Bitmap.Config.ARGB_8888)
+        val offscreenBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val offscreenCanvas = Canvas(offscreenBitmap)
 
         super.draw(offscreenCanvas)
 
-        if (maskBitmap == null) {
-            maskBitmap = createMask(canvas.width, canvas.height)
-        }
+        val maskBitmap = createMask(width, height)
 
-        offscreenCanvas.drawBitmap(maskBitmap!!, 0f, 0f, maskPaint)
+        offscreenCanvas.drawBitmap(maskBitmap, 0f, 0f, maskPaint)
         canvas.drawBitmap(offscreenBitmap, 0f, 0f, paint)
     }
 
@@ -74,6 +73,17 @@ class CircularIMG : AppCompatImageView {
 
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
 
+        if (circular)
+            canvas.drawCircle(width / 2f, height / 2f, width / 2f, paint)
+        else if (rectCorner > 0)
+            canvas.drawRoundRect(RectF(0f, 0f, width.toFloat(), height.toFloat()), rectCorner, rectCorner, paint)
+        else
+            canvas.drawPath(customPath(), paint)
+
+        return mask
+    }
+
+    private fun customPath(): Path {
         val p = Path()
         p.moveTo(0f, height / 2f)
         if (topLeft == 0f) {
@@ -95,10 +105,7 @@ class CircularIMG : AppCompatImageView {
         p.lineTo(width.toFloat(), height.toFloat())
         p.lineTo(0f, height.toFloat())
         p.close()
-        //canvas.drawRoundRect(RectF(0f, 0f, width.toFloat(), height.toFloat()), cornerRadius, cornerRadius, paint)
-        canvas.drawPath(p, paint)
-
-        return mask
+        return p
     }
 
 }

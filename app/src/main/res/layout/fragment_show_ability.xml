@@ -24,21 +24,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <TextView
-                        android:id="@+id/txtNewsShowAbility"
-                        android:layout_weight="1"
+                        android:drawablePadding="8dp"
+                        android:drawableStart="@drawable/ic_eye"
+                        android:id="@+id/txtSeenNumShowAbility"
                         android:padding="8dp"
-                        android:layout_gravity="start"
+                        android:gravity="start"
+                        android:textColor="@color/colorAccent"
+                        android:text="100"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" />
+                <TextView
+                        android:id="@+id/txtNewsShowAbility"
+                        android:padding="8dp"
+                        android:layout_gravity="center"
                         android:textColor="@color/redLight"
                         android:text="در صف انتشار"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 <TextView
                         android:id="@+id/txtDateShowAbility"
                         android:padding="8dp"
-                        android:layout_gravity="start"
+                        android:gravity="end"
                         android:textColor="@color/colorAccent"
                         android:text="1397/02/01"
-                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content" />
             </LinearLayout>
 
@@ -90,6 +101,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                     <TextView
+                            android:id="@+id/txtWorkSampleCounter"
                             android:layout_gravity="end"
                             android:text="1/2"
                             android:textColor="@color/colorPrimaryLight"

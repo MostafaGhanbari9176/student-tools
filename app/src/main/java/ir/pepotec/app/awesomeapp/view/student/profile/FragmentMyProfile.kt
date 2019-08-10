@@ -1,44 +1,30 @@
 package ir.pepotec.app.awesomeapp.view.student.profile
 
 import android.animation.ObjectAnimator
-import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
-import com.bumptech.glide.Glide
 import ir.pepotec.app.awesomeapp.R
-import ir.pepotec.app.awesomeapp.model.ApiClient
+import ir.pepotec.app.awesomeapp.model.student.ability.AbilityList
 import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileData
 import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileDb
-import ir.pepotec.app.awesomeapp.model.student.workSample.WorkSampleApi
 import ir.pepotec.app.awesomeapp.model.user.UserDb
 import ir.pepotec.app.awesomeapp.presenter.student.StudentProfilePresenter
-import ir.pepotec.app.awesomeapp.view.student.profile.friendList.ActivityFriend
+import ir.pepotec.app.awesomeapp.view.student.profile.activityProfile.ActivityProfile
 import ir.pepotec.app.awesomeapp.view.uses.AbsoluteFunctions
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import ir.pepotec.app.awesomeapp.view.uses.ProgressInjection
 import kotlinx.android.synthetic.main.fragment_profile.*
-import okhttp3.ResponseBody
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
 
-class FragmentProfile : MyFragment(), ProgressInjection.ProgressInjectionListener {
+class FragmentMyProfile : MyFragment(), ProgressInjection.ProgressInjectionListener {
 
-    private val name = "Name"
-    private val phone = "Phone"
-    private val message = "Message"
+    private val name = "user_name"
+    private val phone = "phone"
+    private val message = "message"
 
     private lateinit var progressInjection: ProgressInjection
 
@@ -48,12 +34,11 @@ class FragmentProfile : MyFragment(), ProgressInjection.ProgressInjectionListene
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
+        progressInjection = ProgressInjection(this, ctx, view as ViewGroup, R.layout.fragment_profile)
+        checkDataExist()
     }
 
     private fun init() {
-        progressInjection = ProgressInjection(this, ctx, view as ViewGroup, R.layout.fragment_profile)
-        checkDataExist()
         profileHead.initialize(imgProfile, R.color.tabBack, R.color.colorPrimaryDark)
         setImage()
         animateParent()
@@ -64,7 +49,7 @@ class FragmentProfile : MyFragment(), ProgressInjection.ProgressInjectionListene
             DialogEyeLevel(
                 getString(R.string.allEyeLevel),
                 getString(R.string.friendEyeLevel),
-                false,
+                true,
                 name
             ).defaultChose(false)
         }
@@ -81,7 +66,7 @@ class FragmentProfile : MyFragment(), ProgressInjection.ProgressInjectionListene
             DialogAboutMe()
         }
         btnFriendListMyProfile.setOnClickListener {
-            startActivity(Intent(ctx, ActivityFriend::class.java))
+            startActivity(Intent(ctx, ActivityProfile::class.java))
         }
     }
 
@@ -96,21 +81,28 @@ class FragmentProfile : MyFragment(), ProgressInjection.ProgressInjectionListene
     private fun getStudentData() {
         progressInjection.show()
         StudentProfilePresenter(object : StudentProfilePresenter.StudentProfileResult {
-            override fun studentData(ok: Boolean, message: String, data: StudentProfileData?) {
+            override fun studentData(
+                ok: Boolean,
+                message: String,
+                data: StudentProfileData?,
+                abilityData: ArrayList<AbilityList>?
+            ) {
                 if (ok) {
                     progressInjection.cancel()
+                    init()
                     val phone = UserDb().getUserPhone()
-                    txtMyStudentId.text = data?.studentId ?: "!"
-                    txtMyName.text = data?.name ?: "!"
+                    txtMyStudentId.text = data?.s_id ?: "!"
+                    txtMyName.text = data?.user_name ?: "!"
                     txtMyPhone.text = phone
 
                 } else
                     progressInjection.error(message)
             }
-        }).getStudent()
+        }).myProfile()
     }
 
     private fun setData() {
+        init()
         val sId = StudentProfileDb().getStudentId()
         val name = StudentProfileDb().getStudentName()
         val phone = UserDb().getUserPhone()
@@ -123,21 +115,18 @@ class FragmentProfile : MyFragment(), ProgressInjection.ProgressInjectionListene
     private fun setImage() {
         StudentProfilePresenter(object : StudentProfilePresenter.StudentProfileResult {
             override fun studentImgData(data: ByteArray?) {
-                Glide.with(ctx)
-                    .load(data)
-                    .into(imgProfile)
+                AbsoluteFunctions().setImage(imgProfile, data, true)
             }
-        }).downStudentImg()
+        }).downMyImg()
     }
 
     fun changeImg(b: Bitmap) {
-        val file = AbsoluteFunctions().convertBitMapToFile(b, ctx)
+        val file = AbsoluteFunctions().convertBitMapToFile(b, ctx, "profile")
         StudentProfilePresenter(object : StudentProfilePresenter.StudentProfileResult {
             override fun upStudentImgRes(ok: Boolean) {
-                if (ok)
-                    setImage()
+                setImage()
             }
-        }).upStudentImg(file)
+        }).upMyImg(file)
     }
 
     private fun animateParent() {

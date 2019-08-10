@@ -3,6 +3,7 @@ package ir.pepotec.app.awesomeapp.presenter.student
 import com.google.gson.Gson
 import ir.pepotec.app.awesomeapp.model.ServerRes
 import ir.pepotec.app.awesomeapp.model.ServerResConst
+import ir.pepotec.app.awesomeapp.model.student.ability.AbilityList
 import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfile
 import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileData
 import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileDb
@@ -16,45 +17,69 @@ import java.io.File
 class StudentProfilePresenter(private val listener: StudentProfileResult) : StudentProfile.StudentProfileResponse {
 
     interface StudentProfileResult {
-        fun addStudentRes(ok: Boolean, message: String){}
-        fun studentData(ok: Boolean, message: String, data: StudentProfileData?){}
-        fun studentImgData(data: ByteArray?){}
-        fun upStudentImgRes(ok: Boolean){}
-        fun friendListData(ok: Boolean, message: String, data: ArrayList<StudentProfileData>?){}
-        fun addFriendRes(ok: Boolean, message: String){}
-        fun saveAboutMeRes(ok: Boolean, message: String){}
-        fun aboutMeData(ok: Boolean, message: String, data: String?){}
-        fun elNameRes(ok: Boolean, message: String, data: Int?){}
-        fun elPhoneRes(ok: Boolean, message: String, data: Int?){}
-        fun elImgRes(ok: Boolean, message: String, data: Int?){}
-        fun error(message: String){}
+        fun addStudentRes(ok: Boolean, message: String) {}
+        fun studentData(
+            ok: Boolean,
+            message: String,
+            data: StudentProfileData?,
+            abilityData: ArrayList<AbilityList>? = null
+        ) {
+        }
+
+        fun studentImgData(data: ByteArray?) {}
+        fun upStudentImgRes(ok: Boolean) {}
+        fun friendListData(ok: Boolean, message: String, data: ArrayList<StudentProfileData>?) {}
+        fun addFriendRes(ok: Boolean, message: String) {}
+        fun saveAboutMeRes(ok: Boolean, message: String) {}
+        fun aboutMeData(ok: Boolean, message: String, data: String?) {}
+        fun elNameRes(ok: Boolean, message: String, data: Int?) {}
+        fun elPhoneRes(ok: Boolean, message: String, data: Int?) {}
+        fun elImgRes(ok: Boolean, message: String, data: Int?) {}
+        fun searchRes(ok: Boolean, message: String, data: ArrayList<StudentProfileData>?) {}
     }
 
     fun addStudent(sId: String, name: String, pass: String) {
 
         val phone = UserDb().getUserPhone()
         val ac = UserDb().getUserApiCode()
+        //StudentProfileDb().saveData(sId,user_name)
         StudentProfile(this).addStudent(phone, ac, sId, name, pass)
     }
 
-    fun getStudent() {
+    fun search(key: String, num: Int, step: Int) {
         val phone = UserDb().getUserPhone()
         val ac = UserDb().getUserApiCode()
-        StudentProfile(this).getStudent(phone, ac)
+        StudentProfile(this).search(phone, ac, key, num, step)
     }
 
-    fun downStudentImg() {
+    fun myProfile() {
         val phone = UserDb().getUserPhone()
         val ac = UserDb().getUserApiCode()
-        StudentProfile(this).downStudentImg(phone, ac)
+        StudentProfile(this).myProfile(phone, ac)
     }
 
-    fun upStudentImg(file: File) {
+    fun downMyImg() {
         val phone = UserDb().getUserPhone()
         val ac = UserDb().getUserApiCode()
-        val body = RequestBody.create(MediaType.parse(""), file)
-        val multiData = MultipartBody.Part.createFormData("", file.name, body)
-        StudentProfile(this).upStudentImg(phone, ac, multiData)
+        StudentProfile(this).downMyImg(phone, ac)
+    }
+
+    fun downOtherImg(userId: Int) {
+        val phone = UserDb().getUserPhone()
+        val ac = UserDb().getUserApiCode()
+        StudentProfile(this).downOtherImg(phone, ac, userId)
+    }
+
+    fun upMyImg(file: File) {
+        val phone = UserDb().getUserPhone()
+        val ac = UserDb().getUserApiCode()
+
+        val phoneBody = RequestBody.create(MultipartBody.FORM, phone)
+        val acBody = RequestBody.create(MultipartBody.FORM, ac)
+
+        val body = RequestBody.create(MediaType.parse(".jpg"), file)
+        val multiData = MultipartBody.Part.createFormData("img", "img", body)
+        StudentProfile(this).upMyImg(phoneBody, acBody, multiData)
     }
 
     fun getFriendList() {
@@ -63,10 +88,16 @@ class StudentProfilePresenter(private val listener: StudentProfileResult) : Stud
         StudentProfile(this).getFriendList(phone, ac)
     }
 
-    fun addFriend(friendId: String) {
+    fun addFriend(friendId: Int) {
         val phone = UserDb().getUserPhone()
         val ac = UserDb().getUserApiCode()
         StudentProfile(this).addFriend(phone, ac, friendId)
+    }
+
+    fun deleteFriend(friendId: Int) {
+        val phone = UserDb().getUserPhone()
+        val ac = UserDb().getUserApiCode()
+        StudentProfile(this).deleteFriend(phone, ac, friendId)
     }
 
     fun saveAboutMe(text: String) {
@@ -99,6 +130,13 @@ class StudentProfilePresenter(private val listener: StudentProfileResult) : Stud
         StudentProfile(this).eLImg(phone, ac, code)
     }
 
+
+    fun otherProfile(userId: Int) {
+        val phone = UserDb().getUserPhone()
+        val ac = UserDb().getUserApiCode()
+        StudentProfile(this).getOtherProfile(phone, ac, userId)
+    }
+
     override fun addStudentRes(res: ServerRes?) {
         when (res?.code ?: -1) {
             -1 -> listener.addStudentRes(false, "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!")
@@ -120,10 +158,29 @@ class StudentProfilePresenter(private val listener: StudentProfileResult) : Stud
                 null
             )
             ServerResConst.ok -> {
-                val json = res?.data?.getJSONObject(0).toString()
+                val json = res!!.data[0]
                 val data = Gson().fromJson(json, StudentProfileData::class.java)
                 StudentProfileDb().saveData(data)
                 listener.studentData(true, "", data)
+            }
+            ServerResConst.apiCodeError -> App.apiCodeError()
+        }
+    }
+
+    override fun searchRes(res: ServerRes?) {
+        when (res?.code ?: -1) {
+            -1 -> listener.searchRes(false, "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!", null)
+            ServerResConst.error -> listener.searchRes(
+                false,
+                "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!",
+                null
+            )
+            ServerResConst.ok -> {
+                val data = ArrayList<StudentProfileData>()
+                for (o in res?.data!!)
+                    data.add(Gson().fromJson(o, StudentProfileData::class.java))
+
+                listener.searchRes(true, "", data)
             }
             ServerResConst.apiCodeError -> App.apiCodeError()
         }
@@ -150,10 +207,10 @@ class StudentProfilePresenter(private val listener: StudentProfileResult) : Stud
                 null
             )
             ServerResConst.ok -> {
-                val jsonArray = res?.data
                 val data = ArrayList<StudentProfileData>()
-                for (i in 0..(jsonArray?.length() ?: 0)) {
-                    val json = res?.data?.getJSONObject(i).toString()
+                val dataArray = res!!.data
+                for (i in dataArray.indices) {
+                    val json = dataArray[i]
                     data.add(Gson().fromJson(json, StudentProfileData::class.java))
                 }
                 listener.friendListData(true, "", data)
@@ -169,7 +226,7 @@ class StudentProfilePresenter(private val listener: StudentProfileResult) : Stud
                 false,
                 "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!"
             )
-            ServerResConst.ok -> listener.addFriendRes(true, "عملیات موفق بود.")
+            ServerResConst.ok -> listener.addFriendRes(true, "انجام شد.")
             ServerResConst.apiCodeError -> App.apiCodeError()
         }
     }
@@ -195,8 +252,7 @@ class StudentProfilePresenter(private val listener: StudentProfileResult) : Stud
                 null
             )
             ServerResConst.ok -> {
-                val json = res?.data?.getJSONObject(0)
-                val data = json?.getString("text")
+                val data = res!!.data[0]
                 listener.aboutMeData(true, "", data)
             }
             ServerResConst.apiCodeError -> App.apiCodeError()
@@ -212,8 +268,7 @@ class StudentProfilePresenter(private val listener: StudentProfileResult) : Stud
                 null
             )
             ServerResConst.ok -> {
-                val json = res?.data?.getJSONObject(0)
-                val data = json?.getInt("code")
+                val data = res!!.data[0].toInt()
                 listener.elNameRes(true, "", data)
             }
             ServerResConst.apiCodeError -> App.apiCodeError()
@@ -229,8 +284,7 @@ class StudentProfilePresenter(private val listener: StudentProfileResult) : Stud
                 null
             )
             ServerResConst.ok -> {
-                val json = res?.data?.getJSONObject(0)
-                val data = json?.getInt("code")
+                val data = res!!.data[0].toInt()
                 listener.elPhoneRes(true, "", data)
             }
             ServerResConst.apiCodeError -> App.apiCodeError()
@@ -246,16 +300,35 @@ class StudentProfilePresenter(private val listener: StudentProfileResult) : Stud
                 null
             )
             ServerResConst.ok -> {
-                val json = res?.data?.getJSONObject(0)
-                val data = json?.getInt("code")
+                val data = res!!.data[0].toInt()
                 listener.elImgRes(true, "", data)
             }
             ServerResConst.apiCodeError -> App.apiCodeError()
         }
     }
 
-    override fun error(message: String?) {
-      listener.error("خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!")
+    override fun otherProfileData(res: ServerRes?) {
+        when (res?.code ?: -1) {
+            -1 -> listener.studentData(false, "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!", null)
+            ServerResConst.error -> listener.studentData(
+                false,
+                "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!",
+                null
+            )
+            ServerResConst.ok -> {
+                val abilityData = ArrayList<AbilityList>()
+                var data: StudentProfileData? = null
+                val resData = res!!.data
+                for (i in (resData.indices)) {
+                    if (i == 0)
+                        data = Gson().fromJson(resData[0], StudentProfileData::class.java)
+                    else
+                    abilityData.add(Gson().fromJson(resData[i], AbilityList::class.java))
+                }
+                listener.studentData(true, "", data, abilityData)
+            }
+            ServerResConst.apiCodeError -> App.apiCodeError()
+        }
     }
 
 }

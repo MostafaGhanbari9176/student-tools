@@ -11,7 +11,7 @@ class UserDb {
     fun saveUserData(data: UserData) {
         Pref().apply {
             saveStringValue(phone, data.phone)
-            saveStringValue(apiCode, data.apiCode)
+            saveStringValue(apiCode, data.api_code)
             saveIntegerValue(kind, data.kind)
         }
     }
@@ -26,6 +26,10 @@ class UserDb {
 
     fun savePhone(phone: String) {
         Pref().saveStringValue(this@UserDb.phone, phone)
+    }
+
+    fun saveApiCode(apiCode: String) {
+        Pref().saveStringValue(this@UserDb.apiCode, apiCode)
     }
 
     fun removeData() {

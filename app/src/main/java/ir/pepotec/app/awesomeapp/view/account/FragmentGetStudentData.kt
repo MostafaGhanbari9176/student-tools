@@ -77,6 +77,7 @@ class FragmentGetStudentData : MyFragment() {
                 requestFocus()
                 setError("این دو مقدار باید یکسان باشند")
             }
+            return
         }
 
         saveData()

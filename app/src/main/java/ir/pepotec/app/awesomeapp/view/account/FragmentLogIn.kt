@@ -72,4 +72,8 @@ class FragmentLogIn : MyFragment(), UserPresenter.UserResult {
             toast(message)
     }
 
+    override fun badLogIn() {
+        (ctx as ActivityAccount).badLogIn()
+    }
+
 }

@@ -12,18 +12,19 @@ import androidx.viewpager.widget.ViewPager
 import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.view.student.ability.FragmentAbility
 import ir.pepotec.app.awesomeapp.view.student.chat.FragmentChat
-import ir.pepotec.app.awesomeapp.view.student.profile.FragmentProfile
+import ir.pepotec.app.awesomeapp.view.student.profile.FragmentMyProfile
 import ir.pepotec.app.awesomeapp.view.uses.App
 import ir.pepotec.app.awesomeapp.view.uses.VPModel
 import kotlinx.android.synthetic.main.activity_student.*
 import org.jetbrains.anko.toast
+import android.provider.MediaStore
 
 class ActivityStudent : AppCompatActivity() {
 
     private var lastOffset = 0f
-    private lateinit var  fragmentProfile:FragmentProfile
-    private lateinit var  fragmentChat: FragmentChat
-
+    private lateinit var fragmentMyProfile: FragmentMyProfile
+    private lateinit var fragmentChat: FragmentChat
+    private var imageData: Intent? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student)
@@ -39,8 +40,8 @@ class ActivityStudent : AppCompatActivity() {
         tabLayoutStudent.setupWithViewPager(VPStudent)
         val adapter = AdapterVPStudent(supportFragmentManager)
         adapter.addData(VPModel(FragmentAbility(), "مهارت ها"))
-        fragmentProfile = FragmentProfile()
-        adapter.addData(VPModel(fragmentProfile, "پروفایل"))
+        fragmentMyProfile = FragmentMyProfile()
+        adapter.addData(VPModel(fragmentMyProfile, "پروفایل"))
         fragmentChat = FragmentChat()
         adapter.addData(VPModel(fragmentChat, "گفتوگو"))
         VPStudent.adapter = adapter
@@ -77,34 +78,45 @@ class ActivityStudent : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         App.instanse = this@ActivityStudent
         if (resultCode == Activity.RESULT_OK) {
-            when(requestCode)
-            {
+            when (requestCode) {
                 1 -> {
+                    imageData = data
                     cropImage(data?.data)
                 }
                 2 -> {
                     changeImage(data)
                 }
             }
-        }
+        } else if (imageData != null)
+            changeImage(imageData)
+        else
+            toast("خطا, لطفا دوباره تلاش کنید")
     }
 
     private fun changeImage(data: Intent?) {
-        val extra = data?.extras
-        val bitmap : Bitmap = extra!!.getParcelable("data")
-        fragmentProfile.changeImg(bitmap)
+        val uri = data?.data
+        val bitmap: Bitmap
+        if (uri != null)
+            bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+        else {
+            val extra = data?.extras
+            bitmap = extra!!.getParcelable("data")
+        }
+        fragmentMyProfile.changeImg(bitmap)
     }
 
-    private fun cropImage(data: Uri?) {
-        val cropIntent = Intent("com.android.camera.action.CROP", data)
-        cropIntent.putExtra("crop", "true")
-        // indicate aspect of desired crop
-        cropIntent.putExtra("aspectX", 1)
-        cropIntent.putExtra("aspectY", 1)
-        // indicate output X and Y
-        cropIntent.putExtra("outputX", 280)
-        cropIntent.putExtra("outputY", 280)
-        cropIntent.putExtra("return-data", true)
+    private fun cropImage(uri: Uri?) {
+        val cropIntent = Intent("com.android.camera.action.CROP", uri)
+        cropIntent.apply {
+            setDataAndType(uri, "image/*");
+            putExtra("crop", "true")
+            putExtra("outputX", 280)
+            putExtra("outputY", 280)
+            putExtra("aspectX", 1)
+            putExtra("aspectY", 1)
+            putExtra("scaleUpIfNeeded", true)
+            putExtra("return-data", true)
+        }
         startActivityForResult(cropIntent, 2)
     }
 
@@ -114,9 +126,8 @@ class ActivityStudent : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if(VPStudent.currentItem == 2) {
-            if(fragmentChat.onBackPresed())
-            {
+        if (VPStudent.currentItem == 2) {
+            if (fragmentChat.onBackPresed()) {
                 super.onBackPressed()
                 this.finish()
             }

@@ -2,73 +2,97 @@ package ir.pepotec.app.awesomeapp.model.student.workSample
 
 import ir.pepotec.app.awesomeapp.model.ServerRes
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
 interface WorkSampleApi {
 
-    @FormUrlEncoded
     @Multipart
-    @POST("addWorkSample")
+    @POST("${WorkSample.baseUrl}add")
     fun addWorkSample(
-        @Field("phone") phone: String,
-        @Field("ac") apiCode: String,
-        @Field("subject") subject: String,
-        @Field("description") description: String,
+        @Part("phone") phone: RequestBody,
+        @Part("apiCode") apiCode: RequestBody,
+        @Part("abilityId") abilityId: RequestBody,
+        @Part("subject") subject: RequestBody,
+        @Part("description") description: RequestBody,
         @Part files: ArrayList<MultipartBody.Part>
     ): Call<ServerRes>
 
     @FormUrlEncoded
-    @POST("getWorkSampleList")
-    fun getWorkSampleList(
+    @POST("${WorkSample.baseUrl}getMyList")
+    fun getMyWorkSampleList(
         @Field("phone") phone: String,
-        @Field("ac") apiCode: String,
-        @Field("abilityId") abilityId:String
+        @Field("apiCode") apiCode: String,
+        @Field("abilityId") abilityId:Int
     ): Call<ServerRes>
 
     @FormUrlEncoded
-    @POST("getWorkSample")
-    fun getWorkSample(
-        @Field("id") id: String,
+    @POST("${WorkSample.baseUrl}getList")
+    fun getOtherWorkSampleList(
         @Field("phone") phone: String,
-        @Field("ac") apiCode: String
+        @Field("apiCode") apiCode: String,
+        @Field("abilityId") abilityId:Int
     ): Call<ServerRes>
 
     @FormUrlEncoded
+    @POST("${WorkSample.baseUrl}getMySingle")
+    fun getMyWorkSample(
+        @Field("workSampleId") id: Int,
+        @Field("phone") phone: String,
+        @Field("apiCode") apiCode: String
+    ): Call<ServerRes>
+
+    @FormUrlEncoded
+    @POST("${WorkSample.baseUrl}getSingle")
+    fun getOtherWorkSample(
+        @Field("workSampleId") id: Int,
+        @Field("phone") phone: String,
+        @Field("apiCode") apiCode: String
+    ): Call<ServerRes>
+
+    @FormUrlEncoded
+    @POST("${WorkSample.baseUrl}seen")
+    fun increaseSeen(
+        @Field("workSampleId") id: Int,
+        @Field("phone") phone: String,
+        @Field("apiCode") apiCode: String
+    ): Call<ServerRes>
+
     @Multipart
-    @POST("editWorkSample")
+    @POST("${WorkSample.baseUrl}edit")
     fun editWorkSample(
-        @Field("id") id: String,
-        @Field("phone") phone: String,
-        @Field("ac") apiCode: String,
-        @Field("subject") subject: String,
-        @Field("description") description: String,
+        @Part("workSampleId") id: RequestBody,
+        @Part("phone") phone: RequestBody,
+        @Part("apiCode") apiCode: RequestBody,
+        @Part("subject") subject: RequestBody,
+        @Part("description") description: RequestBody,
         @Part files: ArrayList<MultipartBody.Part>
     ): Call<ServerRes>
 
     @FormUrlEncoded
-    @POST("eyeCloseWorkSample")
-    fun eyeCloseWorkSample(
-        @Field("id") id: String,
-        @Field("phone") phone: String,
-        @Field("ac") apiCode: String
-    ): Call<ServerRes>
-
-    @FormUrlEncoded
-    @POST("deleteWorkSample")
+    @POST("${WorkSample.baseUrl}delete")
     fun deleteWorkSample(
-        @Field("id") id: String,
+        @Field("workSampleId") id: Int,
         @Field("phone") phone: String,
-        @Field("ac") apiCode: String
+        @Field("apiCode") apiCode: String
     ): Call<ServerRes>
 
     @FormUrlEncoded
-    @POST("workSampleImg")
+    @POST("${WorkSample.baseUrl}changeLike")
+    fun likeWorkSample(
+        @Field("workSampleId") id: Int,
+        @Field("phone") phone: String,
+        @Field("apiCode") apiCode: String
+    ): Call<ServerRes>
+
+    @FormUrlEncoded
+    @POST("${WorkSample.baseUrl}img")
     fun workSampleImg(
         @Field("imgId") imgId: String,
         @Field("phone") phone:String,
-        @Field("ac") apiCode:String
+        @Field("apiCode") apiCode:String
     ):Call<ResponseBody>
 
 }

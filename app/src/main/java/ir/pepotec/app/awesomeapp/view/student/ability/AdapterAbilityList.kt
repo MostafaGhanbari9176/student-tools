@@ -4,23 +4,31 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.model.student.ability.AbilityList
 import ir.pepotec.app.awesomeapp.view.uses.App
 import kotlinx.android.synthetic.main.item_ability.view.*
 
-class AdapterAbilityList(private val data:ArrayList<AbilityList>, private val listener:(abilityId:String) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class AdapterAbilityList(
+    private val data: ArrayList<AbilityList>,
+    private val itsMy: Boolean,
+    private val listener: (abilityId: Int) -> Unit
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
         return if (position == 0) 2 else 1
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == 1) MyHolder(LayoutInflater.from(App.instanse).inflate(R.layout.item_ability, parent, false))
+        return if (viewType == 1) MyHolder(
+            LayoutInflater.from(App.instanse).inflate(
+                R.layout.item_ability,
+                parent,
+                false
+            )
+        )
         else AddHolder(LayoutInflater.from(App.instanse).inflate(R.layout.item_ability, parent, false))
     }
 
@@ -28,27 +36,28 @@ class AdapterAbilityList(private val data:ArrayList<AbilityList>, private val li
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.fabAbility.setOnClickListener {
-            listener(if(position == 0) "" else data.get(position -1 ).id)
+            listener(if (position == 0) -1 else data.get(position - 1).ability_id)
         }
         if (position == 0) {
-            (holder as AddHolder).onBind()
+            (holder as AddHolder).onBind(itsMy)
             return
         }
         (holder as MyHolder).itemView.apply {
-            fabAbility.text = data.get(position-1).subject
+            fabAbility.text = data.get(position - 1).subject
         }
 
     }
 
     class MyHolder(v: View) : RecyclerView.ViewHolder(v)
-    class AddHolder(v: View) : RecyclerView.ViewHolder(v)
-    {
-        fun onBind()
-        {
+    class AddHolder(v: View) : RecyclerView.ViewHolder(v) {
+        fun onBind(itsMy: Boolean) {
             itemView.fabAbility.apply {
-                text = "افزودن مهارت"
-                icon = ContextCompat.getDrawable(App.instanse, R.drawable.ic_add)
-                setBackgroundColor(Color.WHITE)
+                if (itsMy) {
+                    text = "افزودن مهارت"
+                    icon = ContextCompat.getDrawable(App.instanse, R.drawable.ic_add)
+                    setBackgroundColor(Color.WHITE)
+                } else
+                    visibility = View.GONE
             }
         }
     }

@@ -33,7 +33,7 @@
                 android:windowSoftInputMode="stateHidden"
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme"
-                android:name=".view.student.profile.friendList.ActivityFriend"/>
+                android:name="ir.pepotec.app.awesomeapp.view.student.profile.activityProfile.ActivityProfile"/>
         <activity
                 android:windowSoftInputMode="stateHidden"
                 android:screenOrientation="portrait"
@@ -44,6 +44,11 @@
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme"
                 android:name=".view.student.ability.activityAbility.ActivityAbility"/>
+        <activity
+                android:windowSoftInputMode="stateHidden"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme"
+                android:name=".view.main.search.activitySearch.ActivitySearch"/>
     </application>
 
 </manifest>

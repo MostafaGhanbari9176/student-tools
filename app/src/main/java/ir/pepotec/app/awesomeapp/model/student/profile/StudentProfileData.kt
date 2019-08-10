@@ -2,8 +2,15 @@ package ir.pepotec.app.awesomeapp.model.student.profile
 
 data class StudentProfileData
     (
-    val studentId: String,
-    val name:String
+    val s_id: String,
+    val email: String,
+    val about_me: String,
+    val phone: String,
+    val last_date: String,
+    val last_time: String,
+    val user_id: Int,
+    val its_friend: Boolean,
+    val user_name:String
     )
 class StudentEyeLevel
 {

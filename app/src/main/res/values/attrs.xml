@@ -5,5 +5,7 @@
     <attr name="topRight" format="dimension"/>
     <attr name="bottomLeft" format="dimension"/>
     <attr name="bottomRight" format="dimension"/>
+    <attr name="rectCorner" format="dimension"/>
+    <attr name="circular" format="boolean"/>
 </declare-styleable>
 </resources>

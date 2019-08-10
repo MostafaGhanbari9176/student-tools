@@ -8,15 +8,17 @@ import retrofit2.Response
 
 class Ability(private val listener: AbilityResponse) {
 
+    companion object{
+       const val baseUrl = "student/ability/index.php/"
+    }
+
     interface AbilityResponse
     {
         fun addAbilityRes(res:ServerRes?)
         fun getAbilityListRes(res:ServerRes?)
         fun getAbilityRes(res:ServerRes?)
-        fun deleteAbilityRes(res:ServerRes?)
         fun editAbilityRes(res:ServerRes?)
-        fun eyeCloseAbilityRes(res:ServerRes?)
-        fun abilityError(message:String?)
+        fun changeStatusRes(res:ServerRes?)
     }
 
     fun addAbility(phone:String, apiCode:String, subject:String, resume:String, description:String)
@@ -26,7 +28,7 @@ class Ability(private val listener: AbilityResponse) {
 
         req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.abilityError(t.message)
+                listener.addAbilityRes(null)
             }
 
             override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
@@ -35,14 +37,14 @@ class Ability(private val listener: AbilityResponse) {
         })
     }
 
-    fun getAbilityList(phone:String, apiCode:String)
+    fun getMyList(phone:String, apiCode:String)
     {
         val api: AbilityApi = ApiClient.getClient().create(AbilityApi::class.java)
-        val req:Call<ServerRes> = api.getAbilityList(phone, apiCode)
+        val req:Call<ServerRes> = api.getMyList(phone, apiCode)
 
         req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.abilityError(t.message)
+                listener.getAbilityListRes(null)
             }
 
             override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
@@ -51,30 +53,49 @@ class Ability(private val listener: AbilityResponse) {
         })
     }
 
-    fun getAbility(id:String, phone:String, apiCode:String)
+    fun getSingle(id:Int, phone:String, apiCode:String, itsMy:Boolean)
     {
         val api: AbilityApi = ApiClient.getClient().create(AbilityApi::class.java)
-        val req:Call<ServerRes> = api.getAbility(id, phone, apiCode)
+        val req:Call<ServerRes> = when(itsMy) {
+            true -> api.getMySingle(id, phone, apiCode)
+            else -> api.getOtherSingle(id, phone, apiCode)
+        }
+                    req.enqueue(object : Callback<ServerRes> {
+                override fun onFailure(call: Call<ServerRes>, t: Throwable) {
+                    listener.getAbilityRes(null)
+                }
+
+                override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
+                    listener.getAbilityRes(response.body())
+                }
+            })
+        }
+
+    fun increaseSeen(id:Int, phone:String, apiCode:String)
+    {
+        val api: AbilityApi = ApiClient.getClient().create(AbilityApi::class.java)
+        val req:Call<ServerRes> = api.increaseSeen(id, phone, apiCode)
 
         req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.abilityError(t.message)
+
             }
 
             override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
-                listener.getAbilityRes(response.body())
+
             }
         })
     }
 
-    fun editAbility(id:String, phone:String, apiCode:String, subject:String, resume:String, description:String)
+
+    fun editAbility(id:Int, phone:String, apiCode:String, subject:String, resume:String, description:String)
     {
         val api: AbilityApi = ApiClient.getClient().create(AbilityApi::class.java)
         val req:Call<ServerRes> = api.editAbility(id, phone, apiCode, subject, resume, description)
 
         req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.abilityError(t.message)
+                listener.editAbilityRes(null)
             }
 
             override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
@@ -83,34 +104,18 @@ class Ability(private val listener: AbilityResponse) {
         })
     }
 
-    fun eyeCloseAbility(id:String, phone:String, apiCode:String)
-    {
-        val api: AbilityApi = ApiClient.getClient().create(AbilityApi::class.java)
-        val req:Call<ServerRes> = api.eyeCloseAbility(id, phone, apiCode)
-
-        req.enqueue(object : Callback<ServerRes> {
-            override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.abilityError(t.message)
-            }
-
-            override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
-                listener.eyeCloseAbilityRes(response.body())
-            }
-        })
-    }
-
-    fun deleteAbility(id:String, phone:String, apiCode:String)
+    fun deleteAbility(id:Int, phone:String, apiCode:String)
     {
         val api: AbilityApi = ApiClient.getClient().create(AbilityApi::class.java)
         val req:Call<ServerRes> = api.deleteAbility(id, phone, apiCode)
 
         req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.abilityError(t.message)
+                listener.changeStatusRes(null)
             }
 
             override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
-                listener.deleteAbilityRes(response.body())
+                listener.changeStatusRes(response.body())
             }
         })
     }

@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.model.student.ability.AbilityData
-import ir.pepotec.app.awesomeapp.model.student.ability.AbilityList
+import ir.pepotec.app.awesomeapp.model.student.ability.AbilityStatus
 import ir.pepotec.app.awesomeapp.model.student.workSample.workSampleList
 import ir.pepotec.app.awesomeapp.presenter.student.AbilityPresenter
 import ir.pepotec.app.awesomeapp.presenter.student.WorkSamplePresenter
 import ir.pepotec.app.awesomeapp.view.uses.DialogProgress
+import ir.pepotec.app.awesomeapp.view.uses.MyActivity
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import ir.pepotec.app.awesomeapp.view.uses.ProgressInjection
 import kotlinx.android.synthetic.main.fragment_show_ability.*
@@ -22,9 +23,11 @@ import kotlinx.android.synthetic.main.fragment_show_ability.*
 class FragmentShowAbility : MyFragment(), AbilityPresenter.AbilityResult,ProgressInjection.ProgressInjectionListener {
 
     private lateinit var popMenu: PopupMenu
-    var abilityId = ""
+    var abilityId = -1
+    var itsMy = false
     private lateinit var  progress:ProgressInjection
     private val dialogProgress = DialogProgress()
+    private var status = 0
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_show_ability, container, false)
     }
@@ -36,14 +39,35 @@ class FragmentShowAbility : MyFragment(), AbilityPresenter.AbilityResult,Progres
     }
 
     private fun init(data: AbilityData?) {
-        txtSubjectShowAbility.text = data?.subject
-        txtResumeShowAbility.text = data?.resume
-        txtDescriptionShowAbility.text = data?.description
+        if(!itsMy) {
+            increaseSeen()
+            fabShowAbility.hide()
+        }
         setUpPopMenu()
+        txtSubjectShowAbility.text = data?.subject
+        txtResumeShowAbility.text = if(data?.resume.isNullOrEmpty()) "هیچ سابقه کاری ثبت نشده است!" else data?.resume
+        txtDescriptionShowAbility.text = data?.description
+        txtDateShowAbility.text = data?.add_date
+        txtSeenNumShowAbility.text = data?.seen_num.toString()
+        txtNewsShowAbility.text = when(data?.status)
+        {
+            AbilityStatus.adamNamayesh -> "عدم نمایش"
+            AbilityStatus.darEntezar -> "در صف انتظار"
+            AbilityStatus.montasherShode -> "منتشر شده"
+            AbilityStatus.delete -> "حذف شده"
+            AbilityStatus.radShode -> "رد شده"
+            else -> ""
+        }
         fabShowAbility.setOnClickListener {
             popMenu.show()
         }
         getWorkSampleData()
+    }
+
+    private fun increaseSeen() {
+        AbilityPresenter(object :AbilityPresenter.AbilityResult{
+
+        }).increaseSeen(abilityId)
     }
 
     private fun getWorkSampleData() {
@@ -59,14 +83,14 @@ class FragmentShowAbility : MyFragment(), AbilityPresenter.AbilityResult,Progres
                     }
 
             }
-        }).workSampleList(abilityId)
+        }).workSampleList(abilityId, itsMy)
     }
 
 
 
     private fun getAbilityData() {
        progress.show()
-        AbilityPresenter(this).getAbility(abilityId)
+        AbilityPresenter(this).getSingle(abilityId, itsMy)
     }
 
     private fun setUpPopMenu() {
@@ -78,15 +102,12 @@ class FragmentShowAbility : MyFragment(), AbilityPresenter.AbilityResult,Progres
                     R.id.menuAbilityEdit -> {
                         val f = FragmentAddAbility()
                         f.apply {
-                            subject = txtSubjectShowAbility.text.toString()
-                            description = txtDescriptionShowAbility.text.toString()
-                            resume = txtResumeShowAbility.text.toString()
+                            abilityId = this@FragmentShowAbility.abilityId
+                            subject = this@FragmentShowAbility.txtSubjectShowAbility.text.toString()
+                            description = this@FragmentShowAbility.txtDescriptionShowAbility.text.toString()
+                            resume = this@FragmentShowAbility.txtResumeShowAbility.text.toString()
                         }
                         (ctx as ActivityAbility).changeView(f)
-                    }
-
-                    R.id.menuAbilityHide -> {
-                        showHideDialog()
                     }
                     R.id.menuAbilityDelete -> {
                         showDeleteDialog()
@@ -115,39 +136,23 @@ class FragmentShowAbility : MyFragment(), AbilityPresenter.AbilityResult,Progres
         AbilityPresenter(this).deleteAbility(abilityId)
     }
 
-    private fun showHideDialog() {
-        MaterialAlertDialogBuilder(ctx)
-            .setTitle("عدم نمایش مهارت")
-            .setMessage("با این کار کاربران مهارت شما را نمی بینند")
-            .setPositiveButton("انجام بده", DialogInterface.OnClickListener {
-                    dialog, which -> hideAbility()
-            })
-            .setNegativeButton("لغو", DialogInterface.OnClickListener {
-                    dialog, which -> dialog.cancel()
-            })
-            .show()
-    }
-
-    private fun hideAbility() {
-        dialogProgress.show()
-        AbilityPresenter(this).eyeCloseAbility(abilityId)
-    }
-
-    private fun showOrAddWorkSample(workSampleId:String) {
-        if(workSampleId.isEmpty())
-        (ctx as ActivityAbility).changeView(FragmentAddWorkSample())
+    private fun showOrAddWorkSample(workSampleId:Int) {
+        if(workSampleId == -1)
+        (ctx as ActivityAbility).changeView(FragmentAddWorkSample().apply { this.abilityId = this@FragmentShowAbility.abilityId })
         else
         {
             val f = FragmentShowWorkSample()
             f.workSampleId = workSampleId
-            (ctx as ActivityAbility).changeView(f)
+            f.itsMy = itsMy
+            (ctx as MyActivity).changeView(f)
         }
     }
 
     private fun setUpRV(data: ArrayList<workSampleList>?) {
+        txtWorkSampleCounter.text = "${data?.size ?: 0}/2";
         RVWorkSample.visibility = View.VISIBLE
         RVWorkSample.layoutManager = LinearLayoutManager(ctx, LinearLayoutManager.HORIZONTAL, false)
-        RVWorkSample.adapter = AdapterWorkSample(data!!) {
+        RVWorkSample.adapter = AdapterWorkSample(data!!, itsMy) {
             showOrAddWorkSample(it )
         }
     }
@@ -160,15 +165,6 @@ class FragmentShowAbility : MyFragment(), AbilityPresenter.AbilityResult,Progres
         }
         progress.cancel()
         init(data)
-    }
-
-    override fun abilityListData(ok:Boolean, message:String, data: ArrayList<AbilityList>?) {
-        
-    }
-
-    override fun abilityDeleteResult(ok: Boolean, message: String) {
-        dialogProgress.cancel()
-        toast(message)
     }
 
     override fun resultFromAbility(ok: Boolean, message: String) {

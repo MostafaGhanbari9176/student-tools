@@ -33,7 +33,7 @@ class Pref {
     }
 
     fun getStringValue(name: String, defValue: String): String {
-        return p.getString(name, defValue)
+        return p.getString(name, defValue) ?:""
     }
 
     fun saveStringValue(name: String, value: String): Boolean {

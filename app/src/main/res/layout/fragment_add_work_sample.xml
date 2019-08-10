@@ -89,14 +89,14 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content" android:visibility="gone">
                     <ir.pepotec.app.awesomeapp.view.uses.CircularIMG
                             app:topLeft="@dimen/radius"
                             app:topRight="@dimen/radius"
                             android:layout_marginEnd="16dp"
                             android:layout_width="@dimen/img"
                             android:layout_height="@dimen/img"
-                            app:srcCompat="@drawable/img"
+                            app:srcCompat="@drawable/ic_work_sample"
                             android:id="@+id/imgAddWorkSample1"
                     />
                     <com.google.android.material.button.MaterialButton
@@ -118,14 +118,14 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content" android:visibility="gone">
                     <ir.pepotec.app.awesomeapp.view.uses.CircularIMG
                             app:topLeft="@dimen/radius"
                             app:topRight="@dimen/radius"
                             android:layout_marginEnd="16dp"
                             android:layout_width="@dimen/img"
                             android:layout_height="@dimen/img"
-                            app:srcCompat="@drawable/img"
+                            app:srcCompat="@drawable/ic_work_sample"
                             android:id="@+id/imgAddWorkSample2"
                     />
                     <com.google.android.material.button.MaterialButton
@@ -157,14 +157,14 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content" android:visibility="gone">
                     <ir.pepotec.app.awesomeapp.view.uses.CircularIMG
                             app:topLeft="@dimen/radius"
                             app:topRight="@dimen/radius"
                             android:layout_marginEnd="16dp"
                             android:layout_width="@dimen/img"
                             android:layout_height="@dimen/img"
-                            app:srcCompat="@drawable/img"
+                            app:srcCompat="@drawable/ic_work_sample"
                             android:id="@+id/imgAddWorkSample3"
                     />
                     <com.google.android.material.button.MaterialButton

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ir.pepotec.app.awesomeapp.R
+import ir.pepotec.app.awesomeapp.view.main.search.activitySearch.ActivitySearch
 import ir.pepotec.app.awesomeapp.view.student.ActivityStudent
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -29,8 +30,10 @@ class FragmentHome : MyFragment() {
     private fun homeList() {
         RVHome.adapter = AdapterHomeList{
             position ->
-            startActivity(Intent(ctx, ActivityStudent::class.java))
-            //toast("$position")
+            when(position) {
+               0 -> startActivity(Intent(ctx, ActivityStudent::class.java))
+               1 -> startActivity(Intent(ctx, ActivitySearch::class.java).apply { putExtra("flag", "student") })
+            }
         }
         RVHome.layoutManager = GridLayoutManager(ctx,2)
     }
