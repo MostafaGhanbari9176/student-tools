@@ -12,23 +12,23 @@ import retrofit2.Response
 class StudentProfile(private val listener: StudentProfileResponse) {
 
     companion object {
-        const val baseUrl = "student/profile/index.php/";
+        const val baseUrl = "student/profile/index.php/"
     }
 
     interface StudentProfileResponse {
-        fun addStudentRes(res: ServerRes?)
-        fun studentData(res: ServerRes?)
-        fun otherProfileData(res: ServerRes?)
-        fun studentImgData(data: ByteArray?)
-        fun upStudentImgRes(ok: Boolean)
-        fun friendListData(res: ServerRes?)
-        fun addFriendRes(res: ServerRes?)
-        fun saveAboutMeRes(res: ServerRes?)
-        fun aboutMeData(res: ServerRes?)
-        fun elNameRes(res: ServerRes?)
-        fun elPhoneRes(res: ServerRes?)
-        fun elImgRes(res: ServerRes?)
-        fun searchRes(res: ServerRes?)
+        fun addStudentRes(res: ServerRes?){}
+        fun studentData(res: ServerRes?){}
+        fun otherProfileData(res: ServerRes?){}
+        fun studentImgData(data: ByteArray?){}
+        fun upStudentImgRes(ok: Boolean){}
+        fun friendListData(res: ServerRes?){}
+        fun addFriendRes(res: ServerRes?){}
+        fun saveAboutMeRes(res: ServerRes?){}
+        fun aboutMeData(res: ServerRes?){}
+        fun elNameRes(res: ServerRes?){}
+        fun elPhoneRes(res: ServerRes?){}
+        fun elImgRes(res: ServerRes?){}
+        fun searchRes(res: ServerRes?){}
     }
 
     fun addStudent(phone: String, apiCode: String, sId: String, name: String, pass: String) {
@@ -244,6 +244,21 @@ class StudentProfile(private val listener: StudentProfileResponse) {
     fun getOtherProfile(phone: String, ac: String, userId: Int) {
         val api: StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
         val req = api.getOtherProfile(phone, ac, userId)
+
+        req.enqueue(object : Callback<ServerRes> {
+            override fun onFailure(call: Call<ServerRes>, t: Throwable) {
+                listener.otherProfileData(null)
+            }
+
+            override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
+                listener.otherProfileData(response.body())
+            }
+        })
+    }
+
+    fun getChatList(phone: String, ac: String) {
+        val api: StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
+        val req = api.getChatList(phone, ac)
 
         req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {

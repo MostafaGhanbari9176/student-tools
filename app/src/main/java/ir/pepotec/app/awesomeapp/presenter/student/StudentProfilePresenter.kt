@@ -2,12 +2,13 @@ package ir.pepotec.app.awesomeapp.presenter.student
 
 import com.google.gson.Gson
 import ir.pepotec.app.awesomeapp.model.ServerRes
-import ir.pepotec.app.awesomeapp.model.ServerResConst
 import ir.pepotec.app.awesomeapp.model.student.ability.AbilityList
+import ir.pepotec.app.awesomeapp.model.student.chat.ChatListData
 import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfile
 import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileData
 import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileDb
 import ir.pepotec.app.awesomeapp.model.user.UserDb
+import ir.pepotec.app.awesomeapp.view.uses.AF
 import ir.pepotec.app.awesomeapp.view.uses.App
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -36,6 +37,7 @@ class StudentProfilePresenter(private val listener: StudentProfileResult) : Stud
         fun elPhoneRes(ok: Boolean, message: String, data: Int?) {}
         fun elImgRes(ok: Boolean, message: String, data: Int?) {}
         fun searchRes(ok: Boolean, message: String, data: ArrayList<StudentProfileData>?) {}
+        fun chatListRes(ok: Boolean, data: ArrayList<ChatListData>) {}
     }
 
     fun addStudent(sId: String, name: String, pass: String) {
@@ -130,60 +132,50 @@ class StudentProfilePresenter(private val listener: StudentProfileResult) : Stud
         StudentProfile(this).eLImg(phone, ac, code)
     }
 
-
     fun otherProfile(userId: Int) {
         val phone = UserDb().getUserPhone()
         val ac = UserDb().getUserApiCode()
         StudentProfile(this).getOtherProfile(phone, ac, userId)
     }
 
+    fun getChatList() {
+        val phone = UserDb().getUserPhone()
+        val ac = UserDb().getUserApiCode()
+        StudentProfile(object : StudentProfile.StudentProfileResponse {
+            override fun otherProfileData(res: ServerRes?) {
+                val data = ArrayList<ChatListData>()
+                res?.let {
+                    for (o in it.data)
+                        data.add(Gson().fromJson(o, ChatListData::class.java))
+                }
+                listener.chatListRes(res?.code == ServerRes.ok, data)
+            }
+        }).getChatList(phone, ac)
+    }
+
     override fun addStudentRes(res: ServerRes?) {
-        when (res?.code ?: -1) {
-            -1 -> listener.addStudentRes(false, "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!")
-            ServerResConst.error -> listener.addStudentRes(
-                false,
-                "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!"
-            )
-            ServerResConst.ok -> listener.addStudentRes(true, "عملیات موفق بود.")
-            ServerResConst.apiCodeError -> App.apiCodeError()
-        }
+        listener.addStudentRes(res?.code == ServerRes.ok, res?.message ?: AF().serverMessage(res?.code ?: -1))
+
     }
 
     override fun studentData(res: ServerRes?) {
-        when (res?.code ?: -1) {
-            -1 -> listener.studentData(false, "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!", null)
-            ServerResConst.error -> listener.studentData(
-                false,
-                "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!",
-                null
-            )
-            ServerResConst.ok -> {
-                val json = res!!.data[0]
-                val data = Gson().fromJson(json, StudentProfileData::class.java)
-                StudentProfileDb().saveData(data)
-                listener.studentData(true, "", data)
-            }
-            ServerResConst.apiCodeError -> App.apiCodeError()
+        var data: StudentProfileData? = null
+        res?.let {
+            data = Gson().fromJson(it.data[0], StudentProfileData::class.java)
+            StudentProfileDb().saveData(data!!)
         }
+
+        listener.studentData(res?.code == ServerRes.ok, res?.message ?: AF().serverMessage(res?.code ?: -1), data)
     }
 
     override fun searchRes(res: ServerRes?) {
-        when (res?.code ?: -1) {
-            -1 -> listener.searchRes(false, "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!", null)
-            ServerResConst.error -> listener.searchRes(
-                false,
-                "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!",
-                null
-            )
-            ServerResConst.ok -> {
-                val data = ArrayList<StudentProfileData>()
-                for (o in res?.data!!)
-                    data.add(Gson().fromJson(o, StudentProfileData::class.java))
-
-                listener.searchRes(true, "", data)
-            }
-            ServerResConst.apiCodeError -> App.apiCodeError()
+        val data = ArrayList<StudentProfileData>()
+        res?.let {
+            for (o in it.data)
+                data.add(Gson().fromJson(o, StudentProfileData::class.java))
         }
+        listener.searchRes(res?.code == ServerRes.ok, res?.message ?: AF().serverMessage(res?.code ?: -1), data)
+
     }
 
     override fun studentImgData(data: ByteArray?) {
@@ -195,140 +187,61 @@ class StudentProfilePresenter(private val listener: StudentProfileResult) : Stud
     }
 
     override fun friendListData(res: ServerRes?) {
-        when (res?.code ?: -1) {
-            -1 -> listener.friendListData(
-                false,
-                "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!",
-                null
-            )
-            ServerResConst.error -> listener.friendListData(
-                false,
-                "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!",
-                null
-            )
-            ServerResConst.ok -> {
-                val data = ArrayList<StudentProfileData>()
-                val dataArray = res!!.data
-                for (i in dataArray.indices) {
-                    val json = dataArray[i]
-                    data.add(Gson().fromJson(json, StudentProfileData::class.java))
-                }
-                listener.friendListData(true, "", data)
-            }
-            ServerResConst.apiCodeError -> App.apiCodeError()
+        val data = ArrayList<StudentProfileData>()
+        res?.let {
+            for (o in it.data)
+                data.add(Gson().fromJson(o, StudentProfileData::class.java))
         }
+        listener.friendListData(res?.code == ServerRes.ok, res?.message ?: AF().serverMessage(res?.code ?: -1), data)
     }
 
     override fun addFriendRes(res: ServerRes?) {
-        when (res?.code ?: -1) {
-            -1 -> listener.addFriendRes(false, "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!")
-            ServerResConst.error -> listener.addFriendRes(
-                false,
-                "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!"
-            )
-            ServerResConst.ok -> listener.addFriendRes(true, "انجام شد.")
-            ServerResConst.apiCodeError -> App.apiCodeError()
-        }
+        listener.addFriendRes(res?.code == ServerRes.ok, res?.message ?: AF().serverMessage(res?.code ?: -1))
     }
 
     override fun saveAboutMeRes(res: ServerRes?) {
-        when (res?.code ?: -1) {
-            -1 -> listener.saveAboutMeRes(false, "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!")
-            ServerResConst.error -> listener.saveAboutMeRes(
-                false,
-                "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!"
-            )
-            ServerResConst.ok -> listener.saveAboutMeRes(true, "عملیات موفق بود.")
-            ServerResConst.apiCodeError -> App.apiCodeError()
-        }
+        listener.saveAboutMeRes(res?.code == ServerRes.ok, res?.message ?: AF().serverMessage(res?.code ?: -1))
     }
 
     override fun aboutMeData(res: ServerRes?) {
-        when (res?.code ?: -1) {
-            -1 -> listener.aboutMeData(false, "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!", null)
-            ServerResConst.error -> listener.aboutMeData(
-                false,
-                "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!",
-                null
-            )
-            ServerResConst.ok -> {
-                val data = res!!.data[0]
-                listener.aboutMeData(true, "", data)
-            }
-            ServerResConst.apiCodeError -> App.apiCodeError()
-        }
+        val data = res?.let { it.data[0] }
+        listener.aboutMeData(res?.code == ServerRes.ok, res?.message ?: AF().serverMessage(res?.code ?: -1), data)
     }
 
     override fun elNameRes(res: ServerRes?) {
-        when (res?.code ?: -1) {
-            -1 -> listener.elNameRes(false, "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!", null)
-            ServerResConst.error -> listener.elNameRes(
-                false,
-                "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!",
-                null
-            )
-            ServerResConst.ok -> {
-                val data = res!!.data[0].toInt()
-                listener.elNameRes(true, "", data)
-            }
-            ServerResConst.apiCodeError -> App.apiCodeError()
-        }
+        val data = res?.let { it.data[0].toInt() }
+        listener.elNameRes(res?.code == ServerRes.ok, res?.message ?: AF().serverMessage(res?.code ?: -1), data)
     }
 
     override fun elPhoneRes(res: ServerRes?) {
-        when (res?.code ?: -1) {
-            -1 -> listener.elPhoneRes(false, "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!", null)
-            ServerResConst.error -> listener.elPhoneRes(
-                false,
-                "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!",
-                null
-            )
-            ServerResConst.ok -> {
-                val data = res!!.data[0].toInt()
-                listener.elPhoneRes(true, "", data)
-            }
-            ServerResConst.apiCodeError -> App.apiCodeError()
-        }
+        val data = res?.let { it.data[0].toInt() }
+        listener.elPhoneRes(res?.code == ServerRes.ok, res?.message ?: AF().serverMessage(res?.code ?: -1), data)
     }
 
     override fun elImgRes(res: ServerRes?) {
-        when (res?.code ?: -1) {
-            -1 -> listener.elImgRes(false, "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!", null)
-            ServerResConst.error -> listener.elImgRes(
-                false,
-                "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!",
-                null
-            )
-            ServerResConst.ok -> {
-                val data = res!!.data[0].toInt()
-                listener.elImgRes(true, "", data)
-            }
-            ServerResConst.apiCodeError -> App.apiCodeError()
-        }
+
+        val data = res?.let { it.data[0].toInt() }
+        listener.elImgRes(res?.code == ServerRes.ok, res?.message ?: AF().serverMessage(res?.code ?: -1), data)
+
     }
 
     override fun otherProfileData(res: ServerRes?) {
-        when (res?.code ?: -1) {
-            -1 -> listener.studentData(false, "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!", null)
-            ServerResConst.error -> listener.studentData(
-                false,
-                "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!",
-                null
-            )
-            ServerResConst.ok -> {
-                val abilityData = ArrayList<AbilityList>()
-                var data: StudentProfileData? = null
-                val resData = res!!.data
-                for (i in (resData.indices)) {
-                    if (i == 0)
-                        data = Gson().fromJson(resData[0], StudentProfileData::class.java)
-                    else
-                    abilityData.add(Gson().fromJson(resData[i], AbilityList::class.java))
-                }
-                listener.studentData(true, "", data, abilityData)
+        val abilityData = ArrayList<AbilityList>()
+        var data: StudentProfileData? = null
+        res?.let {
+            for (i in (it.data.indices)) {
+                if (i == 0)
+                    data = Gson().fromJson(it.data[0], StudentProfileData::class.java)
+                else
+                    abilityData.add(Gson().fromJson(it.data[i], AbilityList::class.java))
             }
-            ServerResConst.apiCodeError -> App.apiCodeError()
         }
+        listener.studentData(
+            res?.code == ServerRes.ok,
+            res?.message ?: AF().serverMessage(res?.code ?: -1),
+            data,
+            abilityData
+        )
     }
 
 }

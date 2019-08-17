@@ -72,7 +72,7 @@ class DialogProfileImg(private val ctx :Context = App.instanse): Dialog(ctx) {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(ctx as ActivityStudent,Intent.createChooser(intent, "Select Picture"), 1, null);
+        startActivityForResult(ctx as ActivityStudent,Intent.createChooser(intent, "Select Picture"), 1, null)
     }
 
     private fun changeCheck(All: Boolean) {

@@ -2,18 +2,17 @@ package ir.pepotec.app.awesomeapp.view.uses
 
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
+import ir.pepotec.app.awesomeapp.R
 import java.util.*
 
-abstract class MyActivity(@IdRes private val content:Int? = null) : AppCompatActivity() {
+abstract class MyActivity(@IdRes private val content: Int = R.id.ContentCommon) : AppCompatActivity() {
 
     val backHistory = Stack<MyFragment>()
-    fun changeView(f: MyFragment) {
-        content?.let {
-            backHistory.add(f)
-            supportFragmentManager.beginTransaction()
-                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                .replace(it, f).commit()
-        }
+    open fun changeView(f: MyFragment) {
+        backHistory.add(f)
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+            .replace(content, f).commit()
     }
 
     override fun onBackPressed() {

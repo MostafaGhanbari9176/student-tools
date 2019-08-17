@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.model.student.workSample.workSampleList
 import ir.pepotec.app.awesomeapp.presenter.student.WorkSamplePresenter
-import ir.pepotec.app.awesomeapp.view.uses.AbsoluteFunctions
+import ir.pepotec.app.awesomeapp.view.uses.AF
 import ir.pepotec.app.awesomeapp.view.uses.App
 import kotlinx.android.synthetic.main.item_add_work_sample.view.*
 import kotlinx.android.synthetic.main.item_work_sample.view.*
@@ -63,7 +63,7 @@ class AdapterWorkSample(
     private fun downImage(id: String, v: ImageView) {
         WorkSamplePresenter(object : WorkSamplePresenter.WorkSampleResult {
             override fun workSampleImgData(data: ByteArray?) {
-                AbsoluteFunctions().setImage(v, data)
+                AF().setImage(v, data)
             }
         }).workSampleImg(id)
     }

@@ -22,7 +22,6 @@
             android:layout_height="match_parent" android:layout_below="@id/tabLayoutStudent"
             android:background="@color/backGround"/>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:alpha="0"
             android:visibility="gone"
             android:id="@+id/fabStudent"
             android:layout_alignParentBottom="true"

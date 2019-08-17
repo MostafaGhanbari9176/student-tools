@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="4dp"
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/itemSendParent"
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/itemSendParent"
         android:layoutDirection="rtl"
-        android:paddingStart="8dp"
+        android:padding="8dp"
         android:orientation="vertical"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="start"
->
+        android:gravity="start|top"
+        android:background="@drawable/send">
+    <TextView
+            android:id="@+id/txtSendItem"
+            android:textSize="@dimen/txt"
+            android:textColor="@color/colorPrimaryDark"
+            android:paddingEnd="12dp"
+            android:paddingBottom="8dp"
+            android:text="@string/aboutMeInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+    </TextView>
     <LinearLayout
             android:id="@+id/LLDateItemSend"
             android:gravity="center_vertical"
@@ -16,29 +29,17 @@
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-        <ProgressBar
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_width="24dp"
-                android:layout_height="24dp"/>
+        <ImageView
+                android:layout_width="@dimen/imgVSmall"
+                android:layout_height="@dimen/imgVSmall"
+                app:srcCompat="@drawable/ic_done_all"
+                android:id="@+id/imgSeen"
+        />
         <TextView
+                android:gravity="end"
                 android:text="1397/02/21    22:25"
                 android:textColor="@color/colorPrimaryLight"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" android:id="@+id/txtDateItemSend"/>
     </LinearLayout>
-    <TextView
-            android:id="@+id/txtSendItem"
-            android:textSize="@dimen/txt"
-            android:textColor="@color/colorPrimaryDark"
-            android:background="@drawable/send"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:text="@string/aboutMeInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-    </TextView>
 </LinearLayout>

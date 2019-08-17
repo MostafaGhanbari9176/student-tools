@@ -8,10 +8,10 @@ import ir.pepotec.app.awesomeapp.view.uses.App
 import ir.pepotec.app.awesomeapp.view.uses.MyActivity
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 
-class ActivitySearch : MyActivity(R.id.ContentSearch) {
+class ActivitySearch : MyActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
+        setContentView(R.layout.content_common)
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
         App.instanse = this
         val flag = intent?.extras?.getString("flag") ?: "student"

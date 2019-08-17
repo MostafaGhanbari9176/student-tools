@@ -8,12 +8,12 @@ import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.view.uses.App
 import ir.pepotec.app.awesomeapp.view.uses.MyActivity
 
-class ActivityAccount : MyActivity(R.id.ContentAccount) {
+class ActivityAccount : MyActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_account)
+        setContentView(R.layout.content_common)
         App.instanse = this
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
         changeView(FragmentLogSign())

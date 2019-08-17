@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-        android:paddingEnd="8dp"
-        android:id="@+id/itemReceiveParent"
         xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="4dp"
+        android:id="@+id/itemReceiveParent"
         android:layoutDirection="rtl"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -10,32 +11,32 @@
         android:gravity="end"
 >
     <LinearLayout
+            android:padding="8dp"
             android:id="@+id/LLDateItemReceive"
             android:gravity="center_vertical"
-            android:layout_marginBottom="4dp"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/receive"
+    >
         <TextView
+                android:id="@+id/txtReceiveItem"
+                android:textSize="@dimen/txt"
+                android:textColor="@color/colorPrimaryDark"
+                android:paddingStart="12dp"
+                android:paddingBottom="8dp"
+                android:text="@string/aboutMeInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+        </TextView>
+        <TextView
+                android:layout_gravity="end"
                 android:layout_marginEnd="8dp"
                 android:text="1397/02/21    22:25"
                 android:textColor="@color/colorPrimaryLight"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" android:id="@+id/txtDateItemReceive"/>
 
     </LinearLayout>
-    <TextView
-            android:id="@+id/txtSendItem"
-            android:textSize="@dimen/txt"
-            android:textColor="@color/colorPrimaryDark"
-            android:background="@drawable/receive"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:text="@string/aboutMeInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-    </TextView>
 </LinearLayout>

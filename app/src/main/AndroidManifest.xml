@@ -49,6 +49,9 @@
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme"
                 android:name=".view.main.search.activitySearch.ActivitySearch"/>
+        <activity android:name=".view.student.chat.messageList.ActivityMessageList"/>
+        <activity android:name=".view.file.ActivityFile"/>
+        <service android:name=".view.student.chat.ServiceChat"/>
     </application>
 
 </manifest>

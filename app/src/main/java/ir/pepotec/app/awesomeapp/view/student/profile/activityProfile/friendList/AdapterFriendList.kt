@@ -8,9 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileData
 import ir.pepotec.app.awesomeapp.presenter.student.StudentProfilePresenter
-import ir.pepotec.app.awesomeapp.view.uses.AbsoluteFunctions
+import ir.pepotec.app.awesomeapp.view.uses.AF
 import ir.pepotec.app.awesomeapp.view.uses.App
-import ir.pepotec.app.awesomeapp.view.uses.CircularIMG
 import kotlinx.android.synthetic.main.item_student_list.view.*
 
 class AdapterFriendList (var data: ArrayList<StudentProfileData>, private val listener:(userId:Int)->Unit, private val reachesBottom:()->Unit): RecyclerView.Adapter<AdapterFriendList.MyHolder>() {
@@ -49,7 +48,7 @@ class AdapterFriendList (var data: ArrayList<StudentProfileData>, private val li
     private fun setImage(img: ImageView, userId: Int) {
         StudentProfilePresenter(object:StudentProfilePresenter.StudentProfileResult{
             override fun studentImgData(data: ByteArray?) {
-                AbsoluteFunctions().setImage(img, data)
+                AF().setImage(img, data)
             }
         }).downOtherImg(userId)
     }

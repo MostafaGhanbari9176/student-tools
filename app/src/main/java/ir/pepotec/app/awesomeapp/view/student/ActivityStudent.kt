@@ -53,16 +53,16 @@ class ActivityStudent : AppCompatActivity() {
             }
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                changeFab(position, positionOffset)
+                //changeFab(position, positionOffset)
             }
 
             override fun onPageSelected(position: Int) {
-                fabStudent.visibility = if (position == 2) View.VISIBLE else View.GONE
+               // fabStudent.visibility = if (position == 2) View.VISIBLE else View.GONE
             }
         })
     }
 
-    private fun changeFab(position: Int, offset: Float) {
+/*    private fun changeFab(position: Int, offset: Float) {
 
         if (offset > lastOffset && position == 1) {
             lastOffset = offset
@@ -72,7 +72,7 @@ class ActivityStudent : AppCompatActivity() {
             lastOffset = offset
             fabStudent.alpha = offset
         }
-    }
+    }*/
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

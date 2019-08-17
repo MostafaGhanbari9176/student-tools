@@ -6,9 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.view.student.ActivityStudent
-import ir.pepotec.app.awesomeapp.view.student.chat.chatContact.FragmentChatContact
+import ir.pepotec.app.awesomeapp.view.student.chat.chatList.FragmentChatList
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
-import kotlinx.android.synthetic.main.fragment_chat.*
 import java.util.*
 
 class FragmentChat:MyFragment() {
@@ -16,7 +15,7 @@ class FragmentChat:MyFragment() {
     val backHistory = Stack<MyFragment>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_chat, container, false)
+        return inflater.inflate(R.layout.content_common, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -25,7 +24,7 @@ class FragmentChat:MyFragment() {
     }
 
     private fun init() {
-        val f = FragmentChatContact()
+        val f = FragmentChatList()
         f.parent = this
         changeView(f)
     }
@@ -33,7 +32,7 @@ class FragmentChat:MyFragment() {
     fun changeView(f:MyFragment)
     {
         backHistory.push(f)
-        (ctx as ActivityStudent).supportFragmentManager.beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out).replace(R.id.ContentChat, f).commit()
+        (ctx as ActivityStudent).supportFragmentManager.beginTransaction().setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out).replace(R.id.ContentCommon, f).commit()
     }
 
     public fun onBackPresed():Boolean

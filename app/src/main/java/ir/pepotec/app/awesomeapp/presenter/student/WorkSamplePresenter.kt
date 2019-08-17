@@ -2,11 +2,11 @@ package ir.pepotec.app.awesomeapp.presenter.student
 
 import com.google.gson.Gson
 import ir.pepotec.app.awesomeapp.model.ServerRes
-import ir.pepotec.app.awesomeapp.model.ServerResConst
 import ir.pepotec.app.awesomeapp.model.student.workSample.WorkSample
 import ir.pepotec.app.awesomeapp.model.student.workSample.WorkSampleData
 import ir.pepotec.app.awesomeapp.model.student.workSample.workSampleList
 import ir.pepotec.app.awesomeapp.model.user.UserDb
+import ir.pepotec.app.awesomeapp.view.uses.AF
 import ir.pepotec.app.awesomeapp.view.uses.App
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -38,7 +38,7 @@ class WorkSamplePresenter(private val listener: WorkSampleResult) : WorkSample.W
         val multiData = ArrayList<MultipartBody.Part>()
         for (o in files) {
             val requestBody = RequestBody.create(MediaType.parse(".jpg"), o)
-            multiData.add(MultipartBody.Part.createFormData("img[]","img[]", requestBody))
+            multiData.add(MultipartBody.Part.createFormData("img[]", "img[]", requestBody))
         }
         WorkSample(this).addWorkSample(phoneBody, acBody, abilityIdBody, subjectBody, descriptionBody, multiData)
     }
@@ -56,12 +56,12 @@ class WorkSamplePresenter(private val listener: WorkSampleResult) : WorkSample.W
         val multiData = ArrayList<MultipartBody.Part>()
         for (o in files) {
             val requestBody = RequestBody.create(MediaType.parse(".jpg"), o)
-            multiData.add(MultipartBody.Part.createFormData("img[]","img[]", requestBody))
+            multiData.add(MultipartBody.Part.createFormData("img[]", "img[]", requestBody))
         }
         WorkSample(this).editWorkSample(idBody, phoneBody, acBody, subjectBody, descriptionBody, multiData)
     }
 
-    fun workSampleList(abilityId: Int, itsMy:Boolean) {
+    fun workSampleList(abilityId: Int, itsMy: Boolean) {
         val phone = UserDb().getUserPhone()
         val ac = UserDb().getUserApiCode()
         WorkSample(this).getWorkSampleList(phone, ac, abilityId, itsMy)
@@ -73,7 +73,7 @@ class WorkSamplePresenter(private val listener: WorkSampleResult) : WorkSample.W
         WorkSample(this).increaseSeen(workSampleId, phone, ac)
     }
 
-    fun getWorkSample(id: Int, itsMy:Boolean) {
+    fun getWorkSample(id: Int, itsMy: Boolean) {
         val phone = UserDb().getUserPhone()
         val ac = UserDb().getUserApiCode()
         WorkSample(this).getWorkSample(id, phone, ac, itsMy)
@@ -98,107 +98,40 @@ class WorkSamplePresenter(private val listener: WorkSampleResult) : WorkSample.W
     }
 
     override fun addWorkSampleRes(res: ServerRes?) {
-        when (res?.code ?: -1) {
-            -1 -> listener.addWorkSampleResult(
-                false,
-                "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!"
-            )
-            ServerResConst.error -> listener.addWorkSampleResult(
-                false,
-                "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!"
-            )
-            ServerResConst.ok -> listener.addWorkSampleResult(true, "عملیات موفق بود.")
-            ServerResConst.apiCodeError -> App.apiCodeError()
-        }
+        listener.addWorkSampleResult(res?.code == ServerRes.ok, res?.message ?: AF().serverMessage(res?.code ?: -1))
     }
 
     override fun workSampleListData(res: ServerRes?) {
-        when (res?.code ?: -1) {
-            -1 -> listener.workSampleListData(
-                false,
-                "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!",
-                null
-            )
-            ServerResConst.error -> listener.workSampleListData(
-                false,
-                "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!",
-                null
-            )
-            ServerResConst.ok -> {
-                val jsonArray = res!!.data
-                val data = ArrayList<workSampleList>()
-                for (o in jsonArray)
-                    data.add(Gson().fromJson(o, workSampleList::class.java))
-                listener.workSampleListData(true, "", data)
-            }
-            ServerResConst.apiCodeError -> App.apiCodeError()
+
+        val data = ArrayList<workSampleList>()
+        res?.let {
+            for (o in it.data)
+                data.add(Gson().fromJson(o, workSampleList::class.java))
         }
+        listener.workSampleListData(
+            res?.code == ServerRes.ok,
+            res?.message ?: AF().serverMessage(res?.code ?: -1),
+            data
+        )
+
     }
 
     override fun workSampleData(res: ServerRes?) {
-        when (res?.code ?: -1) {
-            -1 -> listener.workSampleData(
-                false,
-                "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!",
-                null
-            )
-            ServerResConst.error -> listener.workSampleData(
-                false,
-                "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!",
-                null
-            )
-            ServerResConst.ok -> {
-                val json = res!!.data[0]
-                val data = Gson().fromJson(json, WorkSampleData::class.java)
-                listener.workSampleData(true, "", data)
-            }
-            ServerResConst.apiCodeError -> App.apiCodeError()
-        }
+        val data = res?.let { Gson().fromJson(it.data[0], WorkSampleData::class.java) }
+        listener.workSampleData(res?.code == ServerRes.ok, res?.message ?: AF().serverMessage(res?.code ?: -1), data)
+
     }
 
     override fun editWorkSampleRes(res: ServerRes?) {
-        when (res?.code ?: -1) {
-            -1 -> listener.editWorkSampleResult(
-                false,
-                "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!"
-            )
-            ServerResConst.error -> listener.editWorkSampleResult(
-                false,
-                "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!"
-            )
-            ServerResConst.ok -> listener.editWorkSampleResult(true, "عملیات موفق بود.")
-            ServerResConst.apiCodeError -> App.apiCodeError()
-        }
+        listener.editWorkSampleResult(res?.code == ServerRes.ok, res?.message ?: AF().serverMessage(res?.code ?: -1))
     }
 
     override fun eyeCloseWorkSampleRes(res: ServerRes?) {
-        when (res?.code ?: -1) {
-            -1 -> listener.eyeCloseWorkSampleResult(
-                false,
-                "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!"
-            )
-            ServerResConst.error -> listener.eyeCloseWorkSampleResult(
-                false,
-                "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!"
-            )
-            ServerResConst.ok -> listener.eyeCloseWorkSampleResult(true, "عملیات موفق بود.")
-            ServerResConst.apiCodeError -> App.apiCodeError()
-        }
+
     }
 
     override fun deleteWorkSampleRes(res: ServerRes?) {
-        when (res?.code ?: -1) {
-            -1 -> listener.deleteWorkSampleResult(
-                false,
-                "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!"
-            )
-            ServerResConst.error -> listener.deleteWorkSampleResult(
-                false,
-                "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!"
-            )
-            ServerResConst.ok -> listener.deleteWorkSampleResult(true, "عملیات موفق بود.")
-            ServerResConst.apiCodeError -> App.apiCodeError()
-        }
+        listener.deleteWorkSampleResult(res?.code == ServerRes.ok, res?.message ?: AF().serverMessage(res?.code ?: -1))
     }
 
     override fun workSampleImgData(res: ByteArray?) {

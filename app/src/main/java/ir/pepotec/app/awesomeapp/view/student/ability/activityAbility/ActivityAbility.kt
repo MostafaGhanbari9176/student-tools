@@ -10,11 +10,11 @@ import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.view.uses.App
 import ir.pepotec.app.awesomeapp.view.uses.MyActivity
 
-class ActivityAbility : MyActivity(R.id.ContentAbility) {
+class ActivityAbility : MyActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_ability)
+        setContentView(R.layout.content_common)
         App.instanse = this
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
         val abilityId = intent?.extras?.getInt("abilityId")

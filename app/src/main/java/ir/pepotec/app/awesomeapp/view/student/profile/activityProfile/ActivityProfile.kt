@@ -6,24 +6,17 @@ import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.view.student.profile.activityProfile.friendList.FragmentFriendList
 import ir.pepotec.app.awesomeapp.view.uses.App
 import ir.pepotec.app.awesomeapp.view.uses.MyActivity
-import kotlinx.android.synthetic.main.activity_profile.*
 
-class ActivityProfile : MyActivity(R.id.ContentFriend) {
-    var userId = -1
+class ActivityProfile : MyActivity() {
+    var user_id = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
+        setContentView(R.layout.content_common)
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
         App.instanse = this
-        userId = intent?.extras?.getInt("userId") ?: -1
-        fabActivityProfile.apply {
-            if (userId != -1)
-                hide()
-            else
-                show()
-        }
-        changeView(if (userId == -1) FragmentFriendList() else FragmentOtherProfile().apply {
-            this@apply.userId = this@ActivityProfile.userId
+        user_id = intent?.extras?.getInt("userId") ?: -1
+        changeView(if (user_id == -1) FragmentFriendList() else FragmentOtherProfile().apply {
+            this@apply.user_id = this@ActivityProfile.user_id
         })
     }
 

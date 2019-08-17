@@ -15,14 +15,14 @@ import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileData
 import ir.pepotec.app.awesomeapp.presenter.student.StudentProfilePresenter
 import ir.pepotec.app.awesomeapp.view.student.ability.AdapterAbilityList
 import ir.pepotec.app.awesomeapp.view.student.ability.activityAbility.FragmentShowAbility
-import ir.pepotec.app.awesomeapp.view.uses.AbsoluteFunctions
+import ir.pepotec.app.awesomeapp.view.uses.AF
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import ir.pepotec.app.awesomeapp.view.uses.ProgressInjection
 import kotlinx.android.synthetic.main.fragment_other_profile.*
 
 class FragmentOtherProfile : MyFragment() {
 
-    var userId = -1
+    var user_id = -1
     lateinit var progress: ProgressInjection
     var txtRight = 0
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -54,7 +54,7 @@ class FragmentOtherProfile : MyFragment() {
                 } else
                     progress.error(message)
             }
-        }).otherProfile(userId)
+        }).otherProfile(user_id)
     }
 
     private fun init(data: StudentProfileData, abilityData: ArrayList<AbilityList>) {
@@ -93,15 +93,15 @@ class FragmentOtherProfile : MyFragment() {
                 }
                 toast(message)
             }
-        }).addFriend(userId)
+        }).addFriend(user_id)
     }
 
     private fun setImage() {
         StudentProfilePresenter(object:StudentProfilePresenter.StudentProfileResult{
             override fun studentImgData(data: ByteArray?) {
-                AbsoluteFunctions().setImage(imgOtherProfile, data)
+                AF().setImage(imgOtherProfile, data)
             }
-        }).downOtherImg(userId)
+        }).downOtherImg(user_id)
     }
 
     private fun setUpRV(abilityData: java.util.ArrayList<AbilityList>) {

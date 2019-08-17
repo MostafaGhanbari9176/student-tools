@@ -6,12 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.core.app.ActivityCompat
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.presenter.student.WorkSamplePresenter
-import ir.pepotec.app.awesomeapp.view.uses.AbsoluteFunctions
+import ir.pepotec.app.awesomeapp.view.uses.AF
 import ir.pepotec.app.awesomeapp.view.uses.DialogProgress
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import kotlinx.android.synthetic.main.fragment_add_work_sample.*
@@ -83,25 +81,25 @@ class FragmentAddWorkSample : MyFragment() {
     }
 
     fun image1(b: Bitmap) {
-        val file = AbsoluteFunctions().convertBitMapToFile(b, ctx, "image1")
+        val file = AF().convertBitMapToFile(b, ctx, "image1")
         imgList.add(file)
         btnChooseImgAddWorkSample.text = "انتخاب عکس دیگر (الزامی نیست)"
-        AbsoluteFunctions().setImage(imgAddWorkSample1, file)
+        AF().setImage(imgAddWorkSample1, file)
         LLAddWorkSample1.visibility = View.VISIBLE
     }
 
     fun image2(b: Bitmap) {
-        val file = AbsoluteFunctions().convertBitMapToFile(b, ctx, "image2")
+        val file = AF().convertBitMapToFile(b, ctx, "image2")
         imgList.add(file)
-        AbsoluteFunctions().setImage(imgAddWorkSample2, file)
+        AF().setImage(imgAddWorkSample2, file)
         LLAddWorkSample2.visibility = View.VISIBLE
     }
 
     fun image3(b: Bitmap) {
-        val file = AbsoluteFunctions().convertBitMapToFile(b, ctx, "image3")
+        val file = AF().convertBitMapToFile(b, ctx, "image3")
         imgList.add(file)
         btnChooseImgAddWorkSample.visibility = View.GONE
-        AbsoluteFunctions().setImage(imgAddWorkSample3, file)
+        AF().setImage(imgAddWorkSample3, file)
         LLAddWorkSample3.visibility = View.VISIBLE
     }
 

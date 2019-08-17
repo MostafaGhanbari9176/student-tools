@@ -10,6 +10,7 @@
     <!--Image-->
     <dimen name="img">64dp</dimen>
     <dimen name="imgSmall">32dp</dimen>
+    <dimen name="imgVSmall">16dp</dimen>
     <dimen name="imgBig">128dp</dimen>
     <!--ToGether 1.5 -->
     <dimen name="radius">16dp</dimen>

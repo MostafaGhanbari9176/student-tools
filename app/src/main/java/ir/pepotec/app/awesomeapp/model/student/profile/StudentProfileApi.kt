@@ -129,4 +129,11 @@ interface StudentProfileApi {
         @Field("otherId") otherId: Int
     ): Call<ServerRes>
 
+    @FormUrlEncoded
+    @POST("${StudentProfile.baseUrl}chatList")
+    fun getChatList(
+        @Field("phone") phone: String,
+        @Field("apiCode") apiCode: String
+    ): Call<ServerRes>
+
 }

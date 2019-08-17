@@ -15,7 +15,7 @@ import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileDb
 import ir.pepotec.app.awesomeapp.model.user.UserDb
 import ir.pepotec.app.awesomeapp.presenter.student.StudentProfilePresenter
 import ir.pepotec.app.awesomeapp.view.student.profile.activityProfile.ActivityProfile
-import ir.pepotec.app.awesomeapp.view.uses.AbsoluteFunctions
+import ir.pepotec.app.awesomeapp.view.uses.AF
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import ir.pepotec.app.awesomeapp.view.uses.ProgressInjection
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -115,13 +115,13 @@ class FragmentMyProfile : MyFragment(), ProgressInjection.ProgressInjectionListe
     private fun setImage() {
         StudentProfilePresenter(object : StudentProfilePresenter.StudentProfileResult {
             override fun studentImgData(data: ByteArray?) {
-                AbsoluteFunctions().setImage(imgProfile, data, true)
+                AF().setImage(imgProfile, data, true)
             }
         }).downMyImg()
     }
 
     fun changeImg(b: Bitmap) {
-        val file = AbsoluteFunctions().convertBitMapToFile(b, ctx, "profile")
+        val file = AF().convertBitMapToFile(b, ctx, "profile")
         StudentProfilePresenter(object : StudentProfilePresenter.StudentProfileResult {
             override fun upStudentImgRes(ok: Boolean) {
                 setImage()

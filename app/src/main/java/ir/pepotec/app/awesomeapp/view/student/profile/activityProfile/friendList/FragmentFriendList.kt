@@ -14,10 +14,9 @@ import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileData
 import ir.pepotec.app.awesomeapp.presenter.student.StudentProfilePresenter
 import ir.pepotec.app.awesomeapp.view.main.search.activitySearch.ActivitySearch
-import ir.pepotec.app.awesomeapp.view.student.profile.activityProfile.ActivityProfile
+import ir.pepotec.app.awesomeapp.view.student.chat.messageList.ActivityMessageList
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import ir.pepotec.app.awesomeapp.view.uses.MyRecyclerCallBack
-import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.fragment_friend_list.*
 
 class FragmentFriendList:MyFragment() {
@@ -38,7 +37,7 @@ class FragmentFriendList:MyFragment() {
 
     private fun init() {
         getData()
-        (ctx as ActivityProfile).fabActivityProfile.setOnClickListener {
+        fabFriendList.setOnClickListener {
             startActivity(Intent(ctx, ActivitySearch::class.java).apply { putExtra("key", "student") })
         }
     }
@@ -62,6 +61,7 @@ class FragmentFriendList:MyFragment() {
 
             override fun rightSwipe(position: Int) {
                 adapter.notifyItemChanged(position)
+                startActivity(Intent(ctx, ActivityMessageList::class.java).apply { putExtra("user_id", adapter.data[position].user_id) })
             }
         },R.drawable.ic_delete, R.drawable.ic_sms, R.color.redLight, R.color.colorAccent,true, false))
         touchHelper.attachToRecyclerView(RVFrienList)

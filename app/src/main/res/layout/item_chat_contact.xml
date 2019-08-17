@@ -24,9 +24,9 @@
 
         <ir.pepotec.app.awesomeapp.view.uses.CircularIMG
                 android:layout_marginEnd="16dp"
-                app:srcCompat="@drawable/img"
+                app:srcCompat="@drawable/ic_profile_def"
                 android:layout_width="@dimen/img"
-                android:layout_height="@dimen/img"/>
+                android:layout_height="@dimen/img" android:id="@+id/imgChatContact"/>
         <LinearLayout
                 android:gravity="center_vertical"
                 android:orientation="vertical"
@@ -38,7 +38,7 @@
                     android:text="9431443"
                     android:textSize="@dimen/txtSmall"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" android:id="@+id/txtSIdChatContact"/>
             <TextView
                     android:textColor="@color/light1"
                     android:padding="8dp"
@@ -47,7 +47,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" android:id="@+id/txtLastMessageChatContact"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
