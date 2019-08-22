@@ -24,7 +24,11 @@ import ir.pepotec.app.awesomeapp.view.uses.App
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import kotlinx.android.synthetic.main.fragment_message_list.*
 import java.io.File
-import java.io.InputStream
+import android.content.ActivityNotFoundException
+import android.webkit.MimeTypeMap
+import android.net.Uri
+import ir.pepotec.app.awesomeapp.presenter.FilePresenter
+
 
 class FragmentMessageList : MyFragment(), ServiceChat.ChatInterface, AdapterMessageList.AdapterMessageListEvent {
 
@@ -228,6 +232,71 @@ class FragmentMessageList : MyFragment(), ServiceChat.ChatInterface, AdapterMess
     override fun onDestroyView() {
         super.onDestroyView()
         chatService?.user_id = -1
+    }
+
+    override fun myFileClicked(position: Int) {
+        adapter?.let {
+            val data = it.data[position]
+            val f = File(data.fPath)
+            if (data.status == 0 && !data.animating) {
+                data.animating = true
+                it.notifyItemChanged(position)
+                sendFileMessage(data)
+            }
+            if (data.status != 0 && !data.animating) {
+                if (f.exists()) {
+                    openFile(f)
+                } else {
+                    data.animating = true
+                    it.notifyItemChanged(position)
+                    downloadFile(data, position)
+                }
+            }
+        }
+    }
+
+    override fun otherFileClicked(position: Int) {
+        adapter?.let {
+            val data = it.data[position]
+            val f = File(data.fPath)
+            if (!data.animating) {
+                if (f.exists()) {
+                    openFile(f)
+                } else {
+                    data.animating = true
+                    it.notifyItemChanged(position)
+                    downloadFile(data, position)
+                }
+            }
+        }
+    }
+
+    private fun downloadFile(data: ChatMessageData, position:Int) {
+        FilePresenter(object : FilePresenter.FilePresenterRes {
+            override fun fileResponse(ok: Boolean, path: String) {
+                adapter?.let {
+                    val data = it.data[position]
+                    data.animating = false
+                    if(ok)
+                        data.fPath = path
+                    it.notifyItemChanged(position)
+                }
+            }
+        }).downloadFile(data.file_id, data.m_id, data.user_id)
+    }
+
+    private fun openFile(f: File) {
+        val myMime = MimeTypeMap.getSingleton()
+        val newIntent = Intent(Intent.ACTION_VIEW)
+        val mimeType = myMime.getMimeTypeFromExtension(f.extension)
+        newIntent.setDataAndType(Uri.fromFile(f), mimeType)
+        newIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        try {
+            ctx.startActivity(newIntent)
+        } catch (e: Exception) {
+            toast("برنامه ایی برای نمایش این نوع فایل موجود نمی باشد.")
+        }
+
     }
 
 }

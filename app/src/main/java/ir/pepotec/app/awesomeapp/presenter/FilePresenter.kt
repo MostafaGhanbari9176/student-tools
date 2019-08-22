@@ -12,8 +12,7 @@ import java.io.FileOutputStream
 class FilePresenter(private val listener:FilePresenterRes) {
 
     interface FilePresenterRes{
-        fun fileData(ok:Boolean, data:ByteArray?){}
-        fun fileResponse(ok:Boolean)
+        fun fileResponse(ok:Boolean, path:String){}
     }
 
     fun downloadFile(fileId:Int, mId:Int, userId:Int)
@@ -27,14 +26,14 @@ class FilePresenter(private val listener:FilePresenterRes) {
                     data = it.data[0]
                 }
                 if(data.isEmpty())
-                    listener.fileResponse(false)
+                    listener.fileResponse(false, "")
                 else
                     downloadFile(fileId, data, mId, userId)
             }
         }).getType(phone, ac, fileId)
     }
 
-    fun downloadFile(fileId:Int, fileType:String, mId:Int, userId:Int)
+    private fun downloadFile(fileId:Int, fileType:String, mId:Int, userId:Int)
     {
         val phone = UserDb().getUserPhone()
         val ac = UserDb().getUserApiCode()
@@ -49,9 +48,9 @@ class FilePresenter(private val listener:FilePresenterRes) {
                     bos.write(it)
                     bos.flush()
                     bos.close()
-                    listener.fileResponse(true)
+                    listener.fileResponse(true, p)
                 }?:run{
-                    listener.fileResponse(false)
+                    listener.fileResponse(false, "")
                 }
             }
         }).downloadFile(phone, ac, fileId)

@@ -59,7 +59,7 @@ class ChatPresenter(private val listener: ChatResult) {
                             lastSeenId = it.data[0].toInt()
                         else {
                             data.add(Gson().fromJson(it.data[i], ChatMessageData::class.java))
-                            data[i-1].fPath = pathProssecing(data[i-1])
+                            data[i-1].fPath = pathProssecing(data[i-1], userId)
                         }
                     }
                 }
@@ -82,7 +82,7 @@ class ChatPresenter(private val listener: ChatResult) {
                 res?.let {
                     for (i in it.data.indices) {
                         data.add(Gson().fromJson(it.data[i], ChatMessageData::class.java))
-                        data[i].fPath = pathProssecing(data[i])
+                        data[i].fPath = pathProssecing(data[i], userId)
                     }
                 }
                 listener.newData(
@@ -130,11 +130,11 @@ class ChatPresenter(private val listener: ChatResult) {
         Chat(object : Chat.ChatRes {}).updateSeen(phone, ac, otherId)
     }
 
-    private fun pathProssecing(data: ChatMessageData): String {
+    private fun pathProssecing(data: ChatMessageData, user_id:Int): String {
         var path = ""
-        if (data.path_id != 0)
+        if (data.path_id != 0 && data.user_id != user_id)
             path = PathDb().getPath(data.path_id)
-        if (!File(path).exists() && data.file_id != 0)
+        if (!File(path).exists() && data.file_id != 0 )
             path = "${data.file_id}"
         return path
     }

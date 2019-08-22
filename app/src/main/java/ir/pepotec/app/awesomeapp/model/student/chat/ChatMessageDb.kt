@@ -148,7 +148,7 @@ class ChatMessageDb(private val userId: Int) : SQLiteOpenHelper(App.instanse, "c
 
     fun updatePath(mId: Int, path:String) {
         this.writableDatabase.apply {
-            execSQL("UPDATE $tbName SET fPath = $path WHERE m_id = $mId")
+            execSQL("UPDATE $tbName SET f_path = '$path' WHERE m_id = $mId")
             close()
         }
     }

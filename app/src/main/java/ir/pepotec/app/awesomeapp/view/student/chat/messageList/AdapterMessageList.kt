@@ -87,7 +87,7 @@ class AdapterMessageList(val data: ArrayList<ChatMessageData>, private val liste
     }
 
     class SendFileHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun onBind(data: ChatMessageData, adapter: AdapterMessageList) {
+        fun onBind(data: ChatMessageData, adapter: AdapterMessageList, position:Int) {
             itemView.apply {
                 txtSendItem.text = data.m_text
                 txtDateItemSend.text = "${data.send_date}  ${data.send_time}"
@@ -126,7 +126,9 @@ class AdapterMessageList(val data: ArrayList<ChatMessageData>, private val liste
                 }
                 if (data.animating)
                     (imgItemSendFile.drawable as AnimatedVectorDrawable).start()
-
+                setOnClickListener {
+                    adapter.listener.myFileClicked(position)
+                }
             }
         }
 
@@ -154,7 +156,7 @@ class AdapterMessageList(val data: ArrayList<ChatMessageData>, private val liste
     }
 
     class ReceiveFileHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun onBind(data: ChatMessageData, adapter: AdapterMessageList) {
+        fun onBind(data: ChatMessageData, adapter: AdapterMessageList, position:Int) {
             itemView.apply {
                 txtReceiveItem.text = data.m_text
                 txtReceiveItem.maxWidth = adapter.maxW
@@ -180,6 +182,9 @@ class AdapterMessageList(val data: ArrayList<ChatMessageData>, private val liste
 
                 if (data.animating)
                     (imgItemReceiveFile.drawable as AnimatedVectorDrawable).start()
+                setOnClickListener {
+                    adapter.listener.otherFileClicked(position)
+                }
             }
         }
     }
@@ -189,13 +194,13 @@ class AdapterMessageList(val data: ArrayList<ChatMessageData>, private val liste
         if (data.its_my) {
             return if (data.fPath.isNullOrEmpty())
                 1
-            else if (((File(data.fPath).extension) == "png" || (File(data.fPath).extension) == "jpg" || (File(data.fPath).extension) == "jpeg") && data.status != 0)
+            else if (((File(data.fPath).extension) == "png" || (File(data.fPath).extension) == "jpg" || (File(data.fPath).extension) == "jpeg") && data.status != 0 && File(data.fPath).exists())
                 2
             else 3
         } else {
             return if (data.fPath.isNullOrEmpty())
                 4
-            else if (((File(data.fPath).extension) == "png" || (File(data.fPath).extension) == "jpg" || (File(data.fPath).extension) == "jpeg"))
+            else if (((File(data.fPath).extension) == "png" || (File(data.fPath).extension) == "jpg" || (File(data.fPath).extension) == "jpeg") && (File(data.fPath).exists()))
                 5
             else 6
         }
@@ -259,26 +264,31 @@ class AdapterMessageList(val data: ArrayList<ChatMessageData>, private val liste
         else if (getItemViewType(position) == 2)
             (holder as SendImageHolder).onBind(data[position], this@AdapterMessageList)
         else if (getItemViewType(position) == 3)
-            (holder as SendFileHolder).onBind(data[position], this@AdapterMessageList)
+            (holder as SendFileHolder).onBind(data[position], this@AdapterMessageList, position)
         else if (getItemViewType(position) == 4)
             (holder as ReceiveHolder).onBind(data[position], this@AdapterMessageList)
         else if (getItemViewType(position) == 5)
             (holder as ReceiveImageHolder).onBind(data[position], this@AdapterMessageList)
         else
-            (holder as ReceiveFileHolder).onBind(data[position], this@AdapterMessageList)
+            (holder as ReceiveFileHolder).onBind(data[position], this@AdapterMessageList, position)
     }
 
     override fun getItemCount(): Int = data.size
 
     private fun setImage(path: String, img: ImageView) {
+        if(!File(path).exists())
+            return
         val b = BitmapFactory.decodeFile(path)
-        val div = b.height.toFloat() / b.width
-        val h = div * maxW
-        img.apply {
-            layoutParams.width = maxW
-            layoutParams.height = h.toInt()
-            setImageBitmap(b)
+        b?.let {
+            val div = b.height.toFloat() / b.width
+            val h = div * maxW
+            img.apply {
+                layoutParams.width = maxW
+                layoutParams.height = h.toInt()
+                setImageBitmap(b)
+            }
         }
+
     }
 
 }
