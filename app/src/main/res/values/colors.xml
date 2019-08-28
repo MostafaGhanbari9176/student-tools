@@ -17,7 +17,7 @@
     <color name="redDark">#d32f2f</color>
     <color name="error">#f44336</color>
     <!--Status-->
-    <color name="status">@color/light3</color>
+    <color name="status">@color/colorPrimaryDark</color>
     <!--BackGround-->
     <color name="backGround">@color/light1</color>
     <color name="tabBack">@color/colorPrimary</color>
@@ -27,4 +27,9 @@
     <color name="dialogBtn">@color/colorAccent</color>
     <color name="dialogBtnText">@color/colorPrimaryDark</color>
     <color name="dialogHint">@color/colorPrimaryLight</color>
+
+
+
+    <color name="blogBack">@color/colorAccent</color>
+    <color name="blogDark">#D5A45B</color>
 </resources>

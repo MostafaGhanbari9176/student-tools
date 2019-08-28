@@ -154,6 +154,8 @@ class StudentProfilePresenter(private val listener: StudentProfileResult) : Stud
     }
 
     override fun addStudentRes(res: ServerRes?) {
+        if(res?.code == ServerRes.ok)
+            StudentProfileDb().isLogIn = true
         listener.addStudentRes(res?.code == ServerRes.ok, res?.message ?: AF().serverMessage(res?.code ?: -1))
 
     }

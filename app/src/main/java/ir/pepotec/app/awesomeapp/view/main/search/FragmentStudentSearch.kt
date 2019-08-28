@@ -1,4 +1,4 @@
-package ir.pepotec.app.awesomeapp.view.main.search.activitySearch
+package ir.pepotec.app.awesomeapp.view.main.search
 
 import android.content.Intent
 import android.graphics.drawable.AnimatedVectorDrawable

@@ -40,7 +40,7 @@ class ChatListDb : SQLiteOpenHelper(App.instanse, "chat_list", null, 1) {
         return id
     }
 
-    fun saveData(data: ChatListData) {
+/*    fun saveData(data: ChatListData) {
         this.writableDatabase.apply {
             insert(tbName, null,
                 ContentValues().apply {
@@ -53,7 +53,7 @@ class ChatListDb : SQLiteOpenHelper(App.instanse, "chat_list", null, 1) {
                 })
             close()
         }
-    }
+    }*/
 
     fun saveData(data: ArrayList<ChatListData>) {
         this.writableDatabase.apply {

@@ -9,10 +9,22 @@ abstract class MyActivity(@IdRes private val content: Int = R.id.ContentCommon) 
 
     val backHistory = Stack<MyFragment>()
     open fun changeView(f: MyFragment) {
-        backHistory.add(f)
+        if(backHistory.size >0 && f::class == backHistory.peek()::class)
+            return
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-            .replace(content, f).commit()
+            .replace(content, addFragment(f)).commit()
+    }
+
+    private fun addFragment(f:MyFragment): MyFragment {
+        val i = backHistory.search(f)
+        return if(i != -1)
+            backHistory[i]
+        else {
+            backHistory.add(f)
+            f
+        }
+
     }
 
     override fun onBackPressed() {

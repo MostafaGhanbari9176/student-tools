@@ -1,5 +1,6 @@
 package ir.pepotec.app.awesomeapp.view.student.profile.activityProfile
 
+import android.content.Intent
 import android.os.Bundle
 import android.transition.ChangeBounds
 import android.transition.Fade
@@ -15,6 +16,7 @@ import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileData
 import ir.pepotec.app.awesomeapp.presenter.student.StudentProfilePresenter
 import ir.pepotec.app.awesomeapp.view.student.ability.AdapterAbilityList
 import ir.pepotec.app.awesomeapp.view.student.ability.activityAbility.FragmentShowAbility
+import ir.pepotec.app.awesomeapp.view.student.chat.messageList.ActivityMessageList
 import ir.pepotec.app.awesomeapp.view.uses.AF
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import ir.pepotec.app.awesomeapp.view.uses.ProgressInjection
@@ -79,6 +81,9 @@ class FragmentOtherProfile : MyFragment() {
             setUpRV(abilityData)
         btnAddFriendOtherProfile.setOnClickListener {
             addFriend()
+        }
+        btnChatOtherProfile.setOnClickListener {
+            startActivity(Intent(ctx, ActivityMessageList::class.java).apply { putExtra("user_id", user_id) })
         }
 
     }

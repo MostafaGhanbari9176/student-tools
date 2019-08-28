@@ -60,6 +60,7 @@ class AF {
     fun serverMessage(code: Int): String = when (code) {
         ServerRes.ok -> "با موفقیت انجام شد."
         ServerRes.error -> "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!"
+        ServerRes.badReq -> "درخواست اشتباه!"
         else -> "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!"
     }
 

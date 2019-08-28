@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:background="@color/colorPrimaryDark"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <com.google.android.material.tabs.TabLayout
+            android:layoutDirection="ltr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicatorColor="@color/colorAccent"
+            android:background="@color/tabBack"
+            app:tabTextColor="@color/light1"
+            app:tabSelectedTextColor="@color/light"
+            android:id="@+id/tabLayoutBlog"
+    />
+    <androidx.viewpager.widget.ViewPager
+            android:id="@+id/VPBlog"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp"/>
+    <LinearLayout
+            android:gravity="center"
+            android:background="@color/dark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <ImageView
+                android:id="@+id/btnAddMessageBlog"
+                app:srcCompat="@drawable/ic_add"
+                android:tint="@color/light"
+                android:layout_width="@dimen/img"
+                android:layout_height="@dimen/img"
+        />
+    </LinearLayout>
+</LinearLayout>

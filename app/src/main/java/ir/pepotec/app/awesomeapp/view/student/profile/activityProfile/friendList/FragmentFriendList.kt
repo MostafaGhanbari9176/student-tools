@@ -13,8 +13,9 @@ import com.google.android.material.snackbar.Snackbar
 import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileData
 import ir.pepotec.app.awesomeapp.presenter.student.StudentProfilePresenter
-import ir.pepotec.app.awesomeapp.view.main.search.activitySearch.ActivitySearch
+import ir.pepotec.app.awesomeapp.view.main.search.ActivitySearch
 import ir.pepotec.app.awesomeapp.view.student.chat.messageList.ActivityMessageList
+import ir.pepotec.app.awesomeapp.view.student.profile.activityProfile.ActivityProfile
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import ir.pepotec.app.awesomeapp.view.uses.MyRecyclerCallBack
 import kotlinx.android.synthetic.main.fragment_friend_list.*
@@ -51,7 +52,9 @@ class FragmentFriendList:MyFragment() {
     }
 
     private fun setUpRv(data: ArrayList<StudentProfileData>?) {
-        adapter = AdapterFriendList(data!!, {}, {})
+        adapter = AdapterFriendList(data!!, {
+            startActivity(Intent(ctx, ActivityProfile::class.java).apply { putExtra("userId", it) })
+        }, {})
         RVFrienList.layoutManager = LinearLayoutManager(ctx)
         RVFrienList.adapter = adapter
         val touchHelper = ItemTouchHelper(MyRecyclerCallBack(object:MyRecyclerCallBack.RecyclerCallBack{

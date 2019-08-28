@@ -49,7 +49,7 @@ class FragmentMyProfile : MyFragment(), ProgressInjection.ProgressInjectionListe
             DialogEyeLevel(
                 getString(R.string.allEyeLevel),
                 getString(R.string.friendEyeLevel),
-                true,
+                false,
                 name
             ).defaultChose(false)
         }
@@ -57,7 +57,7 @@ class FragmentMyProfile : MyFragment(), ProgressInjection.ProgressInjectionListe
             DialogEyeLevel(
                 getString(R.string.allEyeLevel),
                 getString(R.string.friendEyeLevel),
-                false,
+                true,
                 phone
             ).defaultChose(false)
 

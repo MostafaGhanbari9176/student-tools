@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:orientation="vertical"
+              android:orientation="vertical"
+                android:layout_margin="8dp"
                 android:layoutDirection="rtl"
                 android:gravity="center_horizontal"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-    <ImageView
-            android:layout_centerInParent="true"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
             app:srcCompat="@drawable/ic_student"
-            android:id="@+id/imgIHome"
-            android:layout_width="wrap_content"
+            android:tint="@color/dark"
+            android:tintMode="src_atop"
+            android:id="@+id/fabHomeList"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
     />
     <TextView
-            android:layout_centerHorizontal="true"
-            android:layout_alignBottom="@id/imgIHome"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/txtPrimary"
             android:textSize="@dimen/txt"
             android:gravity="center"
-            android:maxLines="1"
+            android:maxLines="2"
             android:text="دانشجو"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txtSubIHome"/>
-</RelativeLayout>
+</LinearLayout>

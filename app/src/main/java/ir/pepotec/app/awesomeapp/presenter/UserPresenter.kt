@@ -4,6 +4,7 @@ import ir.pepotec.app.awesomeapp.model.ServerRes
 import ir.pepotec.app.awesomeapp.model.user.User
 import ir.pepotec.app.awesomeapp.model.user.UserData
 import com.google.gson.Gson
+import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileDb
 import ir.pepotec.app.awesomeapp.model.user.UserDb
 import ir.pepotec.app.awesomeapp.model.user.UserKind
 import ir.pepotec.app.awesomeapp.view.uses.AF
@@ -56,9 +57,13 @@ class UserPresenter(private val listener: UserResult) : User.UserResponse {
     }
 
     override fun logInRes(res: ServerRes?) {
-        res?.let {
-            val data = Gson().fromJson(it.data[0], UserData::class.java)
+
+        if (res?.code == ServerRes.ok) {
+
+            val data = Gson().fromJson(res.data[0], UserData::class.java)
             UserDb().saveUserData(data)
+
+            StudentProfileDb().isLogIn = true
         }
         listener.resultFromUser(res?.code == ServerRes.ok, res?.message ?: AF().serverMessage(res?.code ?: -1))
 

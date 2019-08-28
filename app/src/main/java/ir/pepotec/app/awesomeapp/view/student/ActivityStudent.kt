@@ -47,32 +47,8 @@ class ActivityStudent : AppCompatActivity() {
         VPStudent.adapter = adapter
         VPStudent.setCurrentItem(1)
         VPStudent.offscreenPageLimit = 3
-        VPStudent.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
 
-            }
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                //changeFab(position, positionOffset)
-            }
-
-            override fun onPageSelected(position: Int) {
-               // fabStudent.visibility = if (position == 2) View.VISIBLE else View.GONE
-            }
-        })
     }
-
-/*    private fun changeFab(position: Int, offset: Float) {
-
-        if (offset > lastOffset && position == 1) {
-            lastOffset = offset
-            fabStudent.visibility = View.VISIBLE
-            fabStudent.alpha = offset
-        } else if (offset < lastOffset && position != 2) {
-            lastOffset = offset
-            fabStudent.alpha = offset
-        }
-    }*/
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -110,8 +86,8 @@ class ActivityStudent : AppCompatActivity() {
         cropIntent.apply {
             setDataAndType(uri, "image/*");
             putExtra("crop", "true")
-            putExtra("outputX", 280)
-            putExtra("outputY", 280)
+            putExtra("outputX", 512)
+            putExtra("outputY", 512)
             putExtra("aspectX", 1)
             putExtra("aspectY", 1)
             putExtra("scaleUpIfNeeded", true)
@@ -126,12 +102,8 @@ class ActivityStudent : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (VPStudent.currentItem == 2) {
-            if (fragmentChat.onBackPresed()) {
-                super.onBackPressed()
-                this.finish()
-            }
-        }
+        super.onBackPressed()
+        this.finish()
     }
 
 }

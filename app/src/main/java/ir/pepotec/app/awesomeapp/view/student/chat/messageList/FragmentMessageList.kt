@@ -32,6 +32,19 @@ import ir.pepotec.app.awesomeapp.presenter.FilePresenter
 
 class FragmentMessageList : MyFragment(), ServiceChat.ChatInterface, AdapterMessageList.AdapterMessageListEvent {
 
+    val conn:ServiceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            chatService = (service as ServiceChat.ChatBinder).getService().apply {
+                user_id = this@FragmentMessageList.user_id
+                listener = this@FragmentMessageList
+            }
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            chatService?.user_id = -1
+            chatService?.listener = null
+        }
+    }
     var user_id = -1
     var fPath = ""
     private var adapter: AdapterMessageList? = null
@@ -132,18 +145,7 @@ class FragmentMessageList : MyFragment(), ServiceChat.ChatInterface, AdapterMess
 
     private fun setUpService() {
         val intent = Intent(ctx, ServiceChat::class.java)
-        (ctx as ActivityMessageList).bindService(intent, object : ServiceConnection {
-            override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-                chatService = (service as ServiceChat.ChatBinder).getService().apply {
-                    user_id = this@FragmentMessageList.user_id
-                    listener = this@FragmentMessageList
-                }
-            }
-
-            override fun onServiceDisconnected(name: ComponentName?) {
-
-            }
-        }, Context.BIND_AUTO_CREATE)
+        (ctx as ActivityMessageList).bindService(intent, conn, Context.BIND_AUTO_CREATE)
     }
 
     private fun sendMessage(message: ChatMessageData) {
@@ -297,6 +299,12 @@ class FragmentMessageList : MyFragment(), ServiceChat.ChatInterface, AdapterMess
             toast("برنامه ایی برای نمایش این نوع فایل موجود نمی باشد.")
         }
 
+    }
+
+    override fun onDestroy() {
+        conn.onServiceDisconnected(null)
+        (ctx as ActivityMessageList).unbindService(conn)
+        super.onDestroy()
     }
 
 }

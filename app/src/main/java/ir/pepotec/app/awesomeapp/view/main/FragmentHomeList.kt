@@ -1,4 +1,4 @@
-package ir.pepotec.app.awesomeapp.view.main.search
+package ir.pepotec.app.awesomeapp.view.main
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,12 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import ir.pepotec.app.awesomeapp.R
-import ir.pepotec.app.awesomeapp.view.main.AdapterMainLists
-import ir.pepotec.app.awesomeapp.view.main.MainListsModel
+import ir.pepotec.app.awesomeapp.view.blog.ActivityBlog
+import ir.pepotec.app.awesomeapp.view.blog.AdapterBlog
+import ir.pepotec.app.awesomeapp.view.student.ActivityStudent
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import kotlinx.android.synthetic.main.fragment_main_lists.*
 
-class FragmentSearchList : MyFragment() {
+class FragmentHomeList : MyFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_main_lists, container, false)
     }
@@ -28,16 +29,13 @@ class FragmentSearchList : MyFragment() {
 
     private fun homeList() {
         val data = ArrayList<MainListsModel>()
-        data.add(MainListsModel("جستوجو دانشجو", R.drawable.ic_student))
-        data.add(MainListsModel("جستوجو مهارت کار", R.drawable.ic_ability))
+        data.add(MainListsModel("دانشجو", R.drawable.ic_student))
+        data.add(MainListsModel("وبلاگ", R.drawable.ic_subtitles))
         RVMainLists.adapter = AdapterMainLists(data) { position ->
-            startActivity(Intent(ctx, ActivitySearch::class.java).apply { putExtra("flag",
-                when(position){
-                    0 -> "student"
-                    1 -> "ability"
-                    else -> "student"
-                }
-            ) })
+            when (position) {
+                0 -> startActivity(Intent(ctx, ActivityStudent::class.java))
+                1 -> startActivity(Intent(ctx, ActivityBlog::class.java))
+            }
         }
         RVMainLists.layoutManager = GridLayoutManager(ctx,3)
     }

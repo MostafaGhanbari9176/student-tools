@@ -14,6 +14,7 @@ package ir.pepotec.app.awesomeapp.model.student.ability
 
 data class AbilityData(
     val ability_id: Int,
+    val user_id: Int,
     val subject: String,
     val resume: String,
     val description: String,

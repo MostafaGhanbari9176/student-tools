@@ -68,4 +68,14 @@ interface AbilityApi {
         @Field("apiCode") apiCode: String
     ): Call<ServerRes>
 
+    @FormUrlEncoded
+    @POST("${Ability.baseUrl}search")
+    fun search(
+        @Field("phone") phone: String,
+        @Field("apiCode") apiCode: String,
+        @Field("key") key: String,
+        @Field("num") num: Int,
+        @Field("step") step: Int
+    ): Call<ServerRes>
+
 }

@@ -6,118 +6,57 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class Ability(private val listener: AbilityResponse) {
+class Ability(private val listener: AbilityResponse) : Callback<ServerRes> {
 
-    companion object{
-       const val baseUrl = "student/ability/index.php/"
+    companion object {
+        const val baseUrl = "student/ability/index.php/"
     }
 
-    interface AbilityResponse
-    {
-        fun addAbilityRes(res:ServerRes?)
-        fun getAbilityListRes(res:ServerRes?)
-        fun getAbilityRes(res:ServerRes?)
-        fun editAbilityRes(res:ServerRes?)
-        fun changeStatusRes(res:ServerRes?)
+    private val api: AbilityApi = ApiClient.getClient().create(AbilityApi::class.java)
+
+    interface AbilityResponse {
+        fun abilityRes(res: ServerRes?){}
     }
 
-    fun addAbility(phone:String, apiCode:String, subject:String, resume:String, description:String)
-    {
-        val api: AbilityApi = ApiClient.getClient().create(AbilityApi::class.java)
-        val req:Call<ServerRes> = api.addAbility(phone, apiCode, subject, resume, description)
-
-        req.enqueue(object : Callback<ServerRes> {
-            override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.addAbilityRes(null)
-            }
-
-            override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
-                listener.addAbilityRes(response.body())
-            }
-        })
+    fun addAbility(phone: String, apiCode: String, subject: String, resume: String, description: String) {
+        api.addAbility(phone, apiCode, subject, resume, description).apply { enqueue(this@Ability) }
     }
 
-    fun getMyList(phone:String, apiCode:String)
-    {
-        val api: AbilityApi = ApiClient.getClient().create(AbilityApi::class.java)
-        val req:Call<ServerRes> = api.getMyList(phone, apiCode)
-
-        req.enqueue(object : Callback<ServerRes> {
-            override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.getAbilityListRes(null)
-            }
-
-            override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
-                listener.getAbilityListRes(response.body())
-            }
-        })
+    fun getMyList(phone: String, apiCode: String) {
+        api.getMyList(phone, apiCode).apply { enqueue(this@Ability) }
     }
 
-    fun getSingle(id:Int, phone:String, apiCode:String, itsMy:Boolean)
-    {
-        val api: AbilityApi = ApiClient.getClient().create(AbilityApi::class.java)
-        val req:Call<ServerRes> = when(itsMy) {
+    fun getSingle(id: Int, phone: String, apiCode: String, itsMy: Boolean) {
+
+        val req: Call<ServerRes> = when (itsMy) {
             true -> api.getMySingle(id, phone, apiCode)
             else -> api.getOtherSingle(id, phone, apiCode)
         }
-                    req.enqueue(object : Callback<ServerRes> {
-                override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                    listener.getAbilityRes(null)
-                }
-
-                override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
-                    listener.getAbilityRes(response.body())
-                }
-            })
-        }
-
-    fun increaseSeen(id:Int, phone:String, apiCode:String)
-    {
-        val api: AbilityApi = ApiClient.getClient().create(AbilityApi::class.java)
-        val req:Call<ServerRes> = api.increaseSeen(id, phone, apiCode)
-
-        req.enqueue(object : Callback<ServerRes> {
-            override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-
-            }
-
-            override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
-
-            }
-        })
+        req.enqueue(this)
     }
 
-
-    fun editAbility(id:Int, phone:String, apiCode:String, subject:String, resume:String, description:String)
-    {
-        val api: AbilityApi = ApiClient.getClient().create(AbilityApi::class.java)
-        val req:Call<ServerRes> = api.editAbility(id, phone, apiCode, subject, resume, description)
-
-        req.enqueue(object : Callback<ServerRes> {
-            override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.editAbilityRes(null)
-            }
-
-            override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
-                listener.editAbilityRes(response.body())
-            }
-        })
+    fun increaseSeen(id: Int, phone: String, apiCode: String) {
+        api.increaseSeen(id, phone, apiCode).apply { enqueue(this@Ability) }
     }
 
-    fun deleteAbility(id:Int, phone:String, apiCode:String)
-    {
-        val api: AbilityApi = ApiClient.getClient().create(AbilityApi::class.java)
-        val req:Call<ServerRes> = api.deleteAbility(id, phone, apiCode)
+    fun search(phone: String, ac: String, key: String, num: Int, step: Int) {
+        api.search(phone, ac, key, num, step).apply { enqueue(this@Ability) }
+    }
 
-        req.enqueue(object : Callback<ServerRes> {
-            override fun onFailure(call: Call<ServerRes>, t: Throwable) {
-                listener.changeStatusRes(null)
-            }
+    fun editAbility(id: Int, phone: String, apiCode: String, subject: String, resume: String, description: String) {
+        api.editAbility(id, phone, apiCode, subject, resume, description).apply { enqueue(this@Ability) }
+    }
 
-            override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
-                listener.changeStatusRes(response.body())
-            }
-        })
+    fun deleteAbility(id: Int, phone: String, apiCode: String) {
+        api.deleteAbility(id, phone, apiCode).apply { enqueue(this@Ability) }
+    }
+
+    override fun onFailure(call: Call<ServerRes>, t: Throwable) {
+        listener.abilityRes(null)
+    }
+
+    override fun onResponse(call: Call<ServerRes>, response: Response<ServerRes>) {
+        listener.abilityRes(response.body())
     }
 
 }

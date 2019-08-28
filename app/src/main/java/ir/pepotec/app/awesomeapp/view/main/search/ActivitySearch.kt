@@ -1,12 +1,11 @@
-package ir.pepotec.app.awesomeapp.view.main.search.activitySearch
+package ir.pepotec.app.awesomeapp.view.main.search
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import ir.pepotec.app.awesomeapp.R
+import ir.pepotec.app.awesomeapp.view.main.search.searchAbility.FragmentAbilitySearch
 import ir.pepotec.app.awesomeapp.view.uses.App
 import ir.pepotec.app.awesomeapp.view.uses.MyActivity
-import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 
 class ActivitySearch : MyActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,6 +17,7 @@ class ActivitySearch : MyActivity() {
         when (flag)
         {
             "student" -> changeView(FragmentStudentSearch())
+            "ability" -> changeView(FragmentAbilitySearch())
         }
 
     }
