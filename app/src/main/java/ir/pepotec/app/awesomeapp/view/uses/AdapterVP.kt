@@ -1,4 +1,4 @@
-package ir.pepotec.app.awesomeapp.view.student
+package ir.pepotec.app.awesomeapp.view.uses
 
 import android.os.Parcelable
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import ir.pepotec.app.awesomeapp.view.uses.VPModel
 import java.lang.Exception
 
-class AdapterVPStudent(fm:FragmentManager): FragmentStatePagerAdapter(fm){
+class AdapterVP(fm:FragmentManager): FragmentStatePagerAdapter(fm){
     val source = ArrayList<VPModel>()
 
     fun addData(data:VPModel)

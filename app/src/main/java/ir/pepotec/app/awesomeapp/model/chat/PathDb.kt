@@ -1,4 +1,4 @@
-package ir.pepotec.app.awesomeapp.model.student.chat
+package ir.pepotec.app.awesomeapp.model.chat
 
 import android.content.ContentValues
 import android.database.Cursor

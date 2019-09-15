@@ -14,7 +14,7 @@ import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileData
 import ir.pepotec.app.awesomeapp.presenter.student.StudentProfilePresenter
 import ir.pepotec.app.awesomeapp.view.main.search.ActivitySearch
-import ir.pepotec.app.awesomeapp.view.student.chat.messageList.ActivityMessageList
+import ir.pepotec.app.awesomeapp.view.chat.ActivityChat
 import ir.pepotec.app.awesomeapp.view.student.profile.activityProfile.ActivityProfile
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import ir.pepotec.app.awesomeapp.view.uses.MyRecyclerCallBack
@@ -24,8 +24,8 @@ class FragmentFriendList:MyFragment() {
 
     lateinit var adapter:AdapterFriendList
 
-    var deletePosition = -1
-    lateinit var deleteData:StudentProfileData
+   private var deletePosition = -1
+   private lateinit var deleteData:StudentProfileData
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_friend_list, container, false)
@@ -64,7 +64,7 @@ class FragmentFriendList:MyFragment() {
 
             override fun rightSwipe(position: Int) {
                 adapter.notifyItemChanged(position)
-                startActivity(Intent(ctx, ActivityMessageList::class.java).apply { putExtra("user_id", adapter.data[position].user_id) })
+                startActivity(Intent(ctx, ActivityChat::class.java).apply { putExtra("chat_id", adapter.data[position].user_id) })
             }
         },R.drawable.ic_delete, R.drawable.ic_sms, R.color.redLight, R.color.colorAccent,true, false))
         touchHelper.attachToRecyclerView(RVFrienList)

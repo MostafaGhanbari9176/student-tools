@@ -1,5 +1,6 @@
 package ir.pepotec.app.awesomeapp.view.main.search
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
@@ -9,23 +10,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.*
 import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileData
+import ir.pepotec.app.awesomeapp.presenter.InvitePresenter
 import ir.pepotec.app.awesomeapp.presenter.student.StudentProfilePresenter
 import ir.pepotec.app.awesomeapp.view.student.profile.activityProfile.ActivityProfile
 import ir.pepotec.app.awesomeapp.view.student.profile.activityProfile.friendList.AdapterFriendList
+import ir.pepotec.app.awesomeapp.view.uses.DialogProgress
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import kotlinx.android.synthetic.main.fragment_search_list.*
 
 class FragmentStudentSearch : MyFragment() {
 
+    var groupId = -1
     private var reqKey: String = ""
     private var key: String = ""
     private var getAllData = false
     private var step: Int = 1
     private var adapter: AdapterFriendList? = null
+    private val progress = DialogProgress()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_search, container, false)
     }
@@ -83,10 +89,31 @@ class FragmentStudentSearch : MyFragment() {
     private fun setUpRV(data: java.util.ArrayList<StudentProfileData>?) {
         RVSearch.layoutManager = LinearLayoutManager(ctx)
         adapter = AdapterFriendList(data!!, {
+            if(groupId == -1)
             startActivity(Intent(ctx, ActivityProfile::class.java).apply { putExtra("userId", it) })
+            else
+                inviteAnswer(it)
         }, { reachedBottom() }
         )
         RVSearch.adapter = adapter
+    }
+
+    private fun inviteAnswer(userId:Int) {
+        AlertDialog.Builder(ctx)
+            .setTitle("از دعوت این شخص مطمعن هستید؟")
+            .setPositiveButton("بله", DialogInterface.OnClickListener{ dialog, which -> invite(userId) })
+            .setNegativeButton("خیر", null)
+            .show()
+    }
+
+    private fun invite(userId: Int) {
+        progress.show()
+        InvitePresenter(object:InvitePresenter.Res{
+            override fun result(ok: Boolean, message: String) {
+                progress.cancel()
+                toast(message)
+            }
+        }).add(groupId, userId)
     }
 
     private fun reachedBottom() {

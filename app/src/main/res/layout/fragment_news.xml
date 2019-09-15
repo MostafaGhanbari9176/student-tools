@@ -1,12 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layoutDirection="rtl"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-
-    <TextView
-            android:text=" NEWS !"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layoutDirection="rtl"
+                android:background="@color/colorPrimaryDark"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <cn.lightsky.infiniteindicator.InfiniteIndicator
+            android:layout_alignParentTop="true"
+            android:id="@+id/newsBanner"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:id="@+id/textView" android:gravity="center"/>
-</LinearLayout>
+            android:layout_height="wrap_content"
+            app:indicator_type="indicator_anim_circle"
+    />
+    <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayoutNews"
+            android:layout_below="@id/newsBanner"
+            android:layoutDirection="ltr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicatorColor="@color/colorAccent"
+            android:background="@color/tabBack"
+            app:tabTextColor="@color/light1"
+            app:tabSelectedTextColor="@color/light"
+    />
+<androidx.viewpager.widget.ViewPager
+        android:id="@+id/VPNews"
+        android:layout_below="@id/tabLayoutNews"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <ProgressBar
+            android:layout_centerHorizontal="true"
+            android:id="@+id/pBarNews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/VPNews"
+            android:layout_alignBottom="@id/VPNews"
+    />
+    <TextView
+            android:id="@+id/txtStatusNews"
+            android:padding="8dp"
+            android:text="خبر مهم"
+            android:textSize="@dimen/txt"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/colorAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+    />
+</RelativeLayout>

@@ -11,9 +11,9 @@ import android.renderscript.ScriptC
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import ir.pepotec.app.awesomeapp.model.student.chat.ChatListDb
-import ir.pepotec.app.awesomeapp.model.student.chat.ChatMessageDb
-import ir.pepotec.app.awesomeapp.view.student.chat.ServiceChat
+import ir.pepotec.app.awesomeapp.model.chat.ChatListDb
+import ir.pepotec.app.awesomeapp.model.chat.ChatMessageDb
+import ir.pepotec.app.awesomeapp.view.chat.ServiceChat
 import java.io.File
 
 class App : Application() {

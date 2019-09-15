@@ -1,4 +1,4 @@
-package ir.pepotec.app.awesomeapp.view.student.chat.messageList
+package ir.pepotec.app.awesomeapp.view.chat.messageList
 
 import android.content.ComponentName
 import android.content.Context
@@ -14,39 +14,52 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import ir.pepotec.app.awesomeapp.R
-import ir.pepotec.app.awesomeapp.model.student.chat.ChatMessageData
-import ir.pepotec.app.awesomeapp.model.student.chat.ChatMessageDb
-import ir.pepotec.app.awesomeapp.model.student.chat.FileMessageDb
+import ir.pepotec.app.awesomeapp.model.chat.ChatMessageData
+import ir.pepotec.app.awesomeapp.model.chat.ChatMessageDb
+import ir.pepotec.app.awesomeapp.model.chat.FileMessageDb
 import ir.pepotec.app.awesomeapp.presenter.student.ChatPresenter
 import ir.pepotec.app.awesomeapp.view.file.ActivityFile
-import ir.pepotec.app.awesomeapp.view.student.chat.ServiceChat
+import ir.pepotec.app.awesomeapp.view.chat.ServiceChat
 import ir.pepotec.app.awesomeapp.view.uses.App
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import kotlinx.android.synthetic.main.fragment_message_list.*
 import java.io.File
-import android.content.ActivityNotFoundException
 import android.webkit.MimeTypeMap
 import android.net.Uri
+import androidx.core.app.ActivityCompat
+import ir.pepotec.app.awesomeapp.model.chat.ChatListDb
+import ir.pepotec.app.awesomeapp.model.groupChat.GroupChat
+import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfile
 import ir.pepotec.app.awesomeapp.presenter.FilePresenter
+import ir.pepotec.app.awesomeapp.presenter.InvitePresenter
+import ir.pepotec.app.awesomeapp.view.chat.ActivityChat
+import ir.pepotec.app.awesomeapp.view.chat.FragmentGroupChatData
+import ir.pepotec.app.awesomeapp.view.student.profile.activityProfile.FragmentOtherProfile
+import ir.pepotec.app.awesomeapp.view.uses.AF
+import ir.pepotec.app.awesomeapp.view.uses.DialogProgress
 
+class FragmentMessageList : MyFragment(), ServiceChat.ChatInterface,
+    AdapterMessageList.AdapterMessageListEvent {
 
-class FragmentMessageList : MyFragment(), ServiceChat.ChatInterface, AdapterMessageList.AdapterMessageListEvent {
-
-    val conn:ServiceConnection = object : ServiceConnection {
+    val conn: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             chatService = (service as ServiceChat.ChatBinder).getService().apply {
-                user_id = this@FragmentMessageList.user_id
+                chat_id = this@FragmentMessageList.chat_id
+                kind_id = this@FragmentMessageList.kind_id
                 listener = this@FragmentMessageList
             }
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
-            chatService?.user_id = -1
+            chatService?.chat_id = -1
+            chatService?.kind_id = ""
             chatService?.listener = null
         }
     }
-    var user_id = -1
-    var fPath = ""
+    var kind_id = ""
+    var chat_id = -1
+    private var fPath = ""
+    private val progress = DialogProgress()
     private var adapter: AdapterMessageList? = null
     private var chatService: ServiceChat? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -59,6 +72,14 @@ class FragmentMessageList : MyFragment(), ServiceChat.ChatInterface, AdapterMess
     }
 
     private fun init() {
+        setProfileImg()
+        setSubject()
+        LLHeadMessageList.setOnClickListener {
+            if (kind_id == "s")
+                (ctx as ActivityChat).changeView(FragmentOtherProfile().apply { user_id = chat_id })
+            else
+                (ctx as ActivityChat).changeView(FragmentGroupChatData().apply { groupId = chat_id })
+        }
         fabMessageList.setOnClickListener {
             createMessage()
         }
@@ -71,16 +92,31 @@ class FragmentMessageList : MyFragment(), ServiceChat.ChatInterface, AdapterMess
         updateSeen()
     }
 
+    private fun setSubject() {
+        txtChatSubjectMessageList.text = ChatListDb().getSubject(chat_id, kind_id)
+    }
+
+    private fun setProfileImg() {
+        AF().setImage(
+            imgProfileMessageList, if (kind_id == "s") {
+                StudentProfile.baseUrl
+            } else {
+                GroupChat.baseUrl
+            } + "downImg", chat_id, false,
+            cache = true
+        )
+    }
+
     private fun addFieldFileMessage() {
 
-        val data = FileMessageDb().getData(user_id)
+        val data = FileMessageDb().getData(chat_id, kind_id)
         if (data.size > 0)
             addDataToAdapter(data)
 
     }
 
     private fun chooseFileType() {
-        startActivityForResult(Intent(ctx, ActivityFile::class.java), 1, null)
+        ActivityCompat.startActivityForResult(ctx as ActivityChat, Intent(ctx, ActivityFile::class.java), 1, null)
     }
 
     fun fileChoosed(path: String) {
@@ -102,8 +138,8 @@ class FragmentMessageList : MyFragment(), ServiceChat.ChatInterface, AdapterMess
 
     private fun createMessage() {
         val message = ChatMessageData(
-            ChatMessageDb(user_id).getLastId() + 1,
-            user_id,
+            ChatMessageDb(chat_id, kind_id).getLastId() + 1,
+            -1,
             true,
             "",
             "",
@@ -112,6 +148,7 @@ class FragmentMessageList : MyFragment(), ServiceChat.ChatInterface, AdapterMess
             0,
             0,
             fPath,
+            0,
             true
         )
         addDataToAdapter(ArrayList<ChatMessageData>().apply { add(message) })
@@ -136,16 +173,16 @@ class FragmentMessageList : MyFragment(), ServiceChat.ChatInterface, AdapterMess
                     }
                 }
             }
-        }).sendFileMessage(cmData)
+        }).sendFileMessage(cmData, chat_id, kind_id)
     }
 
     private fun updateSeen() {
-        ChatPresenter(object : ChatPresenter.ChatResult {}).updateSeen(user_id)
+        //   ChatPresenter(object : ChatPresenter.ChatResult {}).updateSeen(chat_id)
     }
 
     private fun setUpService() {
         val intent = Intent(ctx, ServiceChat::class.java)
-        (ctx as ActivityMessageList).bindService(intent, conn, Context.BIND_AUTO_CREATE)
+        (ctx as ActivityChat).bindService(intent, conn, Context.BIND_AUTO_CREATE)
     }
 
     private fun sendMessage(message: ChatMessageData) {
@@ -154,11 +191,11 @@ class FragmentMessageList : MyFragment(), ServiceChat.ChatInterface, AdapterMess
             override fun chatResponse(ok: Boolean, message: String) {
                 toast(message)
             }
-        }).sandMessage(message)
+        }).sandMessage(message, chat_id, kind_id)
     }
 
     private fun setUpRV() {
-        val data = ChatMessageDb(user_id).getData()
+        val data = ChatMessageDb(chat_id, kind_id).getData()
         adapter = AdapterMessageList(data, this)
         RVChatList.layoutManager = GridLayoutManager(ctx, 1)
         RVChatList.adapter = adapter
@@ -233,7 +270,8 @@ class FragmentMessageList : MyFragment(), ServiceChat.ChatInterface, AdapterMess
 
     override fun onDestroyView() {
         super.onDestroyView()
-        chatService?.user_id = -1
+        chatService?.chat_id = -1
+        chatService?.kind_id = ""
     }
 
     override fun myFileClicked(position: Int) {
@@ -273,18 +311,18 @@ class FragmentMessageList : MyFragment(), ServiceChat.ChatInterface, AdapterMess
         }
     }
 
-    private fun downloadFile(data: ChatMessageData, position:Int) {
+    private fun downloadFile(data: ChatMessageData, position: Int) {
         FilePresenter(object : FilePresenter.FilePresenterRes {
             override fun fileResponse(ok: Boolean, path: String) {
                 adapter?.let {
                     val data = it.data[position]
                     data.animating = false
-                    if(ok)
+                    if (ok)
                         data.fPath = path
                     it.notifyItemChanged(position)
                 }
             }
-        }).downloadFile(data.file_id, data.m_id, data.user_id)
+        }).downloadFile(data.file_id, data.m_id, chat_id, kind_id)
     }
 
     private fun openFile(f: File) {
@@ -296,14 +334,30 @@ class FragmentMessageList : MyFragment(), ServiceChat.ChatInterface, AdapterMess
         try {
             ctx.startActivity(newIntent)
         } catch (e: Exception) {
-            toast("برنامه ایی برای نمایش این نوع فایل موجود نمی باشد.")
+            toast("برنامه ایی برای اجرای این نوع فایل موجود نمی باشد.")
         }
 
     }
 
+    override fun lastSeenData(message: String) {
+        txtLastSeenMessageList.text = message
+    }
+
+    override fun acceptInvite(position: Int) {
+        adapter?.let {
+            progress.show()
+            InvitePresenter(object : InvitePresenter.Res {
+                override fun result(ok: Boolean, message: String) {
+                    progress.cancel()
+                        toast(message)
+                }
+            }).accept(it.data[position].i_id)
+        }
+    }
+
     override fun onDestroy() {
         conn.onServiceDisconnected(null)
-        (ctx as ActivityMessageList).unbindService(conn)
+        (ctx as ActivityChat).unbindService(conn)
         super.onDestroy()
     }
 

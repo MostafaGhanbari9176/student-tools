@@ -5,49 +5,29 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.viewpager.widget.ViewPager
 import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.view.student.ability.FragmentAbility
-import ir.pepotec.app.awesomeapp.view.student.chat.FragmentChat
 import ir.pepotec.app.awesomeapp.view.student.profile.FragmentMyProfile
 import ir.pepotec.app.awesomeapp.view.uses.App
-import ir.pepotec.app.awesomeapp.view.uses.VPModel
-import kotlinx.android.synthetic.main.activity_student.*
 import org.jetbrains.anko.toast
 import android.provider.MediaStore
+import ir.pepotec.app.awesomeapp.view.uses.MyActivity
 
-class ActivityStudent : AppCompatActivity() {
+class ActivityStudent : MyActivity() {
 
-    private var lastOffset = 0f
-    private lateinit var fragmentMyProfile: FragmentMyProfile
-    private lateinit var fragmentChat: FragmentChat
     private var imageData: Intent? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_student)
+        setContentView(R.layout.content_common)
         App.instanse = this
-        window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
-        fabStudent.setOnClickListener {
-            toast("clicked")
-        }
-        initVP()
-    }
+        changeView(
+            when (intent?.extras?.getString("show")) {
+                "ability" -> FragmentAbility()
+                else -> FragmentMyProfile()
 
-    private fun initVP() {
-        tabLayoutStudent.setupWithViewPager(VPStudent)
-        val adapter = AdapterVPStudent(supportFragmentManager)
-        adapter.addData(VPModel(FragmentAbility(), "مهارت ها"))
-        fragmentMyProfile = FragmentMyProfile()
-        adapter.addData(VPModel(fragmentMyProfile, "پروفایل"))
-        fragmentChat = FragmentChat()
-        adapter.addData(VPModel(fragmentChat, "گفتوگو"))
-        VPStudent.adapter = adapter
-        VPStudent.setCurrentItem(1)
-        VPStudent.offscreenPageLimit = 3
-
+            }
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -78,7 +58,7 @@ class ActivityStudent : AppCompatActivity() {
             val extra = data?.extras
             bitmap = extra!!.getParcelable("data")
         }
-        fragmentMyProfile.changeImg(bitmap)
+        (backHistory.peek() as FragmentMyProfile).changeImg(bitmap)
     }
 
     private fun cropImage(uri: Uri?) {

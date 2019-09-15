@@ -4,7 +4,7 @@ import ir.pepotec.app.awesomeapp.model.Pref
 
 class StudentProfileDb {
 
-    val sId = "s_id"
+    val sId = "chat_subject"
     val name = "studentName"
     var isLogIn: Boolean
         set(value) {

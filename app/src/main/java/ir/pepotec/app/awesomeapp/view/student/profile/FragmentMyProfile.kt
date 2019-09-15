@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.model.student.ability.AbilityList
+import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfile
 import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileData
 import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileDb
 import ir.pepotec.app.awesomeapp.model.user.UserDb
@@ -40,7 +41,7 @@ class FragmentMyProfile : MyFragment(), ProgressInjection.ProgressInjectionListe
 
     private fun init() {
         profileHead.initialize(imgProfile, R.color.tabBack, R.color.colorPrimaryDark)
-        setImage()
+        setImage(false)
         animateParent()
         imgProfile.setOnClickListener {
             DialogProfileImg()
@@ -112,19 +113,15 @@ class FragmentMyProfile : MyFragment(), ProgressInjection.ProgressInjectionListe
         txtMyPhone.text = phone
     }
 
-    private fun setImage() {
-        StudentProfilePresenter(object : StudentProfilePresenter.StudentProfileResult {
-            override fun studentImgData(data: ByteArray?) {
-                AF().setImage(imgProfile, data, true)
-            }
-        }).downMyImg()
+    private fun setImage(new:Boolean) {
+        AF().setImage(imgProfile, StudentProfile.baseUrl+"downMyImg", 0, new, true)
     }
 
     fun changeImg(b: Bitmap) {
         val file = AF().convertBitMapToFile(b, ctx, "profile")
         StudentProfilePresenter(object : StudentProfilePresenter.StudentProfileResult {
             override fun upStudentImgRes(ok: Boolean) {
-                setImage()
+                setImage(true)
             }
         }).upMyImg(file)
     }

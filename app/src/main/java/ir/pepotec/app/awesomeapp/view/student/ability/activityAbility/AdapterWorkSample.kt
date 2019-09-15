@@ -63,7 +63,7 @@ class AdapterWorkSample(
     private fun downImage(id: String, v: ImageView) {
         WorkSamplePresenter(object : WorkSamplePresenter.WorkSampleResult {
             override fun workSampleImgData(data: ByteArray?) {
-                AF().setImage(v, data)
+               // AF().setImage(v, data)
             }
         }).workSampleImg(id)
     }

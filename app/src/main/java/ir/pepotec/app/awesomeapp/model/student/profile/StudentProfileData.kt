@@ -10,15 +10,16 @@ data class StudentProfileData
     val last_time: String,
     val user_id: Int,
     val its_friend: Boolean,
-    val user_name:String
-    )
-class StudentEyeLevel
-{
-    companion object
-    {
-        val getFromServer:Int = -1
-        val allUser:Int = 0
-        val justFriends:Int = 1
+    val user_name: String,
+    var account: Boolean = false,
+    val owner:Boolean = false
+)
+
+class StudentEyeLevel {
+    companion object {
+        val getFromServer: Int = -1
+        val allUser: Int = 0
+        val justFriends: Int = 1
         val nobody = 2
     }
 }

@@ -8,17 +8,21 @@ import ir.pepotec.app.awesomeapp.view.uses.App
 import ir.pepotec.app.awesomeapp.view.uses.MyActivity
 
 class ActivitySearch : MyActivity() {
+
+    var groupId = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.content_common)
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
         App.instanse = this
-        val flag = intent?.extras?.getString("flag") ?: "student"
-        when (flag)
-        {
-            "student" -> changeView(FragmentStudentSearch())
-            "ability" -> changeView(FragmentAbilitySearch())
-        }
+        groupId = intent?.extras?.getInt("groupId") ?: -1
+        changeView(
+            when (intent?.extras?.getString("flag") ?: "student") {
+                "ability" -> FragmentAbilitySearch()
+                else -> FragmentStudentSearch().apply { groupId = this@ActivitySearch.groupId }
+            }
+        )
 
     }
 

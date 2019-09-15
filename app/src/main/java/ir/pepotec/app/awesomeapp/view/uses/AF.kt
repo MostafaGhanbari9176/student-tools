@@ -1,6 +1,7 @@
 package ir.pepotec.app.awesomeapp.view.uses
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.widget.ImageView
@@ -16,7 +17,12 @@ import android.app.AlarmManager
 import android.content.Context.ALARM_SERVICE
 import android.app.PendingIntent
 import android.content.Intent
-import ir.pepotec.app.awesomeapp.view.student.chat.ServiceChat
+import android.graphics.Point
+import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.signature.MediaStoreSignature
+import ir.pepotec.app.awesomeapp.model.ApiClient
+import ir.pepotec.app.awesomeapp.model.user.UserDb
+import ir.pepotec.app.awesomeapp.view.chat.ServiceChat
 
 
 class AF {
@@ -41,19 +47,32 @@ class AF {
         return f
     }
 
-    @SuppressLint("CheckResult")
-    fun setImage(img: ImageView, data: Any?, cache:Boolean = false) {
-        val rOption:RequestOptions = RequestOptions()
-        if(!cache)
-        {
+
+    fun setImage(img: ImageView, url: String, imgId: Int, new:Boolean, cache: Boolean = false) {
+        val rOption = RequestOptions()
+        if (!cache) {
             rOption.diskCacheStrategy(DiskCacheStrategy.NONE)
             rOption.skipMemoryCache(true)
         }
-        rOption.error(R.drawable.ic_broken_img)
-        rOption.centerCrop()
+
         Glide.with(App.instanse)
-            .load(data)
+            .load(ApiClient.serverAddress + url + "?phone=${UserDb().getUserPhone()}&apiCode=${UserDb().getUserApiCode()}&imgId=$imgId"+if(new) "&new=1" else "")
             .apply(rOption)
+            .centerCrop()
+            .error(R.drawable.ic_broken_img)
+            .into(img)
+    }
+
+    fun setImage(img: ImageView, path: String, cache: Boolean = false) {
+        val rOption = RequestOptions()
+        if (!cache) {
+            rOption.diskCacheStrategy(DiskCacheStrategy.NONE)
+            rOption.skipMemoryCache(true)
+        }
+        Glide.with(App.instanse as MyActivity)
+            .load(path)
+            .apply(rOption)
+            .placeholder(R.drawable.ic_glide_place_holder)
             .into(img)
     }
 

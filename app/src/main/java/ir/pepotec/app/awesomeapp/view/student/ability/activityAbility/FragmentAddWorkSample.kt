@@ -84,14 +84,14 @@ class FragmentAddWorkSample : MyFragment() {
         val file = AF().convertBitMapToFile(b, ctx, "image1")
         imgList.add(file)
         btnChooseImgAddWorkSample.text = "انتخاب عکس دیگر (الزامی نیست)"
-        AF().setImage(imgAddWorkSample1, file)
+       // AF().setImage(imgAddWorkSample1, file)
         LLAddWorkSample1.visibility = View.VISIBLE
     }
 
     fun image2(b: Bitmap) {
         val file = AF().convertBitMapToFile(b, ctx, "image2")
         imgList.add(file)
-        AF().setImage(imgAddWorkSample2, file)
+       // AF().setImage(imgAddWorkSample2, file)
         LLAddWorkSample2.visibility = View.VISIBLE
     }
 
@@ -99,7 +99,7 @@ class FragmentAddWorkSample : MyFragment() {
         val file = AF().convertBitMapToFile(b, ctx, "image3")
         imgList.add(file)
         btnChooseImgAddWorkSample.visibility = View.GONE
-        AF().setImage(imgAddWorkSample3, file)
+        //AF().setImage(imgAddWorkSample3, file)
         LLAddWorkSample3.visibility = View.VISIBLE
     }
 

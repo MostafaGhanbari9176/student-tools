@@ -3,13 +3,12 @@ package ir.pepotec.app.awesomeapp.presenter.student
 import com.google.gson.Gson
 import ir.pepotec.app.awesomeapp.model.ServerRes
 import ir.pepotec.app.awesomeapp.model.student.ability.AbilityList
-import ir.pepotec.app.awesomeapp.model.student.chat.ChatListData
+import ir.pepotec.app.awesomeapp.model.chat.ChatListData
 import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfile
 import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileData
 import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileDb
 import ir.pepotec.app.awesomeapp.model.user.UserDb
 import ir.pepotec.app.awesomeapp.view.uses.AF
-import ir.pepotec.app.awesomeapp.view.uses.App
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -37,44 +36,42 @@ class StudentProfilePresenter(private val listener: StudentProfileResult) : Stud
         fun elPhoneRes(ok: Boolean, message: String, data: Int?) {}
         fun elImgRes(ok: Boolean, message: String, data: Int?) {}
         fun searchRes(ok: Boolean, message: String, data: ArrayList<StudentProfileData>?) {}
-        fun chatListRes(ok: Boolean, data: ArrayList<ChatListData>) {}
+        fun chatListRes(ok: Boolean, singleNum: Int, data: ArrayList<ChatListData>) {}
+        fun result(ok: Boolean, message:String) {}
     }
+
+    private val phone = UserDb().getUserPhone()
+    private val ac = UserDb().getUserApiCode()
 
     fun addStudent(sId: String, name: String, pass: String) {
 
-        val phone = UserDb().getUserPhone()
-        val ac = UserDb().getUserApiCode()
+
         //StudentProfileDb().saveData(sId,user_name)
         StudentProfile(this).addStudent(phone, ac, sId, name, pass)
     }
 
     fun search(key: String, num: Int, step: Int) {
-        val phone = UserDb().getUserPhone()
-        val ac = UserDb().getUserApiCode()
+
         StudentProfile(this).search(phone, ac, key, num, step)
     }
 
     fun myProfile() {
-        val phone = UserDb().getUserPhone()
-        val ac = UserDb().getUserApiCode()
+
         StudentProfile(this).myProfile(phone, ac)
     }
 
     fun downMyImg() {
-        val phone = UserDb().getUserPhone()
-        val ac = UserDb().getUserApiCode()
+
         StudentProfile(this).downMyImg(phone, ac)
     }
 
     fun downOtherImg(userId: Int) {
-        val phone = UserDb().getUserPhone()
-        val ac = UserDb().getUserApiCode()
+
         StudentProfile(this).downOtherImg(phone, ac, userId)
     }
 
     fun upMyImg(file: File) {
-        val phone = UserDb().getUserPhone()
-        val ac = UserDb().getUserApiCode()
+
 
         val phoneBody = RequestBody.create(MultipartBody.FORM, phone)
         val acBody = RequestBody.create(MultipartBody.FORM, ac)
@@ -85,76 +82,85 @@ class StudentProfilePresenter(private val listener: StudentProfileResult) : Stud
     }
 
     fun getFriendList() {
-        val phone = UserDb().getUserPhone()
-        val ac = UserDb().getUserApiCode()
+
         StudentProfile(this).getFriendList(phone, ac)
     }
 
     fun addFriend(friendId: Int) {
-        val phone = UserDb().getUserPhone()
-        val ac = UserDb().getUserApiCode()
+
         StudentProfile(this).addFriend(phone, ac, friendId)
     }
 
     fun deleteFriend(friendId: Int) {
-        val phone = UserDb().getUserPhone()
-        val ac = UserDb().getUserApiCode()
+
         StudentProfile(this).deleteFriend(phone, ac, friendId)
     }
 
     fun saveAboutMe(text: String) {
-        val phone = UserDb().getUserPhone()
-        val ac = UserDb().getUserApiCode()
+
         StudentProfile(this).saveAboutMe(phone, ac, text)
     }
 
     fun getAboutMe() {
-        val phone = UserDb().getUserPhone()
-        val ac = UserDb().getUserApiCode()
+
         StudentProfile(this).getAboutMe(phone, ac)
     }
 
     fun eLName(code: Int) {
-        val phone = UserDb().getUserPhone()
-        val ac = UserDb().getUserApiCode()
+
         StudentProfile(this).eLName(phone, ac, code)
     }
 
     fun eLPhone(code: Int) {
-        val phone = UserDb().getUserPhone()
-        val ac = UserDb().getUserApiCode()
+
         StudentProfile(this).eLPhone(phone, ac, code)
     }
 
     fun eLImg(code: Int) {
-        val phone = UserDb().getUserPhone()
-        val ac = UserDb().getUserApiCode()
+
         StudentProfile(this).eLImg(phone, ac, code)
     }
 
     fun otherProfile(userId: Int) {
-        val phone = UserDb().getUserPhone()
-        val ac = UserDb().getUserApiCode()
+
         StudentProfile(this).getOtherProfile(phone, ac, userId)
     }
 
     fun getChatList() {
-        val phone = UserDb().getUserPhone()
-        val ac = UserDb().getUserApiCode()
+
         StudentProfile(object : StudentProfile.StudentProfileResponse {
             override fun otherProfileData(res: ServerRes?) {
                 val data = ArrayList<ChatListData>()
+                var singleNum = 0
                 res?.let {
-                    for (o in it.data)
-                        data.add(Gson().fromJson(o, ChatListData::class.java))
+                    for (i in it.data.indices) {
+                        if (i == 0)
+                            singleNum = it.data[0].toInt()
+                        else
+                            data.add(Gson().fromJson(it.data[i], ChatListData::class.java))
+                    }
                 }
-                listener.chatListRes(res?.code == ServerRes.ok, data)
+                listener.chatListRes(res?.code == ServerRes.ok, singleNum, data)
             }
         }).getChatList(phone, ac)
     }
 
+    fun changeOnline(value:Int)
+    {
+        StudentProfile(object:StudentProfile.StudentProfileResponse{}).changeOnline(phone ,ac, value)
+    }
+
+    fun lastSeen(userId: Int)
+    {
+        StudentProfile(object:StudentProfile.StudentProfileResponse{
+            override fun result(res: ServerRes?) {
+                listener.result(res?.code == ServerRes.ok, res?.message ?: "offline")
+            }
+        }).getLastSeen(phone, ac, userId)
+    }
+
     override fun addStudentRes(res: ServerRes?) {
-        if(res?.code == ServerRes.ok)
+        if (res?.code == ServerRes.ok)
             StudentProfileDb().isLogIn = true
         listener.addStudentRes(res?.code == ServerRes.ok, res?.message ?: AF().serverMessage(res?.code ?: -1))
 

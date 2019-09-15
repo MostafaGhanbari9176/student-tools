@@ -1,4 +1,4 @@
-package ir.pepotec.app.awesomeapp.model.student.chat
+package ir.pepotec.app.awesomeapp.model.chat
 
 import android.content.ContentValues
 import android.database.Cursor
@@ -6,12 +6,12 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import ir.pepotec.app.awesomeapp.view.uses.App
 
-class ChatMessageDb(private val userId: Int) : SQLiteOpenHelper(App.instanse, "chat_message$userId", null, 1) {
+class ChatMessageDb(chat_id: Int, kind_id:String) : SQLiteOpenHelper(App.instanse, "chat_message$kind_id$chat_id", null, 1) {
 
-    private val tbName = "m$userId"
+    private val tbName = "$kind_id$chat_id"
 
     override fun onCreate(db: SQLiteDatabase?) {
-        db?.execSQL("CREATE TABLE $tbName (m_id INTEGER PRIMARY KEY, m_text TEXT, its_my BOOLEAN, send_date TEXT, send_time TEXT, status INTEGER, file_id INTEGER, f_path TEXT)")
+        db?.execSQL("CREATE TABLE $tbName (m_id INTEGER PRIMARY KEY, m_text TEXT, its_my BOOLEAN, send_date TEXT, send_time TEXT, status INTEGER, file_id INTEGER, f_path TEXT, user_id INTEGER, i_id INTEGER)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -33,7 +33,9 @@ class ChatMessageDb(private val userId: Int) : SQLiteOpenHelper(App.instanse, "c
                             put("its_my", its_my)
                             put("file_id", file_id)
                             put("f_path", fPath ?: "")
+                            put("user_id", user_id)
                             put("status", status)
+                            put("i_id", i_id)
                         }
                     })
             }
@@ -50,7 +52,7 @@ class ChatMessageDb(private val userId: Int) : SQLiteOpenHelper(App.instanse, "c
                 data.add(
                     ChatMessageData(
                         cursor.getInt(0),
-                        userId,
+                        cursor.getInt(8),
                         cursor.getInt(2) == 1,
                         cursor.getString(3),
                         cursor.getString(4),
@@ -59,6 +61,7 @@ class ChatMessageDb(private val userId: Int) : SQLiteOpenHelper(App.instanse, "c
                         cursor.getInt(6),
                         0,
                         cursor.getString(7),
+                        cursor.getInt(9),
                         false
                     )
                 )
@@ -125,6 +128,7 @@ class ChatMessageDb(private val userId: Int) : SQLiteOpenHelper(App.instanse, "c
                         put("file_id", file_id)
                         put("f_path", fPath ?: "")
                         put("status", status)
+                        put("user_id", user_id)
                     }
                 })
 

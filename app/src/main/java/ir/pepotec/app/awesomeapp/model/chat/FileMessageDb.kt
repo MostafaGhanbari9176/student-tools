@@ -1,4 +1,4 @@
-package ir.pepotec.app.awesomeapp.model.student.chat
+package ir.pepotec.app.awesomeapp.model.chat
 
 import android.content.ContentValues
 import android.database.Cursor
@@ -11,14 +11,14 @@ class FileMessageDb : SQLiteOpenHelper(App.instanse, "message_file_db", null, 1)
     val tbName = "message_file_table"
 
     override fun onCreate(db: SQLiteDatabase?) {
-        db?.execSQL("CREATE TABLE $tbName (m_id INTEGER PRIMARY KEY , m_text TEXT, f_path TEXT, user_id INTEGER)")
+        db?.execSQL("CREATE TABLE $tbName (m_id INTEGER PRIMARY KEY , m_text TEXT, f_path TEXT, chat_id INTEGER, kind_id TEXT)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL("DROP TABLE IF EXISTS $tbName")
     }
 
-    fun saveData(data: ChatMessageData) {
+    fun saveData(data: ChatMessageData, chat_id:Int, kind_id:Int) {
         this.writableDatabase.apply {
 
             insert(tbName, null,
@@ -29,7 +29,8 @@ class FileMessageDb : SQLiteOpenHelper(App.instanse, "message_file_db", null, 1)
                         put("m_text", m_text)
                         put("m_id", m_id)
                         put("f_path", fPath)
-                        put("user_id", user_id)
+                        put("chat_id", chat_id)
+                        put("kind_id", kind_id)
                     }
                 })
 
@@ -37,10 +38,10 @@ class FileMessageDb : SQLiteOpenHelper(App.instanse, "message_file_db", null, 1)
         }
     }
 
-    fun getData(userId:Int): ArrayList<ChatMessageData> {
+    fun getData(chat_id:Int, kind_id:String): ArrayList<ChatMessageData> {
         val data = ArrayList<ChatMessageData>()
         val reader = this.readableDatabase
-        val cursor: Cursor = reader.rawQuery("SELECT * FROM $tbName WHERE user_id = $userId ORDER BY m_id ASC", null)
+        val cursor: Cursor = reader.rawQuery("SELECT * FROM $tbName WHERE chat_id = $chat_id AND kind_id = '$kind_id' ORDER BY m_id ASC", null)
         if (cursor.moveToFirst()) {
             do {
                 data.add(
@@ -55,6 +56,7 @@ class FileMessageDb : SQLiteOpenHelper(App.instanse, "message_file_db", null, 1)
                         0,
                         0,
                         cursor.getString(2),
+                        0,
                         false
                     )
                 )

@@ -136,4 +136,26 @@ interface StudentProfileApi {
         @Field("apiCode") apiCode: String
     ): Call<ServerRes>
 
+    @FormUrlEncoded
+    @POST("${StudentProfile.baseUrl}online")
+    fun online(
+        @Field("phone") phone: String,
+        @Field("apiCode") apiCode: String
+    ): Call<ServerRes>
+
+    @FormUrlEncoded
+    @POST("${StudentProfile.baseUrl}offline")
+    fun offline(
+        @Field("phone") phone: String,
+        @Field("apiCode") apiCode: String
+    ): Call<ServerRes>
+
+    @FormUrlEncoded
+    @POST("${StudentProfile.baseUrl}lastSeen")
+    fun lastSeen(
+        @Field("phone") phone: String,
+        @Field("apiCode") apiCode: String,
+        @Field("otherId") userId: Int
+    ): Call<ServerRes>
+
 }

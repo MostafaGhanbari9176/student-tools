@@ -6,11 +6,8 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import ir.pepotec.app.awesomeapp.R
-import ir.pepotec.app.awesomeapp.view.student.AdapterVPStudent
 import ir.pepotec.app.awesomeapp.view.uses.App
 import ir.pepotec.app.awesomeapp.view.uses.MyActivity
-import ir.pepotec.app.awesomeapp.view.uses.VPModel
-import kotlinx.android.synthetic.main.fragment_blog.*
 
 class ActivityBlog:MyActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

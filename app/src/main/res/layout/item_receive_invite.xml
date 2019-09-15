@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="4dp"
+        android:id="@+id/itemReceiveInviteParent"
+        android:layoutDirection="rtl"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+>
+    <LinearLayout
+            android:padding="8dp"
+            android:id="@+id/LLDateItemReceiveInvite"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/receive"
+    >
+        <TextView
+                android:gravity="center"
+                android:textSize="@dimen/txt"
+                android:textColor="@color/txtAccent"
+                android:paddingStart="12dp"
+                android:paddingBottom="8dp"
+                android:text="دعوت شده اید"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+        </TextView>
+        <TextView
+                android:id="@+id/txtItemReceiveInvite"
+                android:textSize="@dimen/txt"
+                android:textColor="@color/colorPrimaryDark"
+                android:paddingStart="12dp"
+                android:paddingBottom="8dp"
+                android:text="@string/aboutMeInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+        </TextView>
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAcceptInviteReceive"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:text="پذیرفتن دعوت"
+                app:strokeColor="@color/txtPrimary"
+                android:textColor="@color/txtAccent"
+
+        />
+        <TextView
+                android:layout_gravity="end"
+                android:layout_marginEnd="8dp"
+                android:text="1397/02/21    22:25"
+                android:textColor="@color/colorPrimaryLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtDateReceiveInvite"/>
+
+    </LinearLayout>
+</LinearLayout>

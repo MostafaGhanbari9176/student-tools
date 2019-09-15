@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="ir.pepotec.app.awesomeapp">
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -53,7 +54,7 @@
                 android:windowSoftInputMode="stateHidden"
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme"
-                android:name=".view.student.chat.messageList.ActivityMessageList"/>
+                android:name=".view.chat.ActivityChat"/>
         <activity
                 android:windowSoftInputMode="stateHidden"
                 android:screenOrientation="portrait"
@@ -69,7 +70,7 @@
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme"
                 android:name=".view.blog.ActivityBlog"/>
-        <service android:name=".view.student.chat.ServiceChat"/>
+        <service android:name=".view.chat.ServiceChat"/>
     </application>
 
 </manifest>

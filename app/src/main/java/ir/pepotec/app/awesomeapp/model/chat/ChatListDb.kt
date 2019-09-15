@@ -1,4 +1,4 @@
-package ir.pepotec.app.awesomeapp.model.student.chat
+package ir.pepotec.app.awesomeapp.model.chat
 
 import android.content.ContentValues
 import android.database.Cursor
@@ -11,29 +11,29 @@ class ChatListDb : SQLiteOpenHelper(App.instanse, "chat_list", null, 1) {
     val tbName = "chat_list_tb"
 
     override fun onCreate(db: SQLiteDatabase?) {
-        db?.execSQL("CREATE TABLE $tbName (c_id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER UNIQUE, s_id TEXT, last_message TEXT DEFAULT ' ')")
+        db?.execSQL("CREATE TABLE $tbName (c_id INTEGER PRIMARY KEY AUTOINCREMENT, chat_id INTEGER , chat_subject TEXT, last_message TEXT DEFAULT ' ', kind_id TEXT)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL("DROP TABLE IF EXISTS $tbName")
     }
 
-    fun lastId():Int {
+    fun lastId(): Int {
         var id = -1
         val reader = this.readableDatabase
-        val cursor:Cursor = reader.rawQuery("SELECT c_id FROM $tbName ORDER BY c_id DESC LIMIT 1", null)
-        if(cursor.moveToFirst())
+        val cursor: Cursor = reader.rawQuery("SELECT c_id FROM $tbName ORDER BY c_id DESC LIMIT 1", null)
+        if (cursor.moveToFirst())
             id = cursor.getInt(0)
         cursor.close()
         reader.close()
         return id
     }
 
-    fun firstId():Int {
+    fun firstId(): Int {
         var id = -1
         val reader = this.readableDatabase
-        val cursor:Cursor = reader.rawQuery("SELECT c_id FROM $tbName ORDER BY c_id ASC LIMIT 1", null)
-        if(cursor.moveToFirst())
+        val cursor: Cursor = reader.rawQuery("SELECT c_id FROM $tbName ORDER BY c_id ASC LIMIT 1", null)
+        if (cursor.moveToFirst())
             id = cursor.getInt(0)
         cursor.close()
         reader.close()
@@ -46,8 +46,8 @@ class ChatListDb : SQLiteOpenHelper(App.instanse, "chat_list", null, 1) {
                 ContentValues().apply {
                     with(data)
                     {
-                        put("user_id", user_id)
-                        put("s_id", s_id)
+                        put("chat_id", chat_id)
+                        put("chat_subject", chat_subject)
                         put("last_message", message ?: "")
                     }
                 })
@@ -62,8 +62,9 @@ class ChatListDb : SQLiteOpenHelper(App.instanse, "chat_list", null, 1) {
                     ContentValues().apply {
                         with(o)
                         {
-                            put("user_id", user_id)
-                            put("s_id", s_id)
+                            put("chat_id", chat_id)
+                            put("kind_id", kind_id)
+                            put("chat_subject", chat_subject)
                             put("last_message", message ?: "")
                         }
                     })
@@ -72,15 +73,16 @@ class ChatListDb : SQLiteOpenHelper(App.instanse, "chat_list", null, 1) {
         }
     }
 
-    fun getData(): ArrayList<ChatListData> {
+    fun getData(kind_id:String): ArrayList<ChatListData> {
         val reader = this.readableDatabase
-        val cursor: Cursor = reader.rawQuery("SELECT * FROM $tbName", null)
+        val cursor: Cursor = reader.rawQuery("SELECT * FROM $tbName WHERE kind_id = '$kind_id'", null)
         val data = ArrayList<ChatListData>()
         if (cursor.moveToFirst()) {
             do {
                 data.add(
                     ChatListData(
                         cursor.getInt(1),
+                        cursor.getString(4),
                         cursor.getString(2),
                         cursor.getString(3)
                     )
@@ -92,20 +94,53 @@ class ChatListDb : SQLiteOpenHelper(App.instanse, "chat_list", null, 1) {
         return data
     }
 
-    fun getSingle(id:Int): ChatListData? {
+    fun getAllData(): ArrayList<ChatListData> {
         val reader = this.readableDatabase
-        val cursor: Cursor = reader.rawQuery("SELECT * FROM $tbName WHERE c_id = $id", null)
-        var data:ChatListData? = null
+        val cursor: Cursor = reader.rawQuery("SELECT * FROM $tbName", null)
+        val data = ArrayList<ChatListData>()
         if (cursor.moveToFirst()) {
-            data = ChatListData(
+            do {
+                data.add(
+                    ChatListData(
                         cursor.getInt(1),
+                        cursor.getString(4),
                         cursor.getString(2),
                         cursor.getString(3)
                     )
+                )
+            } while (cursor.moveToNext())
         }
         cursor.close()
         reader.close()
         return data
+    }
+
+    fun getSingle(id: Int): ChatListData? {
+        val reader = this.readableDatabase
+        val cursor: Cursor = reader.rawQuery("SELECT * FROM $tbName WHERE c_id = $id", null)
+        var data: ChatListData? = null
+        if (cursor.moveToFirst()) {
+            data = ChatListData(
+                cursor.getInt(1),
+                cursor.getString(4),
+                cursor.getString(2),
+                cursor.getString(3)
+            )
+        }
+        cursor.close()
+        reader.close()
+        return data
+    }
+
+    fun getSubject(chat_id:Int, kind_id:String):String{
+        var sub = ""
+        val reader = this.readableDatabase
+        val cursor = reader.rawQuery("SELECT chat_subject FROM $tbName WHERE chat_id = $chat_id AND kind_id = '$kind_id'",null)
+        if(cursor.moveToFirst())
+        {
+            sub = cursor.getString(0)
+        }
+        return sub
     }
 
     fun itsExists(userId: Int): Boolean {
@@ -122,7 +157,7 @@ class ChatListDb : SQLiteOpenHelper(App.instanse, "chat_list", null, 1) {
 
     fun updateMessage(userId: Int, message: String) {
         this.writableDatabase.apply {
-            execSQL("UPDATE $tbName SET last_message = $message WHERE user_id = $userId")
+            execSQL("UPDATE $tbName SET last_message = $message WHERE chat_id = $userId")
             close()
         }
     }
@@ -134,8 +169,7 @@ class ChatListDb : SQLiteOpenHelper(App.instanse, "chat_list", null, 1) {
         }
     }
 
-    fun deleteDb()
-    {
+    fun deleteDb() {
         this.writableDatabase.apply {
             App.instanse.deleteDatabase(path)
             close()

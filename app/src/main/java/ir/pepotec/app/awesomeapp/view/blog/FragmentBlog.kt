@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ir.pepotec.app.awesomeapp.R
-import ir.pepotec.app.awesomeapp.view.student.AdapterVPStudent
+import ir.pepotec.app.awesomeapp.view.uses.AdapterVP
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import ir.pepotec.app.awesomeapp.view.uses.VPModel
 import kotlinx.android.synthetic.main.fragment_blog.*
@@ -23,7 +23,7 @@ class FragmentBlog : MyFragment() {
     }
 
     private fun setUpVP() {
-        val adapter = AdapterVPStudent(childFragmentManager)
+        val adapter = AdapterVP(childFragmentManager)
         tabLayoutBlog.setupWithViewPager(VPBlog)
         val f1 = FragmentBlogData()
         f1.dataMethode = "all"

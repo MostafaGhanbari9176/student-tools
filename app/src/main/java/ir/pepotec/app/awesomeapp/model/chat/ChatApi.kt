@@ -1,4 +1,4 @@
-package ir.pepotec.app.awesomeapp.model.student.chat
+package ir.pepotec.app.awesomeapp.model.chat
 
 import ir.pepotec.app.awesomeapp.model.ServerRes
 import okhttp3.MultipartBody
@@ -13,7 +13,8 @@ interface ChatApi {
     fun getLastMessage(
         @Field("phone") phone:String,
         @Field("apiCode") apiCode:String,
-        @Field("otherId") userId:Int
+        @Field("chatId") chat_id:Int,
+        @Field("kindId") kind_id:String
     ):Call<ServerRes>
 
     @FormUrlEncoded
@@ -21,7 +22,8 @@ interface ChatApi {
     fun getOldMessage(
         @Field("phone") phone:String,
         @Field("apiCode") apiCode:String,
-        @Field("otherId") userId:Int,
+        @Field("chatId") chat_id:Int,
+        @Field("kindId") kind_id:String,
         @Field("lastId") lastId:Int
     ):Call<ServerRes>
 
@@ -30,8 +32,8 @@ interface ChatApi {
     fun getNewMessage(
         @Field("phone") phone:String,
         @Field("apiCode") apiCode:String,
-        @Field("otherId") userId:Int,
-        @Field("lastId") lastId:Int
+        @Field("kindId") kind_id:String,
+        @Field("reqData[]") reqData:ArrayList<String>
     ):Call<ServerRes>
 
     @FormUrlEncoded
@@ -39,7 +41,8 @@ interface ChatApi {
     fun sendMessage(
         @Field("phone") phone:String,
         @Field("apiCode") apiCode:String,
-        @Field("otherId") userId:Int,
+        @Field("chatId") chat_id:Int,
+        @Field("kindId") kind_id:String,
         @Field("message[]") messageList:ArrayList<String>
     ):Call<ServerRes>
 
@@ -48,8 +51,10 @@ interface ChatApi {
     fun sendFileMessage(
         @Part("phone") phone:RequestBody,
         @Part("apiCode") apiCode:RequestBody,
+        @Part("chatId") chat_id:RequestBody,
+        @Part("kindId") kind_id:RequestBody,
         @Part("message") message:RequestBody,
-        @Part("otherId") userId:RequestBody,
+        @Part("userId") user_id:RequestBody,
         @Part("pathId") pathId:RequestBody,
         @Part file:MultipartBody.Part
     ):Call<ServerRes>
@@ -59,7 +64,8 @@ interface ChatApi {
     fun updateSeen(
         @Field("phone") phone:String,
         @Field("apiCode") apiCode:String,
-        @Field("otherId") otherId:Int
+        @Field("chatId") chat_id:Int,
+        @Field("kindId") kind_id:String
     ):Call<ServerRes>
 
 }
