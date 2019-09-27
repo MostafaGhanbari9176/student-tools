@@ -1,22 +1,17 @@
 package ir.pepotec.app.awesomeapp.view.student.ability.activityAbility
 
 import android.content.DialogInterface
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.graphics.Point
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.PopupMenu
 import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.model.student.ability.AbilityStatus
+import ir.pepotec.app.awesomeapp.model.student.workSample.WorkSample
 import ir.pepotec.app.awesomeapp.model.student.workSample.WorkSampleData
 import ir.pepotec.app.awesomeapp.presenter.student.WorkSamplePresenter
 import ir.pepotec.app.awesomeapp.view.uses.*
@@ -24,8 +19,7 @@ import kotlinx.android.synthetic.main.fragment_show_work_sample.*
 
 class FragmentShowWorkSample : MyFragment() {
 
-    private lateinit var progressInjection: ProgressInjection
-    private val progress = DialogProgress()
+    private val progress = DialogProgress { getData() }
     private lateinit var popMenu: PopupMenu
     var workSampleId = -1
     var itsMy = false
@@ -37,23 +31,19 @@ class FragmentShowWorkSample : MyFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        progressInjection = ProgressInjection(object : ProgressInjection.ProgressInjectionListener {
-            override fun pressTryAgain() {
-                getData()
-            }
-        }, ctx, view as ViewGroup, R.layout.fragment_show_work_sample)
         getData()
     }
 
     private fun getData() {
-        progressInjection.show()
+        this.progress.show()
         WorkSamplePresenter(object : WorkSamplePresenter.WorkSampleResult {
             override fun workSampleData(ok: Boolean, message: String, data: WorkSampleData?) {
                 if (ok) {
-                    progressInjection.cancel()
+                    progress.cancel()
                     init(data!!)
-                } else
-                    progressInjection.error(message)
+                } else {
+                    progress.error(message)
+                }
             }
         }).getWorkSample(workSampleId, itsMy)
     }
@@ -81,7 +71,7 @@ class FragmentShowWorkSample : MyFragment() {
                 AbilityStatus.radShode -> "رد شده"
                 else -> ""
             }
-            downImage(img_num)
+            setImage(img_num)
         }
 
         setUpPopMenu()
@@ -107,40 +97,35 @@ class FragmentShowWorkSample : MyFragment() {
         }).increaseSeen(workSampleId)
     }
 
-    private fun downImage(imgNum: Int) {
-        for (i in 1..imgNum) {
-            WorkSamplePresenter(object : WorkSamplePresenter.WorkSampleResult {
-                override fun workSampleImgData(data: ByteArray?) {
-                    stImage(data, i)
-                }
-            }).workSampleImg("$workSampleId${i - 1}")
+    private fun setImage(imgNum: Int) {
+        if (imgNum >= 1)
+            AF().setImageWithBounds(
+                img1ShowWorkSAmple,
+                WorkSample.baseUrl + "img",
+                "${workSampleId}0".toInt(),
+                false,
+                true
+            )
+        if (imgNum >= 2) {
+            CV2ShowWorkSample.visibility = View.VISIBLE
+            AF().setImageWithBounds(
+                img2ShowWorkSAmple,
+                WorkSample.baseUrl + "img",
+                "${workSampleId}1".toInt(),
+                false,
+                true
+            )
         }
-    }
-
-    private fun stImage(data: ByteArray?, imgNumber: Int) {
-        if (data == null || data.isEmpty())
-            return
-        val b: Bitmap = BitmapFactory.decodeByteArray(data, 0, data.size ?: 0)
-        val div: Float = b.height.toFloat() / b.width
-        val w = img1ShowWorkSAmple.width
-        val h = div * w
-        when (imgNumber) {
-            1 -> img1ShowWorkSAmple.apply {
-                layoutParams.height = h.toInt()
-                setImageBitmap(b)
-            }
-            2 -> img2ShowWorkSAmple.apply {
-                CV2ShowWorkSample.visibility = View.VISIBLE
-                layoutParams.height = h.toInt()
-                setImageBitmap(b)
-            }
-            3 -> img3ShowWorkSAmple.apply {
-                CV3ShowWorkSample.visibility = View.VISIBLE
-                layoutParams.height = h.toInt()
-                setImageBitmap(b)
-            }
+        if (imgNum >= 3) {
+            CV3ShowWorkSample.visibility = View.VISIBLE
+            AF().setImageWithBounds(
+                img3ShowWorkSAmple,
+                WorkSample.baseUrl + "img",
+                "${workSampleId}2".toInt(),
+                false,
+                true
+            )
         }
-
     }
 
     private fun setUpPopMenu() {
@@ -176,10 +161,10 @@ class FragmentShowWorkSample : MyFragment() {
     }
 
     private fun delete() {
-        progress.show()
+        this.progress.show()
         WorkSamplePresenter(object : WorkSamplePresenter.WorkSampleResult {
             override fun deleteWorkSampleResult(ok: Boolean, message: String) {
-                progress.cancel()
+                this@FragmentShowWorkSample.progress.cancel()
                 toast(message)
             }
         }).deleteWorkSample(workSampleId)

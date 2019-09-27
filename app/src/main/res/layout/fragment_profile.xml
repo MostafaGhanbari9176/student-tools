@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:background="@color/colorPrimaryDark"
+              android:background="@color/backGround"
               android:orientation="vertical"
               android:layoutDirection="rtl"
               android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                     android:padding="8dp"
                     android:layout_marginTop="16dp"
                     android:textSize="@dimen/txt"
-                    android:textColor="@color/light"
+                    android:textColor="@color/txtDark"
                     android:text="9431443"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
                     android:padding="8dp"
                     android:layout_marginTop="8dp"
                     android:textSize="@dimen/txt"
-                    android:textColor="@color/light"
+                    android:textColor="@color/txtDark"
                     android:drawableEnd="@drawable/ic_eye"
                     android:text="مصطفی قنبری"
                     android:drawablePadding="16dp"
@@ -56,7 +56,7 @@
                     android:padding="8dp"
                     android:layout_marginTop="8dp"
                     android:textSize="@dimen/txt"
-                    android:textColor="@color/light"
+                    android:textColor="@color/txtDark"
                     android:drawableEnd="@drawable/ic_eye"
                     android:text="09157474087"
                     android:drawablePadding="16dp"
@@ -80,7 +80,7 @@
                     android:id="@+id/btnFriendListMyProfile"
                     android:text="لیست دوستان"
                     android:drawableStart="@drawable/ic_people"
-                    android:textColor="@color/dark"
+                    android:textColor="@color/txtLight"
             />
             <com.google.android.material.button.MaterialButton
                     android:layout_width="0dp"
@@ -91,7 +91,7 @@
                     android:padding="8dp"
                     android:text="درباره من"
                     android:id="@+id/btnAboutMyProfile"
-                    android:textColor="@color/dark"
+                    android:textColor="@color/txtLight"
                     android:drawableStart="@drawable/ic_person"
                 />
 

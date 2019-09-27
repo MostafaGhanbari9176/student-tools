@@ -59,7 +59,7 @@ class FragmentMessageList : MyFragment(), ServiceChat.ChatInterface,
     var kind_id = ""
     var chat_id = -1
     private var fPath = ""
-    private val progress = DialogProgress()
+    private val progress = DialogProgress{}
     private var adapter: AdapterMessageList? = null
     private var chatService: ServiceChat? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

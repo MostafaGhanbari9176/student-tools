@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:cardBackgroundColor="@color/dark"
+        app:cardBackgroundColor="@color/light"
         android:layout_margin="4dp"
         app:cardCornerRadius="@dimen/radiusVSmall"
         android:layoutDirection="rtl"
@@ -24,7 +24,7 @@
                 android:id="@+id/txtItemFile"
                 android:gravity="center"
                 android:padding="8dp"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/txtDark"
                 android:textSize="@dimen/txt"
                 android:text="file"
                 android:maxLines="1"

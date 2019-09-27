@@ -22,7 +22,7 @@ class FragmentAddWorkSample : MyFragment() {
     var workSampleId = -1
     var abilityId: Int = 0
     private val imgList = ArrayList<File>()
-    private val progress = DialogProgress()
+    private val progress = DialogProgress{}
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_add_work_sample, container, false)
@@ -84,14 +84,14 @@ class FragmentAddWorkSample : MyFragment() {
         val file = AF().convertBitMapToFile(b, ctx, "image1")
         imgList.add(file)
         btnChooseImgAddWorkSample.text = "انتخاب عکس دیگر (الزامی نیست)"
-       // AF().setImage(imgAddWorkSample1, file)
+        AF().setImage(imgAddWorkSample1, file.path)
         LLAddWorkSample1.visibility = View.VISIBLE
     }
 
     fun image2(b: Bitmap) {
         val file = AF().convertBitMapToFile(b, ctx, "image2")
         imgList.add(file)
-       // AF().setImage(imgAddWorkSample2, file)
+        AF().setImage(imgAddWorkSample2, file.path)
         LLAddWorkSample2.visibility = View.VISIBLE
     }
 
@@ -99,7 +99,7 @@ class FragmentAddWorkSample : MyFragment() {
         val file = AF().convertBitMapToFile(b, ctx, "image3")
         imgList.add(file)
         btnChooseImgAddWorkSample.visibility = View.GONE
-        //AF().setImage(imgAddWorkSample3, file)
+        AF().setImage(imgAddWorkSample3, file.path)
         LLAddWorkSample3.visibility = View.VISIBLE
     }
 

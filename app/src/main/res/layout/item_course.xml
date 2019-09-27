@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardBackgroundColor="@color/dark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        app:cardCornerRadius="4dp">
+
+    <RelativeLayout
+            android:layoutDirection="rtl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    >
+
+        <ImageView
+                android:layout_alignParentTop="true"
+                android:id="@+id/imgItemCourse"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:srcCompat="@drawable/ic_broken_img"
+        />
+
+
+        <TextView
+                android:padding="8dp"
+                android:layout_below="@id/imgItemCourse"
+                android:id="@+id/txtDateItemCourse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1397-04-04"
+                android:textColor="@color/light1"
+                android:textSize="@dimen/txtSmall"/>
+        <TextView
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@string/test"
+                android:layout_below="@id/txtDateItemCourse"
+                android:id="@+id/txtSubItemCourse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:gravity="start"
+                android:textColor="@color/light"/>
+        <LinearLayout
+                android:layout_below="@id/txtSubItemCourse"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary"/>
+        <LinearLayout
+                android:layout_margin="16dp"
+                android:layout_below="@id/txtSubItemCourse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:text="agency"
+                    android:textColor="@color/light1"
+                    android:textSize="@dimen/txt"
+                    android:id="@+id/txtOwnerNameItemCourse"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+            />
+            <TextView
+                    android:gravity="center"
+                    android:text="100"
+                    android:drawableEnd="@drawable/ic_eye"
+                    android:drawablePadding="4dp"
+                    android:textColor="@color/light1"
+                    android:textSize="@dimen/txtSmall"
+                    android:id="@+id/txtSeenItemCourse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+            />
+        </LinearLayout>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

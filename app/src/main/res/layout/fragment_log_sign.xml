@@ -7,14 +7,21 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent" android:orientation="vertical">
     <ImageView
-            app:srcCompat="@drawable/ic_camera"
+            app:srcCompat="@mipmap/ic_launcher"
             android:layout_width="@dimen/imgBig"
             android:layout_height="@dimen/imgBig"
-            android:contentDescription="X"/>
+            />
+    <TextView
+            android:text="هویج"
+            android:textSize="@dimen/txtBig"
+            android:textColor="@color/dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+    />
     <com.google.android.material.button.MaterialButton
             android:padding="8dp"
             android:textColor="@color/light"
-            app:strokeColor="@color/dark"
+            app:backgroundTint="@color/colorAccent"
             android:textSize="@dimen/txt"
             android:layout_marginTop="64dp"
             android:layout_marginStart="16dp"

@@ -11,7 +11,7 @@
             android:layout_marginBottom="4dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            app:cardBackgroundColor="@color/dark"
+            app:cardBackgroundColor="@color/light"
             android:orientation="vertical"
             app:cardCornerRadius="@dimen/radius"
             android:layout_width="match_parent"
@@ -33,14 +33,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                 <TextView
-                        android:textColor="@color/light"
+                        android:textColor="@color/colorPrimary"
                         android:padding="8dp"
                         android:text="9431443"
                         android:textSize="@dimen/txtSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/txtSIdChatContact"/>
                 <TextView
-                        android:textColor="@color/light1"
+                        android:textColor="@color/colorPrimaryDark"
                         android:padding="8dp"
                         android:text="سلام حالت چطوره ؟ خوبی ؟ چخبر ؟ میگم رفتی همونجایی که باید میرفتی ؟ "
                         android:textSize="@dimen/txtSmall"

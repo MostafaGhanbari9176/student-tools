@@ -33,7 +33,7 @@ class FragmentBlog : MyFragment() {
         f2.dataMethode = "like"
         adapter.addData(VPModel(f2, "محبوب"))
         VPBlog.adapter = adapter
-        VPBlog.setCurrentItem(1)
+        VPBlog.currentItem = 1
         VPBlog.offscreenPageLimit = 3
     }
 }

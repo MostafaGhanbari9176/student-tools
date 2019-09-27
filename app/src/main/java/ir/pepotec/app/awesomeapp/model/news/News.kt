@@ -18,19 +18,19 @@ class News(private val listener: Res) : Callback<ServerRes> {
 
     private val api: NewsApi = ApiClient.getClient().create(NewsApi::class.java)
 
-    public fun getFirstData(phone: String, apiCode: String) {
+     fun getFirstData(phone: String, apiCode: String) {
         api.getFirstData(phone, apiCode).apply { enqueue(this@News) }
     }
 
-    public fun get(phone: String, apiCode: String, gId: Int) {
+     fun get(phone: String, apiCode: String, gId: Int) {
         api.get(phone, apiCode, gId).apply { enqueue(this@News) }
     }
 
-    public fun getListData(phone: String, apiCode: String, gId: Int, num: Int, step: Int) {
+     fun getListData(phone: String, apiCode: String, gId: Int, num: Int, step: Int) {
         api.getListData(phone, apiCode, gId, num, step).apply { enqueue(this@News) }
     }
 
-    public fun getSpecial(phone: String, apiCode: String) {
+     fun getSpecial(phone: String, apiCode: String) {
         api.getSpecial(phone, apiCode).apply { enqueue(this@News) }
     }
 

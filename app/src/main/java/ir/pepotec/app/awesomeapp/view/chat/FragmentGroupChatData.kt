@@ -32,12 +32,12 @@ import kotlinx.android.synthetic.main.fragment_group_chat_data.*
 
 class FragmentGroupChatData : MyFragment() {
 
-    private val progress = DialogProgress()
+    private val progress = DialogProgress { getData() }
     var groupId = -1
     private var studentAdapter: AdapterFriendList? = null
     private var admin = false
     private var deletePosition = -1
-    private lateinit var deleteData:StudentProfileData
+    private lateinit var deleteData: StudentProfileData
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_group_chat_data, container, false)
@@ -93,12 +93,12 @@ class FragmentGroupChatData : MyFragment() {
         progress.show()
         GroupChatPresenter(object : GroupChatPresenter.Res {
             override fun result(ok: Boolean, message: String, data: GroupChatData?) {
-                progress.cancel()
                 if (ok) {
+                progress.cancel()
                     setData(data!!)
                     getMemberList()
                 } else
-                    toast(message)
+                    progress.error(message)
 
             }
         }).getData(groupId)
@@ -211,7 +211,7 @@ class FragmentGroupChatData : MyFragment() {
         setImage()
     }
 
-     fun setImage() {
+    fun setImage() {
         AF().setImage(imgGroupChatData, GroupChat.baseUrl + "downImg", groupId, false, cache = false)
     }
 

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layoutDirection="rtl"
+        android:background="@color/backGround"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+>
+<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+>
+
+    <ImageView
+            app:srcCompat="@drawable/ic_broken_img"
+            android:id="@+id/imgMore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    />
+
+    <LinearLayout
+            android:layout_below="@id/imgMore"
+            android:id="@+id/LLInfoMore"
+            android:background="@color/colorAccent"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    >
+        <TextView
+                android:text="1397-02-02"
+                android:gravity="start"
+                android:padding="8dp"
+                android:id="@+id/txtDateMore"
+                android:textColor="@color/txtLight"
+                android:textSize="@dimen/txtSmall"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+        />
+        <TextView
+                android:text="100"
+                android:gravity="center"
+                android:padding="8dp"
+                android:id="@+id/txtSeenMore"
+                android:textColor="@color/txtLight"
+                android:textSize="@dimen/txtSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_eye"
+                android:drawablePadding="4dp"
+        />
+    </LinearLayout>
+
+    <TextView
+            android:padding="16dp"
+            android:text="@string/test2"
+            android:gravity="start"
+            android:textSize="@dimen/txt"
+            android:textColor="@color/txtDark"
+            android:layout_below="@id/LLInfoMore"
+            android:id="@+id/txtOwnerMore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    />
+
+    <TextView
+            android:padding="16dp"
+            android:text="@string/test2"
+            android:gravity="start"
+            android:textSize="@dimen/txt"
+            android:textColor="@color/txtDark"
+            android:layout_below="@id/txtOwnerMore"
+            android:id="@+id/txtSubMore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    />
+
+    <TextView
+            android:padding="16dp"
+            android:text="@string/test"
+            android:gravity="start"
+            android:textSize="@dimen/txt"
+            android:textColor="@color/txtDark"
+            android:layout_below="@id/txtSubMore"
+            android:id="@+id/txtMore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    />
+
+    <TextView
+            android:visibility="gone"
+            android:autoLink="phone"
+            android:padding="16dp"
+            android:gravity="start"
+            android:textSize="@dimen/txt"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_below="@id/txtMore"
+            android:id="@+id/txtPhoneMore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    />
+
+    <TextView
+            android:visibility="gone"
+            android:autoLink="email"
+            android:padding="16dp"
+            android:gravity="start"
+            android:textSize="@dimen/txt"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_below="@id/txtPhoneMore"
+            android:id="@+id/txtEmailMore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    />
+
+    <TextView
+            android:visibility="gone"
+            android:autoLink="web"
+            android:padding="16dp"
+            android:gravity="start"
+            android:textSize="@dimen/txt"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_below="@id/txtEmailMore"
+            android:id="@+id/txtLink1More"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    />
+
+    <TextView
+            android:visibility="gone"
+            android:autoLink="web"
+            android:padding="16dp"
+            android:gravity="start"
+            android:textSize="@dimen/txt"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_below="@id/txtLink1More"
+            android:id="@+id/txtLink2More"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    />
+
+    <TextView
+            android:visibility="gone"
+            android:autoLink="web"
+            android:padding="16dp"
+            android:gravity="start"
+            android:textSize="@dimen/txt"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_below="@id/txtLink2More"
+            android:id="@+id/txtSocialMore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    />
+
+</RelativeLayout>
+</androidx.core.widget.NestedScrollView>

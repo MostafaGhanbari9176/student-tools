@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:cardBackgroundColor="@color/colorAccent"
+        app:cardBackgroundColor="@color/light"
         app:cardCornerRadius="@dimen/radius"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     <ImageView
+            android:tint="@color/colorPrimaryDark"
             android:id="@+id/imgSearchAbility"
             app:srcCompat="@drawable/ic_ability"
             android:layout_width="@dimen/img"
@@ -23,7 +24,7 @@
     <TextView
             android:id="@+id/txtSubjectSearchAbility"
             android:layout_marginStart="16dp"
-            android:textColor="@color/dark"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/txt"
             android:text="Subject"
             android:gravity="center"

@@ -11,6 +11,13 @@
         <item name="android:textColor">@color/dark</item>
         <item name="android:statusBarColor">@color/status</item>
         <item name="colorSecondary">@color/colorAccent</item>
+        <item name="colorOnPrimary">@color/dark</item>
+        <item name="colorOnSecondary">@color/light</item>
+    </style>
+
+    <style name="lightFab">
+        <item name="colorSecondary">@color/light</item>
+        <item name="colorAccent">@color/light</item>
         <item name="colorOnPrimary">@color/light</item>
         <item name="colorOnSecondary">@color/colorPrimaryDark</item>
     </style>
@@ -31,8 +38,12 @@
         <item name="cornerSizeBottomRight">@dimen/radius</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
 </resources>

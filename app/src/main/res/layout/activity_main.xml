@@ -6,19 +6,30 @@
         android:orientation="vertical"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layoutDirection="rtl"
-        android:background="@color/colorPrimary"
+        android:background="@color/backGround"
 >
+    <com.google.android.material.appbar.AppBarLayout
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    >
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tlbMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    />
+    </com.google.android.material.appbar.AppBarLayout>
     <androidx.appcompat.widget.ContentFrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:id="@+id/ContentMain"/>
     <com.google.android.material.bottomnavigation.BottomNavigationView
-            app:itemTextColor="@color/txtPrimary"
-            android:background="@color/dark"
-            app:itemIconTint="@color/txtPrimary"
+            app:itemTextColor="@color/light"
+            android:background="@color/colorPrimary"
+            app:itemIconTint="@color/light"
             android:id="@+id/bnvMain"
-            app:menu="@menu/menu_main"
+            app:menu="@menu/menu_nav_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 </LinearLayout>

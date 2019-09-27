@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--THEME-->
-    <color name="txtPrimary">@color/light</color>
-    <color name="txtAccent">@color/dark</color>
-    <color name="colorPrimary">#344955</color>
-    <color name="colorPrimaryDark">#232f34</color>
-    <color name="colorPrimaryLight">#4a6572</color>
-    <color name="colorAccent">#ffcc80</color>
+    <color name="txtDark">@color/dark</color>
+    <color name="txtLight">@color/light</color>
+    <color name="colorPrimary">#2196f3</color>
+    <color name="colorPrimaryDark">#0069c0</color>
+    <color name="colorPrimaryLight">#6ec6ff</color>
+    <color name="colorAccentLight">#4a6572</color>
+    <color name="colorAccent">#344955</color>
     <!--Original-->
     <color name="dark">#17262a</color>
     <color name="light">#fefefe</color>
     <color name="light1">#edf0f2</color>
     <color name="light2">#d2dbe0</color>
     <color name="light3">#a1a9ae</color>
-    <color name="redLight">#e57373</color>
+    <color name="redLight">#FFC7C7</color>
     <color name="redDark">#d32f2f</color>
     <color name="error">#f44336</color>
     <!--Status-->
@@ -22,14 +23,16 @@
     <color name="backGround">@color/light1</color>
     <color name="tabBack">@color/colorPrimary</color>
     <!--Dialog-->
-    <color name="dialogBack">@color/dark</color>
-    <color name="dialogText">@color/light</color>
+    <color name="dialogBack">@color/light</color>
+    <color name="dialogText">@color/colorPrimaryDark</color>
     <color name="dialogBtn">@color/colorAccent</color>
-    <color name="dialogBtnText">@color/colorPrimaryDark</color>
+    <color name="dialogBtnText">@color/txtLight</color>
     <color name="dialogHint">@color/colorPrimaryLight</color>
 
 
 
-    <color name="blogBack">@color/colorAccent</color>
-    <color name="blogDark">#D5A45B</color>
+    <color name="blogBack">@color/light</color>
+    <color name="blogDark">@color/colorAccent</color>
+    <color name="blogText">@color/dark</color>
+    <color name="blogText2">@color/colorPrimaryDark</color>
 </resources>

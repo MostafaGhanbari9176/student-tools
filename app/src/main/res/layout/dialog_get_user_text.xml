@@ -18,7 +18,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <EditText
-                android:inputType="textLongMessage"
+                android:inputType="textMultiLine"
                 android:autofillHints="ok"
                 android:maxLength="100"
                 android:lineSpacingExtra="@dimen/lineSpace"
@@ -41,7 +41,7 @@
                 android:visibility="gone"/>
         <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/LLBtnAboutMe" android:visibility="gone">
             <Button
                     android:textSize="@dimen/txt"
@@ -52,7 +52,7 @@
                     android:layout_marginBottom="32dp"
                     android:text="@string/btnSave"
                     android:textColor="@color/dialogBtnText"
-                    android:backgroundTint="@color/colorAccent"
+                    android:backgroundTint="@color/dialogBtn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content" android:id="@+id/btnSaveAboutMe"/>
             <Button
@@ -64,7 +64,7 @@
                     android:layout_marginBottom="32dp"
                     android:text="@string/btnCancel"
                     android:textColor="@color/dialogBtnText"
-                    android:backgroundTint="@color/colorAccent"
+                    android:backgroundTint="@color/dialogBtn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content" android:id="@+id/btnCancellAboutMe"/>
 

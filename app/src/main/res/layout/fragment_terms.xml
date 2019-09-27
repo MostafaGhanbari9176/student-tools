@@ -18,7 +18,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginBottom="16dp"
                 app:srcCompat="@drawable/ic_security"
-                android:tint="@color/colorAccent"
+                android:tint="@color/light"
                 android:layout_width="@dimen/imgBig"
                 android:layout_height="@dimen/imgBig"/>
         <TextView
@@ -59,7 +59,7 @@
                         android:id="@+id/btnNextTerms"
                         android:textSize="@dimen/txt"
                         android:layout_marginTop="16dp"
-                        android:textColor="@color/dark"
+                        android:textColor="@color/txtLight"
                         android:text="@string/next"
                         android:padding="8dp"
                         android:backgroundTint="@color/colorAccent"

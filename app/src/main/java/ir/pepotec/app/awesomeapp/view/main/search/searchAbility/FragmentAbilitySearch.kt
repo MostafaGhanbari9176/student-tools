@@ -14,13 +14,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.*
 import ir.pepotec.app.awesomeapp.R
-import ir.pepotec.app.awesomeapp.model.student.ability.Ability
 import ir.pepotec.app.awesomeapp.model.student.ability.AbilityData
-import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileData
 import ir.pepotec.app.awesomeapp.presenter.student.AbilityPresenter
-import ir.pepotec.app.awesomeapp.presenter.student.StudentProfilePresenter
+import ir.pepotec.app.awesomeapp.view.student.ability.activityAbility.FragmentShowAbility
 import ir.pepotec.app.awesomeapp.view.student.profile.activityProfile.ActivityProfile
-import ir.pepotec.app.awesomeapp.view.student.profile.activityProfile.friendList.AdapterFriendList
+import ir.pepotec.app.awesomeapp.view.uses.MyActivity
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import kotlinx.android.synthetic.main.fragment_search_list.*
 
@@ -88,7 +86,7 @@ class FragmentAbilitySearch : MyFragment() {
     private fun setUpRV(data: java.util.ArrayList<AbilityData>?) {
         RVSearch.layoutManager = LinearLayoutManager(ctx)
         adapter = AdapterAbilitySearch(data!!, {
-            startActivity(Intent(ctx, ActivityProfile::class.java).apply { putExtra("userId", it) })
+            (ctx as MyActivity).changeView(FragmentShowAbility().apply { abilityId = it.ability_id; itsMy = false; user_id = it.user_id })
         }, { reachedBottom() }
         )
         RVSearch.adapter = adapter
@@ -137,7 +135,7 @@ class FragmentAbilitySearch : MyFragment() {
                 })
                 setOnClickListener {
                     showSoftKeyBoard()
-                    toast("[-_-{_-_('.')-_-}_-_]")
+                   // toast("[-_-{_-_('.')-_-}_-_]")
                 }
             }
         })

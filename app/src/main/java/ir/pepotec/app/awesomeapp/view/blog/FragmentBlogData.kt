@@ -67,7 +67,12 @@ class FragmentBlogData : MyFragment(), AdapterBlog.AdapterBlogEvent {
 
     override fun like(position: Int) {
         adapter?.let {
-            it.data[position].liked = !(it.data[position].liked)
+            val v = it.data[position]
+            v.liked = !(it.data[position].liked)
+            if(v.liked)
+                v.like_num++
+            else
+                v.like_num--
             it.notifyItemChanged(position)
             BlogPresenter(object : BlogPresenter.BlogResult {
 

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import ir.pepotec.app.awesomeapp.R
+import ir.pepotec.app.awesomeapp.model.student.workSample.WorkSample
 import ir.pepotec.app.awesomeapp.model.student.workSample.workSampleList
 import ir.pepotec.app.awesomeapp.presenter.student.WorkSamplePresenter
 import ir.pepotec.app.awesomeapp.view.uses.AF
@@ -55,17 +56,12 @@ class AdapterWorkSample(
         (holder as MyHolder).itemView.apply {
             txtEyeNumberItemWorkSample.text = data.get(position - 1).seen_num.toString()
             txtLikeNumberItemWorkSample.text = data.get(position - 1).like_num.toString()
-            downImage("${data.get(position - 1).work_sample_id}0", imgItemWorkSample)
+            AF().setImage(imgItemWorkSample, WorkSample.baseUrl+"img", "${data[position - 1].work_sample_id}0".toInt(),
+                new = false,
+                cache = true
+            )
         }
 
-    }
-
-    private fun downImage(id: String, v: ImageView) {
-        WorkSamplePresenter(object : WorkSamplePresenter.WorkSampleResult {
-            override fun workSampleImgData(data: ByteArray?) {
-               // AF().setImage(v, data)
-            }
-        }).workSampleImg(id)
     }
 
 

@@ -10,11 +10,10 @@
             android:id="@+id/fabAbility"
             style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton.Icon"
             app:icon="@drawable/ic_ability"
-            android:textColor="@color/colorPrimaryDark"
+            android:theme="@style/lightFab"
             android:text="اندروید"
             android:textSize="@dimen/txt"
             android:layout_margin="16dp"
-            android:background="@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 </LinearLayout>

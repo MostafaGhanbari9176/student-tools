@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/backGround"
         android:layoutDirection="rtl"
         android:gravity="center"
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
             android:layout_alignParentTop="true"
             android:drawableStart="@drawable/ic_info"
             android:text="فقط فایل های با حداکثر حجم ده مگابایت نمایش داده می شود"
-            android:textColor="@color/light"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="@dimen/txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,6 +26,7 @@
             android:layout_height="wrap_content">
 
     <include
+            android:layout_margin="16dp"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -33,6 +34,7 @@
             layout="@layout/item_file"
     />
     <include
+            android:layout_margin="16dp"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

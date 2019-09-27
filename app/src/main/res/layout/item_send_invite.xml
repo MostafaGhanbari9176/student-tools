@@ -13,7 +13,7 @@
         android:background="@drawable/send">
     <TextView
             android:textSize="@dimen/txt"
-            android:textColor="@color/txtAccent"
+            android:textColor="@color/txtLight"
             android:paddingEnd="12dp"
             android:paddingBottom="8dp"
             android:text="دعوت کرده اید"
@@ -25,10 +25,10 @@
     <TextView
             android:id="@+id/txtSendItem"
             android:textSize="@dimen/txt"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/light"
             android:paddingEnd="12dp"
             android:paddingBottom="8dp"
-            android:text="@string/aboutMeInfo"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 

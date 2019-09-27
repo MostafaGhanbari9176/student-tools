@@ -20,7 +20,7 @@ import java.io.File
 
 class FragmentAbbBlog : MyFragment() {
 
-    private val progress = DialogProgress()
+    private val progress = DialogProgress{checkData()}
     private var f: File? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -41,6 +41,7 @@ class FragmentAbbBlog : MyFragment() {
         btnDeleteImgGetBlog.setOnClickListener {
             btnAddImgGetBlog.text = "افزودن عکس"
             imgGetBlog.setImageDrawable(ContextCompat.getDrawable(ctx, R.drawable.ic_image))
+            btnDeleteImgGetBlog.visibility = View.GONE
             f = null
         }
     }
@@ -60,10 +61,12 @@ class FragmentAbbBlog : MyFragment() {
         progress.show()
         BlogPresenter(object : BlogPresenter.BlogResult {
             override fun blogResult(ok: Boolean, message: String, data: ArrayList<BlogData>?) {
-                progress.cancel()
-                toast(message)
-                if (ok)
+                if (ok) {
+                    toast(message)
+                    progress.cancel()
                     (ctx as ActivityBlog).onBackPressed()
+                }else
+                    progress.error(message)
 
             }
         }).apply {
@@ -90,6 +93,7 @@ class FragmentAbbBlog : MyFragment() {
         f = AF().convertBitMapToFile(bm, ctx, "blog")
         imgGetBlog.setImageBitmap(bm)
         btnAddImgGetBlog.text = "تغییر عکس"
+        btnDeleteImgGetBlog.visibility = View.VISIBLE
     }
 
 }

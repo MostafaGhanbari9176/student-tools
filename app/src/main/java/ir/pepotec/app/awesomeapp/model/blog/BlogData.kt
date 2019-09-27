@@ -5,7 +5,7 @@ data class BlogData(
     val m_text:String,
     val m_date:String,
     val m_time:String,
-    val like_num:Int,
+    var like_num:Int,
     var liked:Boolean,
     var expand:Boolean = false,
     val file_id:Int,

@@ -1,27 +1,11 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-            app:showAsAction="always"
-            android:id="@+id/mainMenuHome"
-            android:title="خانه"
-            android:icon="@drawable/ic_home"
-    />
+        android:id="@+id/menuMainLogOut"
+        android:title="خارج شدن از حساب کاربری"
+/>
     <item
-            app:showAsAction="always"
-            android:id="@+id/mainMenuSearch"
-            android:title="جستوجو"
-            android:icon="@drawable/ic_search"
-    />
-    <item
-            app:showAsAction="ifRoom"
-            android:id="@+id/mainMenuNews"
-            android:title="اخبار"
-            android:icon="@drawable/ic_subtitles"
-    />
-    <item
-            app:showAsAction="never"
-            android:id="@+id/mainMenuAd"
-            android:title="تبلیغات"
-            android:icon="@drawable/ic_subtitles"
+            android:id="@+id/menuMainAboutUs"
+            android:title="درباره ما"
     />
 </menu>

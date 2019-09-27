@@ -144,10 +144,13 @@ class AdapterMessageList(val data: ArrayList<ChatMessageData>, private val liste
 
     class SendInviteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun onBind(data: ChatMessageData, adapter: AdapterMessageList) {
-            val message = "برای پیوستن به گروه"+"<font color='red'> ${data.m_text} </font>"
+            val message = "برای پیوستن به گروه" + "<font color='red'> ${data.m_text} </font>"
             itemView.apply {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    txtSendItem.setText(Html.fromHtml(message,  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE)
+                    txtSendItem.setText(
+                        Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY),
+                        TextView.BufferType.SPANNABLE
+                    )
                 } else {
                     txtSendItem.setText(Html.fromHtml(message), TextView.BufferType.SPANNABLE)
                 }
@@ -216,11 +219,14 @@ class AdapterMessageList(val data: ArrayList<ChatMessageData>, private val liste
     }
 
     class ReceiveInviteHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun onBind(data: ChatMessageData, adapter: AdapterMessageList, position:Int) {
-            val message = "برای پیوستن به گروه"+"<font color='blue'> ${data.m_text} </font>"
+        fun onBind(data: ChatMessageData, adapter: AdapterMessageList, position: Int) {
+            val message = "برای پیوستن به گروه" + "<font color='blue'> ${data.m_text} </font>"
             itemView.apply {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    txtItemReceiveInvite.setText(Html.fromHtml(message,  Html.FROM_HTML_MODE_LEGACY), TextView.BufferType.SPANNABLE)
+                    txtItemReceiveInvite.setText(
+                        Html.fromHtml(message, Html.FROM_HTML_MODE_LEGACY),
+                        TextView.BufferType.SPANNABLE
+                    )
                 } else {
                     txtItemReceiveInvite.setText(Html.fromHtml(message), TextView.BufferType.SPANNABLE)
                 }
@@ -319,16 +325,24 @@ class AdapterMessageList(val data: ArrayList<ChatMessageData>, private val liste
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        when {
-            getItemViewType(position) == 1 -> (holder as SendHolder).onBind(data[position], this@AdapterMessageList)
-            getItemViewType(position) == 2 -> (holder as SendImageHolder).onBind(data[position], this@AdapterMessageList, position)
-            getItemViewType(position) == 3 -> (holder as SendFileHolder).onBind(data[position], this@AdapterMessageList, position)
-            getItemViewType(position) == 4 -> (holder as ReceiveHolder).onBind(data[position], this@AdapterMessageList)
-            getItemViewType(position) == 5 -> (holder as ReceiveImageHolder).onBind(data[position], this@AdapterMessageList, position)
-            getItemViewType(position) == 6 -> (holder as ReceiveFileHolder).onBind(data[position], this@AdapterMessageList, position)
-            getItemViewType(position) == 7 -> (holder as SendInviteHolder).onBind(data[position], this@AdapterMessageList)
+        when (getItemViewType(position)) {
+            1 -> (holder as SendHolder).onBind(data[position], this@AdapterMessageList)
+            2 -> (holder as SendImageHolder).onBind(data[position], this@AdapterMessageList, position)
+            3 -> (holder as SendFileHolder).onBind(data[position], this@AdapterMessageList, position)
+            4 -> (holder as ReceiveHolder).onBind(data[position], this@AdapterMessageList)
+            5 -> (holder as ReceiveImageHolder).onBind(data[position], this@AdapterMessageList, position)
+            6 -> (holder as ReceiveFileHolder).onBind(data[position], this@AdapterMessageList, position)
+            7 -> (holder as SendInviteHolder).onBind(data[position], this@AdapterMessageList)
             else -> (holder as ReceiveInviteHolder).onBind(data[position], this@AdapterMessageList, position)
         }
+        setMargin(position, holder.itemView)
+    }
+
+    private fun setMargin(position: Int, view: View) {
+        val marginId =
+            if (position == 0) R.dimen.margin_16 else if (getItemViewType(position) != getItemViewType(position - 1)) R.dimen.margin_8 else R.dimen.margin_4
+        (view.layoutParams as RecyclerView.LayoutParams).topMargin =
+            (App.instanse as ActivityChat).resources.getDimensionPixelSize(marginId)
     }
 
     override fun getItemCount(): Int = data.size

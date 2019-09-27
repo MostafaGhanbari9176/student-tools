@@ -17,7 +17,7 @@ import java.util.regex.Pattern
 
 class FragmentGetStudentData : MyFragment() {
 
-    private val progress = DialogProgress()
+    private val progress = DialogProgress { checkData() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_complete_account, container, false)
@@ -45,7 +45,7 @@ class FragmentGetStudentData : MyFragment() {
         }
         text = txtGetName.text.toString().trim()
         val pattern = Pattern.compile("[\\[\$&+,:;=\\\\?@#|/'<>.^*()%!-\\]]")
-        if (text.length == 0 || pattern.matcher(text).find()) {
+        if (text.isEmpty() || pattern.matcher(text).find()) {
             txtGetName.apply {
                 requestFocus()
                 setError(if (text.length == 0) "لطفا پر کنید" else "فقط حروف الفبا,اعداد و خط تیره مجاز می باشد")
@@ -92,12 +92,12 @@ class FragmentGetStudentData : MyFragment() {
 
         StudentProfilePresenter(object : StudentProfilePresenter.StudentProfileResult {
             override fun addStudentRes(ok: Boolean, message: String) {
-                progress.cancel()
                 if (ok) {
+                    progress.cancel()
                     startActivity(Intent(ctx, ActivityMain::class.java))
                     (ctx as ActivityAccount).finish()
                 } else
-                    toast(message)
+                    progress.error(message)
             }
         }).addStudent(sId, name, pass)
 

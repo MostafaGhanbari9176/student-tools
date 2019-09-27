@@ -22,7 +22,7 @@
         <TextView
                 android:gravity="center"
                 android:textSize="@dimen/txt"
-                android:textColor="@color/txtAccent"
+                android:textColor="@color/colorPrimaryDark"
                 android:paddingStart="12dp"
                 android:paddingBottom="8dp"
                 android:text="دعوت شده اید"
@@ -36,7 +36,7 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:paddingStart="12dp"
                 android:paddingBottom="8dp"
-                android:text="@string/aboutMeInfo"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
@@ -48,15 +48,15 @@
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:text="پذیرفتن دعوت"
-                app:strokeColor="@color/txtPrimary"
-                android:textColor="@color/txtAccent"
+                app:strokeColor="@color/colorAccent"
+                android:textColor="@color/colorAccent"
 
         />
         <TextView
                 android:layout_gravity="end"
                 android:layout_marginEnd="8dp"
                 android:text="1397/02/21    22:25"
-                android:textColor="@color/colorPrimaryLight"
+                android:textColor="@color/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtDateReceiveInvite"/>

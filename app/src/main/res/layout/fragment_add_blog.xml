@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layoutDirection="rtl"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/backGround"
 >
     <LinearLayout
             android:orientation="vertical"
@@ -18,11 +18,12 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginBottom="16dp"
                 app:srcCompat="@drawable/ic_send"
-                android:tint="@color/colorAccent"
+                android:tint="@color/light"
                 android:layout_width="@dimen/imgBig"
                 android:layout_height="@dimen/imgBig"
         />
         <TextView
+                android:visibility="gone"
                 android:layout_marginBottom="32dp"
                 android:textSize="@dimen/txt"
                 android:textColor="@color/colorAccent"
@@ -32,7 +33,7 @@
         />
         <com.google.android.material.card.MaterialCardView
                 app:shapeAppearanceOverlay="@style/CVTopRound"
-                app:cardBackgroundColor="@color/colorPrimaryDark"
+                app:cardBackgroundColor="@color/backGround"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             <LinearLayout
@@ -45,20 +46,20 @@
                         android:layout_marginBottom="16dp"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         app:hintEnabled="true"
-                        app:hintTextColor="@color/light1"
+                        app:hintTextColor="@color/colorPrimary"
                         android:hint="متن پیام"
                         app:counterEnabled="true"
                         app:counterMaxLength="250"
-                        app:boxStrokeColor="@color/colorAccent"
+                        app:boxStrokeColor="@color/colorPrimaryDark"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:counterTextColor="@color/light1"
+                        app:counterTextColor="@color/colorPrimary"
                         android:textColorHint="@color/colorPrimaryLight">
                     <com.google.android.material.textfield.TextInputEditText
                             android:minHeight="150dp"
                             android:gravity="top|start"
                             android:maxLength="250"
-                            android:textColor="@color/light"
+                            android:textColor="@color/txtDark"
                             android:textSize="@dimen/txt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -83,9 +84,9 @@
                     <com.google.android.material.button.MaterialButton
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                             android:id="@+id/btnAddImgGetBlog"
-                            app:strokeColor="@color/light"
+                            app:strokeColor="@color/colorAccent"
                             android:text="افزودن عکس"
-                            android:textColor="@color/light"
+                            android:textColor="@color/colorAccent"
                             android:textSize="@dimen/txt"
                             android:padding="8dp"
                             android:layout_width="0dp"
@@ -93,11 +94,12 @@
                             android:layout_weight="1"
                     />
                     <com.google.android.material.button.MaterialButton
+                            android:visibility="gone"
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                             android:id="@+id/btnDeleteImgGetBlog"
-                            app:strokeColor="@color/redLight"
+                            app:strokeColor="@color/redDark"
                             android:text="حذف"
-                            android:textColor="@color/light"
+                            android:textColor="@color/redDark"
                             android:textSize="@dimen/txt"
                             android:padding="8dp"
                             android:layout_width="0dp"
@@ -109,7 +111,7 @@
                 <com.google.android.material.button.MaterialButton
                         android:text="@string/btnSave"
                         android:backgroundTint="@color/colorAccent"
-                        android:textColor="@color/dark"
+                        android:textColor="@color/txtLight"
                         android:textSize="@dimen/txt"
                         android:layout_marginTop="16dp"
                         android:padding="8dp"

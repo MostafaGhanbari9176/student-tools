@@ -4,7 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layoutDirection="rtl"
         android:orientation="vertical"
-        android:background="@color/dark"
+        android:background="@color/backGround"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 >
@@ -12,7 +12,7 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/backGround"
     >
         <LinearLayout
                 android:orientation="vertical"
@@ -25,20 +25,21 @@
                     android:layout_marginTop="32dp"
                     android:layout_marginBottom="16dp"
                     app:srcCompat="@drawable/ic_sms"
-                    android:tint="@color/colorAccent"
+                    android:tint="@color/light"
                     android:layout_width="@dimen/imgBig"
                     android:layout_height="@dimen/imgBig"/>
             <TextView
+                    android:textStyle="bold"
                     android:id="@+id/txtTtlGetPhone"
                     android:layout_marginBottom="32dp"
                     android:textSize="@dimen/txt"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/txtLight"
                     android:text="لطفا کد تایید را در کادر زیر وارد کنید"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <com.google.android.material.card.MaterialCardView
                     app:shapeAppearanceOverlay="@style/CVTopRound"
-                    app:cardBackgroundColor="@color/colorPrimaryDark"
+                    app:cardBackgroundColor="@color/backGround"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                 <LinearLayout
@@ -50,9 +51,9 @@
                     <com.google.android.material.textfield.TextInputLayout
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:textColorHint="@color/colorPrimaryLight"
-                            app:hintTextColor="@color/light1"
-                            app:boxStrokeColor="@color/colorAccent"
-                            app:counterTextColor="@color/light1"
+                            app:hintTextColor="@color/colorPrimary"
+                            app:boxStrokeColor="@color/colorPrimaryDark"
+                            app:counterTextColor="@color/colorPrimary"
                             app:hintEnabled="true"
                             android:hint="کد تایید"
                             app:counterEnabled="true"
@@ -63,7 +64,7 @@
                                 android:maxLength="6"
                                 android:id="@+id/txtGetConfCode"
                                 android:inputType="number"
-                                android:textColor="@color/light"
+                                android:textColor="@color/txtDark"
                                 android:textSize="@dimen/txt"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"/>
@@ -72,7 +73,7 @@
                             android:id="@+id/btnNextConfPhone"
                             android:backgroundTint="@color/colorAccent"
                             android:text="@string/next"
-                            android:textColor="@color/dark"
+                            android:textColor="@color/txtLight"
                             android:textSize="@dimen/txt"
                             android:layout_marginTop="16dp"
                             android:padding="8dp"
@@ -85,20 +86,24 @@
                             android:drawableStart="@drawable/ic_info"
                             android:drawablePadding="8dp"
                             android:layout_marginTop="32dp"
-                            android:textColor="@color/colorPrimaryLight"
+                            android:textColor="@color/colorPrimaryDark"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </ScrollView>
+    <LinearLayout
+            android:background="@color/light2"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
     <com.google.android.material.button.MaterialButton
             android:id="@+id/btnResendConfCode"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:text="ارسال مجدد کد تایید !"
-            android:textColor="@color/light"
+            android:textColor="@color/txtDark"
             android:textSize="@dimen/txt"
             android:padding="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+    </LinearLayout>
 </LinearLayout>

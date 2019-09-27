@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+>
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" app:srcCompat="@drawable/about_us_back"/>
+    <ImageView
+            android:alpha="0.1"
+            app:srcCompat = "@mipmap/ic_launcher"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+    />
+    <LinearLayout android:orientation="vertical"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:gravity="center" android:layout_centerInParent="true">
+
+        <TextView
+                android:shadowColor="@color/light2"
+                android:text="طراح و برنامه نویس :"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textSize="@dimen/txt"
+                android:textStyle="bold" android:textColor="@color/txtDark" android:padding="4dp"
+        />
+        <TextView
+                android:shadowColor="@color/light2"
+                android:text="مصطفی قنبری"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textSize="@dimen/txt"
+                android:textStyle="bold" android:textColor="@color/txtDark" android:padding="4dp"
+        />
+        <TextView
+                android:layout_marginTop="24dp"
+                android:shadowColor="@color/light2"
+                android:text="GodHelot1@gmail.com"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="email"
+                android:textSize="@dimen/txt"
+                android:textStyle="bold"
+                android:textColor="@color/redDark"
+                android:padding="4dp"
+                android:textColorLink="@color/red"
+        />
+        <TextView
+                android:shadowColor="@color/light2"
+                android:text="MostafaGhanbari.iR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:textSize="@dimen/txt"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:padding="4dp"
+                android:layout_marginBottom="16dp"
+                android:textColorLink="@color/blue"
+        />
+    </LinearLayout>
+</RelativeLayout>

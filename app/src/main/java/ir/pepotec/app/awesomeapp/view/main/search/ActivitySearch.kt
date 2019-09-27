@@ -16,7 +16,7 @@ class ActivitySearch : MyActivity() {
         setContentView(R.layout.content_common)
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
         App.instanse = this
-        groupId = intent?.extras?.getInt("groupId") ?: -1
+        //groupId = intent?.extras?.getInt("groupId") ?: -1
         changeView(
             when (intent?.extras?.getString("flag") ?: "student") {
                 "ability" -> FragmentAbilitySearch()

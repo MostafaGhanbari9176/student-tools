@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     <ImageView
-            android:tint="@color/dark"
+            android:tint="@color/blogText"
             android:layout_margin="8dp"
             android:id="@+id/imgItemBlog"
             app:srcCompat="@drawable/ic_profile_def"
@@ -26,7 +26,7 @@
             android:id="@+id/txtSIdItemBlog"
             android:text=""
             android:textSize="@dimen/txtSmall"
-            android:textColor="@color/dark"
+            android:textColor="@color/blogText2"
             android:layout_alignBottom="@id/imgItemBlog"
             android:layout_alignTop="@id/imgItemBlog"
             android:gravity="center"
@@ -42,7 +42,7 @@
             android:drawableEnd="@drawable/ic_favorite"
             android:drawablePadding="4dp"
             android:textSize="@dimen/txtSmall"
-            android:textColor="@color/dark"
+            android:textColor="@color/blogText2"
             android:layout_alignBottom="@id/txtSIdItemBlog"
             android:layout_alignTop="@id/txtSIdItemBlog"
             android:gravity="center"
@@ -57,7 +57,7 @@
             android:maxLines="2"
             android:ellipsize="end"
             android:textSize="@dimen/txt"
-            android:textColor="@color/dark"
+            android:textColor="@color/blogText"
             android:padding="8dp"
             android:layout_below="@id/imgItemBlog"
             android:layout_width="match_parent"
@@ -67,7 +67,7 @@
             android:layout_margin="8dp"
             android:text=""
             android:textSize="@dimen/txtSmall"
-            android:textColor="@color/dark"
+            android:textColor="@color/blogText2"
             android:id="@+id/txtDateBlog"
             android:layout_below="@id/txtBlog"
             android:layout_alignParentEnd="true"
@@ -91,7 +91,7 @@
         />
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnReportBlog"
-                android:textColor="@color/redDark"
+                android:textColor="@color/redLight"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

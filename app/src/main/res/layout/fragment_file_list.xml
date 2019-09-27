@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/backGround"
         xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layoutDirection="rtl"
         android:layout_width="match_parent"
@@ -15,9 +15,8 @@
             android:layout_alignParentBottom="true"
             android:id="@+id/btnBackFile"
             android:text="برگشت به عقب"
-            android:textColor="@color/light"
-            app:strokeColor="@color/light"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:backgroundTint="@color/colorAccent"
+            android:textColor="@color/txtLight"
             android:layout_margin="16dp"
             android:padding="8dp"
             android:layout_width="match_parent"

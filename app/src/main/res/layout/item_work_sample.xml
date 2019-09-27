@@ -6,7 +6,7 @@
         android:layout_marginEnd="8dp"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:cardBackgroundColor="@color/dark"
+        app:cardBackgroundColor="@color/light"
         app:cardCornerRadius="@dimen/radius"
         android:layoutDirection="rtl"
         android:layout_width="wrap_content"
@@ -28,22 +28,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
-                    android:drawableTint="@color/light1"
                     android:gravity="center"
                     android:layout_marginEnd="8dp"
                     android:text="100"
                     android:drawableTop="@drawable/ic_eye"
-                    android:textColor="@color/light1"
+                    android:textColor="@color/txtDark"
                     android:textSize="@dimen/txtSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/txtEyeNumberItemWorkSample"/>
             <TextView
-                    android:drawableTint="@color/light1"
                     android:gravity="center"
                     android:layout_marginEnd="8dp"
                     android:text="100"
                     android:drawableTop="@drawable/ic_favorite"
-                    android:textColor="@color/light1"
+                    android:textColor="@color/txtDark"
                     android:textSize="@dimen/txtSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/txtLikeNumberItemWorkSample"/>

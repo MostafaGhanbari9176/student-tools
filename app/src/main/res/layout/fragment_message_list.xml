@@ -5,31 +5,50 @@
         android:layoutDirection="rtl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimaryDark"
 >
+    <ImageView
+            app:srcCompat="@drawable/ic_chat_back"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+    />
+    <LinearLayout
+            android:layout_alignParentTop="true"
+            android:layout_alignBottom="@id/imgParentMessageList"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+    />
     <TextView
             android:gravity="center"
-            android:textColor="@color/txtPrimary"
+            android:textColor="@color/txtLight"
             android:textSize="@dimen/txt"
-            android:layout_alignTop="@id/imgProfileMessageList"
-            android:layout_alignBottom="@id/imgProfileMessageList"
-            android:layout_toEndOf="@id/imgProfileMessageList"
+            android:layout_alignTop="@id/imgParentMessageList"
+            android:layout_alignBottom="@id/imgParentMessageList"
+            android:layout_toEndOf="@id/imgParentMessageList"
             android:text="9431443"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txtChatSubjectMessageList"
     />
     <TextView
-            android:layout_alignBottom="@id/imgProfileMessageList"
-            android:gravity="center"
-            android:textColor="@color/txtPrimary"
+            android:padding="8dp"
+            android:layout_alignBottom="@id/imgParentMessageList"
+            android:gravity="top|start"
+            android:textColor="@color/txtLight"
             android:textSize="@dimen/txtSmall"
-            android:layout_toEndOf="@id/imgProfileMessageList"
+            android:layout_toEndOf="@id/imgParentMessageList"
             android:text="...."
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txtLastSeenMessageList"
     />
+    <LinearLayout
+            android:id="@+id/imgParentMessageList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+    >
     <ir.pepotec.app.awesomeapp.view.uses.CircularIMG
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
@@ -41,43 +60,20 @@
             app:srcCompat="@drawable/ic_profile_def"
             android:id="@+id/imgProfileMessageList"
     />
-    <com.google.android.material.button.MaterialButton
-            android:layout_marginEnd="8dp"
-            android:id="@+id/btnAddFriendMessageList"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:text="افزون به دوستان"
-            android:padding="8dp"
-            android:textColor="@color/colorAccent"
-            app:strokeColor="@color/colorAccent"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-    />
-    <com.google.android.material.button.MaterialButton
-            android:layout_below="@id/btnAddFriendMessageList"
-            android:layout_alignStart="@id/btnAddFriendMessageList"
-            android:layout_alignEnd="@id/btnAddFriendMessageList"
-            android:id="@+id/btnBlockMessageList"
-            android:text="مسدود کردن"
-            android:textColor="@color/redLight"
-            app:strokeColor="@color/redLight"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-    />
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
-            android:background="@color/dark"
             android:layout_above="@id/LLFileBox"
-            android:layout_below="@+id/imgProfileMessageList"
+            android:layout_below="@+id/imgParentMessageList"
             android:id="@+id/RVChatList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
     />
     <LinearLayout
+            android:background="@color/colorAccent"
             android:visibility="gone"
             android:gravity="center_vertical|start"
-            android:layout_margin="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
             android:id="@+id/LLFileBox"
             android:layout_above="@id/CVTypeBox"
             android:orientation="horizontal"
@@ -92,7 +88,7 @@
         />
         <TextView
                 android:id="@+id/txtFileMessageList"
-                android:textColor="@color/txtPrimary"
+                android:textColor="@color/txtLight"
                 android:textSize="@dimen/txtSmall"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -106,6 +102,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginBottom="8dp"
             app:fabSize="mini"
+            android:theme="@style/lightFab"
             android:layout_alignParentBottom="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

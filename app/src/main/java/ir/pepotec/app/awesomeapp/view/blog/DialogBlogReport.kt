@@ -28,6 +28,7 @@ class DialogBlogReport(private val m_id: Int) : Dialog(App.instanse) {
         v.btnBlogReport3.setOnClickListener { sendToServer(3) }
         v.btnBlogReport4.setOnClickListener { sendToServer(4) }
         v.btnBlogReport5.setOnClickListener { sendToServer(5) }
+        v.btnCancelBlogReport.setOnClickListener { cancel() }
     }
 
     private fun sendToServer(status: Int) {

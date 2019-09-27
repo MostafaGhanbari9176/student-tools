@@ -51,4 +51,31 @@ class NewsPresenter(private val listener:Res) {
         }).getFirstData(phone,apiCode)
     }
 
+    fun special()
+    {
+        News(object:News.Res{
+            override fun result(res: ServerRes?) {
+                val data = ArrayList<NewsData>()
+                res?.let {
+                    for(o in it.data)
+                        data.add(Gson().fromJson(o, NewsData::class.java))
+                }
+                listener.singleList(res?.code == ServerRes.ok, res?.message ?: AF().serverMessage(res?.code ?: -1), data)
+            }
+        }).getSpecial(phone,apiCode)
+    }
+
+    fun get(newsId:Int)
+    {
+        News(object:News.Res{
+            override fun result(res: ServerRes?) {
+                var data:NewsData? = null
+                res?.let {
+                    data = Gson().fromJson(it.data[0], NewsData::class.java)
+                }
+                listener.single(res?.code == ServerRes.ok, res?.message ?: AF().serverMessage(res?.code ?: -1), data)
+            }
+        }).get(phone, apiCode, newsId)
+    }
+
 }

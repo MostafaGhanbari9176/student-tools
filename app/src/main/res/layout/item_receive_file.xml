@@ -44,7 +44,7 @@
                 android:layout_gravity="end"
                 android:layout_marginEnd="8dp"
                 android:text="1397/02/21    22:25"
-                android:textColor="@color/colorPrimaryLight"
+                android:textColor="@color/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/txtDateItemReceive"/>
 

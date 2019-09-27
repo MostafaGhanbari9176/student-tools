@@ -2,13 +2,37 @@
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="@dimen/imgBig"
-        android:layout_height="@dimen/imgBig"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 >
     <ImageView
             android:id="@+id/imgDialogProgress"
             android:src="@drawable/ic_progress"
             android:layout_width="@dimen/imgBig"
             android:layout_height="@dimen/imgBig"
+    />
+    <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnTryAgainProgress"
+            app:backgroundTint="@color/colorAccent"
+            android:textColor="@color/txtLight"
+            android:text="تلاش مجدد"
+            app:iconTint="@color/light"
+            app:icon="@drawable/ic_replay"
+            android:layout_marginTop="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+    />
+    <com.google.android.material.button.MaterialButton
+            android:visibility="gone"
+            android:id="@+id/btnTBackProgress"
+            app:backgroundTint="@color/redLight"
+            android:textColor="@color/redDark"
+            app:iconTint="@color/redDark"
+            android:text="بازگشت"
+            app:icon="@drawable/ic_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
     />
 </LinearLayout>

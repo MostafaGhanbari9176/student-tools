@@ -5,19 +5,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.model.student.ability.AbilityList
 import ir.pepotec.app.awesomeapp.presenter.student.AbilityPresenter
 import ir.pepotec.app.awesomeapp.view.student.ability.activityAbility.ActivityAbility
+import ir.pepotec.app.awesomeapp.view.uses.DialogProgress
+import ir.pepotec.app.awesomeapp.view.uses.MyActivity
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
-import ir.pepotec.app.awesomeapp.view.uses.ProgressInjection
 import kotlinx.android.synthetic.main.fragment_ability.*
 
-class FragmentAbility : MyFragment(), ProgressInjection.ProgressInjectionListener {
+class FragmentAbility : MyFragment() {
 
-    lateinit var progress: ProgressInjection
+    private val progress = DialogProgress { getAbilityListData() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_ability, container, false)
@@ -25,22 +25,18 @@ class FragmentAbility : MyFragment(), ProgressInjection.ProgressInjectionListene
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
-    }
-
-    private fun init() {
-        progress = ProgressInjection(this, ctx, getView() as ViewGroup, R.layout.fragment_ability)
         getAbilityListData()
     }
 
     private fun getAbilityListData() {
         progress.show()
-        AbilityPresenter(object:AbilityPresenter.AbilityResult{
+        AbilityPresenter(object : AbilityPresenter.AbilityResult {
             override fun abilityListData(ok: Boolean, message: String, data: ArrayList<AbilityList>?) {
-                if(ok)
-                {
+                if (ok) {
                     progress.cancel()
                     setUpRV(data)
+                } else {
+                    progress.error(message)
                 }
             }
         }).getMyList()
@@ -59,7 +55,8 @@ class FragmentAbility : MyFragment(), ProgressInjection.ProgressInjectionListene
         startActivity(i)
     }
 
-    override fun pressTryAgain() {
+    override fun onResume() {
+        super.onResume()
         getAbilityListData()
     }
 

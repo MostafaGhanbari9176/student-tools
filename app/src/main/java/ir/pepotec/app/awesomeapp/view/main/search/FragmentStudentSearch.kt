@@ -31,7 +31,7 @@ class FragmentStudentSearch : MyFragment() {
     private var getAllData = false
     private var step: Int = 1
     private var adapter: AdapterFriendList? = null
-    private val progress = DialogProgress()
+    private val progress = DialogProgress{}
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_search, container, false)
     }
@@ -63,7 +63,7 @@ class FragmentStudentSearch : MyFragment() {
         }
         StudentProfilePresenter(object : StudentProfilePresenter.StudentProfileResult {
             override fun searchRes(ok: Boolean, message: String, data: ArrayList<StudentProfileData>?) {
-                if(reqKey.isNotEmpty() && reqKey != key) {
+                if (reqKey.isNotEmpty() && reqKey != key) {
                     reqKey = ""
                     getData()
                 }
@@ -89,8 +89,8 @@ class FragmentStudentSearch : MyFragment() {
     private fun setUpRV(data: java.util.ArrayList<StudentProfileData>?) {
         RVSearch.layoutManager = LinearLayoutManager(ctx)
         adapter = AdapterFriendList(data!!, {
-            if(groupId == -1)
-            startActivity(Intent(ctx, ActivityProfile::class.java).apply { putExtra("userId", it) })
+            if (groupId == -1)
+                startActivity(Intent(ctx, ActivityProfile::class.java).apply { putExtra("userId", it) })
             else
                 inviteAnswer(it)
         }, { reachedBottom() }
@@ -98,17 +98,17 @@ class FragmentStudentSearch : MyFragment() {
         RVSearch.adapter = adapter
     }
 
-    private fun inviteAnswer(userId:Int) {
+    private fun inviteAnswer(userId: Int) {
         AlertDialog.Builder(ctx)
             .setTitle("از دعوت این شخص مطمعن هستید؟")
-            .setPositiveButton("بله", DialogInterface.OnClickListener{ dialog, which -> invite(userId) })
+            .setPositiveButton("بله", DialogInterface.OnClickListener { dialog, which -> invite(userId) })
             .setNegativeButton("خیر", null)
             .show()
     }
 
     private fun invite(userId: Int) {
         progress.show()
-        InvitePresenter(object:InvitePresenter.Res{
+        InvitePresenter(object : InvitePresenter.Res {
             override fun result(ok: Boolean, message: String) {
                 progress.cancel()
                 toast(message)

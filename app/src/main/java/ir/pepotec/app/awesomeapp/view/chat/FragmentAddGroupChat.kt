@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.fragment_add_group_chat.*
 
 class FragmentAddGroupChat : MyFragment() {
 
-    private val progress = DialogProgress()
+    private val progress = DialogProgress { checkData() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_add_group_chat, container, false)
@@ -63,10 +63,12 @@ class FragmentAddGroupChat : MyFragment() {
         progress.show()
         GroupChatPresenter(object : GroupChatPresenter.Res {
             override fun result(ok: Boolean, message: String, data: GroupChatData?) {
-                progress.cancel()
-                toast(message)
-                if(ok)
+                if (ok) {
+                    progress.cancel()
+                    toast(message)
                     (ctx as ActivityChat).onBackPressed()
+                } else
+                    progress.error(message)
             }
         }).add(
             name,

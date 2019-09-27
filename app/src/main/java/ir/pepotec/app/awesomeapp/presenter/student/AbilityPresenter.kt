@@ -66,6 +66,7 @@ class AbilityPresenter(private val listener: AbilityResult) {
             override fun abilityRes(res: ServerRes?) {
                 var data: AbilityData? = null
                 res?.let {
+                    if(it.code == 100)
                     data = Gson().fromJson(it.data[0], AbilityData::class.java)
                 }
                 listener.abilityData(res?.code == ServerRes.ok, res?.message ?: AF().serverMessage(res?.code ?: -1), data)

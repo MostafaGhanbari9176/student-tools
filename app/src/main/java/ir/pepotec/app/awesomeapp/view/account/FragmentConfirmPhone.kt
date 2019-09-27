@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_confirm_phone.*
 class FragmentConfirmPhone : MyFragment(), UserPresenter.UserResult {
 
     var signUp = true
-    val progress = DialogProgress()
+    val progress = DialogProgress { checkData() }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_confirm_phone, container, false)
     }
@@ -59,11 +59,11 @@ class FragmentConfirmPhone : MyFragment(), UserPresenter.UserResult {
     }
 
     override fun resultFromUser(ok: Boolean, message: String) {
-        progress.cancel()
         if (ok) {
+            progress.cancel()
             (ctx as ActivityAccount).changeView(if (signUp) FragmentGetStudentData() else FragmentNewPass())
         } else
-            toast(message)
+            progress.error(message)
     }
 
     override fun badSignUp() {

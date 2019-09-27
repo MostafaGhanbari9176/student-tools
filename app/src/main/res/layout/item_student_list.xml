@@ -10,7 +10,7 @@
     <androidx.cardview.widget.CardView
             android:layoutDirection="rtl"
             android:layout_marginBottom="0.5dp"
-            app:cardBackgroundColor="@color/dark"
+            app:cardBackgroundColor="@color/light"
             android:orientation="vertical"
             app:cardCornerRadius="@dimen/radiusVSmall"
             android:layout_width="match_parent"
@@ -36,14 +36,14 @@
                 <TextView
                         android:maxLines="1"
                         android:ellipsize="end"
-                        android:textColor="@color/light"
+                        android:textColor="@color/txtDark"
                         android:padding="8dp"
                         android:text="9431443"
                         android:textSize="@dimen/txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/txtSIdItemStudent"/>
                 <TextView
-                        android:textColor="@color/light"
+                        android:textColor="@color/txtDark"
                         android:padding="8dp"
                         android:text="مصطفی قنبری"
                         android:textSize="@dimen/txtSmall"
@@ -59,19 +59,21 @@
                 <ImageView
 
                         android:id="@+id/imgSelfItemStudent"
-                        android:tint="@color/light"
-                        android:layout_width="wrap_content" android:layout_height="0dp"
+                        android:tint="@color/colorAccent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/ic_person"
                 />
                 <TextView
                         android:gravity="center"
                         android:id="@+id/txtAdminItemStudent"
-                        android:layout_width="wrap_content" android:layout_height="0dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
                         android:textSize="@dimen/txtSmall"
-                        android:textColor="@color/colorAccent"
-                        android:text="ادمین"
+                        android:textColor="@color/txtDark"
+                        android:text="مدیر"
                 />
             </LinearLayout>
         </LinearLayout>

@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_new_pass.*
 
 class FragmentNewPass : MyFragment(), UserPresenter.UserResult {
 
-    val progress = DialogProgress()
+    val progress = DialogProgress{checkData()}
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_new_pass, container, false)
@@ -70,12 +70,12 @@ class FragmentNewPass : MyFragment(), UserPresenter.UserResult {
     }
 
     override fun resultFromUser(ok: Boolean, message: String) {
-        progress.cancel()
         if (ok) {
+        progress.cancel()
             startActivity(Intent(ctx, ActivityMain::class.java))
             (ctx as ActivityAccount).finish()
         }else
-        toast(message)
+            progress.error(message)
     }
 
 }

@@ -17,17 +17,17 @@ import ir.pepotec.app.awesomeapp.model.user.UserDb
 import ir.pepotec.app.awesomeapp.presenter.student.StudentProfilePresenter
 import ir.pepotec.app.awesomeapp.view.student.profile.activityProfile.ActivityProfile
 import ir.pepotec.app.awesomeapp.view.uses.AF
+import ir.pepotec.app.awesomeapp.view.uses.DialogProgress
+import ir.pepotec.app.awesomeapp.view.uses.MyActivity
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
-import ir.pepotec.app.awesomeapp.view.uses.ProgressInjection
 import kotlinx.android.synthetic.main.fragment_profile.*
 
-class FragmentMyProfile : MyFragment(), ProgressInjection.ProgressInjectionListener {
+class FragmentMyProfile : MyFragment() {
 
     private val name = "user_name"
     private val phone = "phone"
     private val message = "message"
-
-    private lateinit var progressInjection: ProgressInjection
+    private val progress = DialogProgress { getStudentData() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_profile, container, false)
@@ -35,12 +35,11 @@ class FragmentMyProfile : MyFragment(), ProgressInjection.ProgressInjectionListe
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        progressInjection = ProgressInjection(this, ctx, view as ViewGroup, R.layout.fragment_profile)
         checkDataExist()
     }
 
     private fun init() {
-        profileHead.initialize(imgProfile, R.color.tabBack, R.color.colorPrimaryDark)
+        profileHead.initialize(imgProfile)
         setImage(false)
         animateParent()
         imgProfile.setOnClickListener {
@@ -80,7 +79,7 @@ class FragmentMyProfile : MyFragment(), ProgressInjection.ProgressInjectionListe
     }
 
     private fun getStudentData() {
-        progressInjection.show()
+        progress.show()
         StudentProfilePresenter(object : StudentProfilePresenter.StudentProfileResult {
             override fun studentData(
                 ok: Boolean,
@@ -89,15 +88,16 @@ class FragmentMyProfile : MyFragment(), ProgressInjection.ProgressInjectionListe
                 abilityData: ArrayList<AbilityList>?
             ) {
                 if (ok) {
-                    progressInjection.cancel()
+                    progress.cancel()
                     init()
                     val phone = UserDb().getUserPhone()
                     txtMyStudentId.text = data?.s_id ?: "!"
                     txtMyName.text = data?.user_name ?: "!"
                     txtMyPhone.text = phone
 
-                } else
-                    progressInjection.error(message)
+                } else {
+                    progress.error(message)
+                }
             }
         }).myProfile()
     }
@@ -113,8 +113,8 @@ class FragmentMyProfile : MyFragment(), ProgressInjection.ProgressInjectionListe
         txtMyPhone.text = phone
     }
 
-    private fun setImage(new:Boolean) {
-        AF().setImage(imgProfile, StudentProfile.baseUrl+"downMyImg", 0, new, true)
+    private fun setImage(new: Boolean) {
+        AF().setImage(imgProfile, StudentProfile.baseUrl + "downMyImg", 0, new, true)
     }
 
     fun changeImg(b: Bitmap) {
@@ -133,10 +133,6 @@ class FragmentMyProfile : MyFragment(), ProgressInjection.ProgressInjectionListe
             interpolator = AccelerateInterpolator()
             start()
         }
-    }
-
-    override fun pressTryAgain() {
-        getStudentData()
     }
 
 }

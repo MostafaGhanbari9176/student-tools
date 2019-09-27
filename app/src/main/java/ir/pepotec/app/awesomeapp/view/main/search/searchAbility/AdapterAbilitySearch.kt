@@ -9,7 +9,7 @@ import ir.pepotec.app.awesomeapp.model.student.ability.AbilityData
 import ir.pepotec.app.awesomeapp.view.uses.App
 import kotlinx.android.synthetic.main.item_search_ability.view.*
 
-class AdapterAbilitySearch(val data:ArrayList<AbilityData>, private val listener:(user_id:Int) -> Unit, private val reachesBottom:() -> Unit):RecyclerView.Adapter<AdapterAbilitySearch.MyHolder>() {
+class AdapterAbilitySearch(val data:ArrayList<AbilityData>, private val listener:(ability:AbilityData) -> Unit, private val reachesBottom:() -> Unit):RecyclerView.Adapter<AdapterAbilitySearch.MyHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
         return MyHolder(LayoutInflater.from(App.instanse).inflate(R.layout.item_search_ability, parent, false))
     }
@@ -21,7 +21,7 @@ class AdapterAbilitySearch(val data:ArrayList<AbilityData>, private val listener
             txtSubjectSearchAbility.text = data[position].subject
             txtDescriptionSearcAbility.text = data[position].description
             setOnClickListener {
-                listener(data[position].user_id)
+                listener(data[position])
             }
         }
         if(position == itemCount -1)

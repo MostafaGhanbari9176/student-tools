@@ -18,16 +18,13 @@ import ir.pepotec.app.awesomeapp.presenter.student.StudentProfilePresenter
 import ir.pepotec.app.awesomeapp.view.student.ability.AdapterAbilityList
 import ir.pepotec.app.awesomeapp.view.student.ability.activityAbility.FragmentShowAbility
 import ir.pepotec.app.awesomeapp.view.chat.ActivityChat
-import ir.pepotec.app.awesomeapp.view.uses.AF
-import ir.pepotec.app.awesomeapp.view.uses.DialogProgress
-import ir.pepotec.app.awesomeapp.view.uses.MyFragment
-import ir.pepotec.app.awesomeapp.view.uses.ProgressInjection
+import ir.pepotec.app.awesomeapp.view.uses.*
 import kotlinx.android.synthetic.main.fragment_other_profile.*
 
 class FragmentOtherProfile : MyFragment() {
 
     var user_id = -1
-    private val progress = DialogProgress()
+    private val progress = DialogProgress { getData() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_other_profile, container, false)
@@ -47,10 +44,11 @@ class FragmentOtherProfile : MyFragment() {
                 data: StudentProfileData?,
                 abilityData: ArrayList<AbilityList>?
             ) {
-                progress.cancel()
                 if (ok) {
                     progress.cancel()
                     init(data!!, abilityData!!)
+                } else {
+                    progress.error(message)
                 }
             }
         }).otherProfile(user_id)
@@ -103,14 +101,14 @@ class FragmentOtherProfile : MyFragment() {
     }
 
     private fun setImage() {
-        AF().setImage(imgOtherProfile, StudentProfile.baseUrl+"downImg", user_id, false, cache = true)
+        AF().setImage(imgOtherProfile, StudentProfile.baseUrl + "downImg", user_id, false, cache = true)
     }
 
     private fun setUpRV(abilityData: java.util.ArrayList<AbilityList>) {
         RVAbilityOtherProfile.layoutManager = LinearLayoutManager(ctx)
         RVAbilityOtherProfile.adapter =
             AdapterAbilityList(abilityData, false) {
-                (ctx as ActivityProfile).changeView(FragmentShowAbility().apply { abilityId = it; itsMy = false })
+                (ctx as MyActivity).changeView(FragmentShowAbility().apply { abilityId = it; itsMy = false })
             }
     }
 
@@ -118,7 +116,6 @@ class FragmentOtherProfile : MyFragment() {
         val set = TransitionSet().apply {
             addTransition(ChangeBounds())
             addTransition(Fade())
-            startDelay = 500
         }
         TransitionManager.beginDelayedTransition(view as ViewGroup, set)
         txtAboutMeOtherProfile.visibility = View.VISIBLE

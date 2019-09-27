@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layoutDirection="rtl"
@@ -8,17 +9,17 @@
     <ScrollView
             android:layout_alignParentTop="true"
             android:id="@+id/SVShowAbility"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/backGround"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
     >
-        <LinearLayout
+        <RelativeLayout
                 android:gravity="center_horizontal"
                 android:background="@color/colorPrimary"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <LinearLayout
+                    android:id="@+id/LLHeadShowAbility"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
@@ -29,47 +30,56 @@
                         android:id="@+id/txtSeenNumShowAbility"
                         android:padding="8dp"
                         android:gravity="start"
-                        android:textColor="@color/colorAccent"
+                        android:drawableTint="@color/txtLight"
+                        android:textColor="@color/txtLight"
                         android:text="100"
                         android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"/>
                 <TextView
+                        android:textStyle="bold"
                         android:id="@+id/txtNewsShowAbility"
                         android:padding="8dp"
                         android:layout_gravity="center"
                         android:textColor="@color/redLight"
                         android:text="در صف انتشار"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"/>
                 <TextView
                         android:id="@+id/txtDateShowAbility"
                         android:padding="8dp"
                         android:gravity="end"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/txtLight"
                         android:text="1397/02/01"
                         android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"/>
             </LinearLayout>
-
             <ImageView
-                    android:tint="@color/colorAccent"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/imgShowAbility"
+                    android:layout_below="@id/LLHeadShowAbility"
+                    android:tint="@color/light"
                     app:srcCompat="@drawable/ic_ability"
                     android:layout_marginBottom="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_width="@dimen/imgBig"
                     android:layout_height="@dimen/imgBig"/>
             <TextView
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/imgShowAbility"
+                    android:textStyle="bold"
                     android:id="@+id/txtSubjectShowAbility"
                     android:textSize="@dimen/txt"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/txtLight"
                     android:text="عنوان مهارت"
                     android:layout_marginBottom="32dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             <com.google.android.material.card.MaterialCardView
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:id="@+id/CVInfoShowAbility"
+                    android:layout_below="@+id/txtSubjectShowAbility"
+                    android:backgroundTint="@color/backGround"
                     app:shapeAppearanceOverlay="@style/CVTopRound"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -85,7 +95,7 @@
                             android:layout_marginBottom="16dp"
                             android:text="سوابق کاری"
                             android:background="@drawable/txt_border"
-                            android:textColor="@color/light"
+                            android:textColor="@color/txtDark"
                             android:textSize="@dimen/txt"
                             android:padding="16dp"
                             android:layout_width="match_parent"
@@ -95,7 +105,7 @@
                             android:layout_marginBottom="32dp"
                             android:text="توضیحات"
                             android:background="@drawable/txt_border"
-                            android:textColor="@color/light"
+                            android:textColor="@color/txtDark"
                             android:textSize="@dimen/txt"
                             android:padding="16dp"
                             android:layout_width="match_parent"
@@ -104,7 +114,7 @@
                             android:id="@+id/txtWorkSampleCounter"
                             android:layout_gravity="end"
                             android:text="1/2"
-                            android:textColor="@color/colorPrimaryLight"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/txtSmall"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
@@ -121,7 +131,7 @@
                     />
                     <TextView
                             android:textSize="@dimen/txtSmall"
-                            android:textColor="@color/light"
+                            android:textColor="@color/txtDark"
                             android:text="TextView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -140,7 +150,17 @@
                     <LinearLayout android:layout_width="0dp" android:layout_height="72dp"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                    android:alpha="0"
+                    android:layout_above="@id/CVInfoShowAbility"
+                    android:id="@+id/fabShowProfile"
+                    android:layout_centerHorizontal="true"
+                    android:text="نمایش پروفایل کاربر"
+                    app:icon="@drawable/ic_person"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+            />
+        </RelativeLayout>
     </ScrollView>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabShowAbility"
@@ -148,5 +168,6 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="16dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+    />
 </RelativeLayout>

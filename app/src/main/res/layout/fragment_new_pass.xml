@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layoutDirection="rtl"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/backGround"
 >
     <LinearLayout
             android:orientation="vertical"
@@ -18,19 +18,19 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginBottom="16dp"
                 app:srcCompat="@drawable/ic_person"
-                android:tint="@color/colorAccent"
+                android:tint="@color/light"
                 android:layout_width="@dimen/imgBig"
                 android:layout_height="@dimen/imgBig"/>
         <TextView
                 android:layout_marginBottom="32dp"
                 android:textSize="@dimen/txt"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/txtLight"
                 android:text="فراموشی رمز عبور"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <com.google.android.material.card.MaterialCardView
                 app:shapeAppearanceOverlay="@style/CVTopRound"
-                app:cardBackgroundColor="@color/colorPrimaryDark"
+                app:cardBackgroundColor="@color/backGround"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             <LinearLayout
@@ -43,19 +43,20 @@
                         android:layout_marginBottom="16dp"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         app:hintEnabled="true"
-                        app:hintTextColor="@color/light1"
+                        app:hintTextColor="@color/colorPrimary"
                         android:hint="رمز عبور جدید"
                         app:startIconDrawable="@drawable/ic_eye"
                         app:counterEnabled="true"
                         app:counterMaxLength="12"
-                        app:boxStrokeColor="@color/colorAccent"
+                        app:boxStrokeColor="@color/colorPrimaryDark"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:textColorHint="@color/colorPrimaryLight"
-                        app:counterTextColor="@color/light1">
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/colorPrimaryLight"
+                        app:counterTextColor="@color/colorPrimary">
                     <com.google.android.material.textfield.TextInputEditText
                             android:maxLength="12"
                             android:inputType="number"
-                            android:textColor="@color/light"
+                            android:textColor="@color/txtDark"
                             android:textSize="@dimen/txt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -65,20 +66,20 @@
                         android:layout_marginBottom="16dp"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         app:hintEnabled="true"
-                        app:hintTextColor="@color/light1"
+                        app:hintTextColor="@color/colorPrimary"
                         android:hint="رمز عبور را دوباره وارد کنید"
                         app:startIconDrawable="@drawable/ic_eye"
                         app:counterEnabled="true"
                         app:counterMaxLength="12"
-                        app:boxStrokeColor="@color/colorAccent"
+                        app:boxStrokeColor="@color/colorPrimaryDark"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColorHint="@color/colorPrimaryLight"
-                        app:counterTextColor="@color/light1">
+                        app:counterTextColor="@color/colorPrimary">
                     <com.google.android.material.textfield.TextInputEditText
                             android:maxLength="12"
                             android:inputType="number"
-                            android:textColor="@color/light"
+                            android:textColor="@color/txtDark"
                             android:textSize="@dimen/txt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -88,7 +89,7 @@
                         android:id="@+id/btnSubmitNewPass"
                         android:text="ثبت"
                         android:backgroundTint="@color/colorAccent"
-                        android:textColor="@color/dark"
+                        android:textColor="@color/txtLight"
                         android:textSize="@dimen/txt"
                         android:layout_marginTop="16dp"
                         android:padding="8dp"

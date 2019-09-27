@@ -22,4 +22,7 @@
     <!--VectorStrokeWidth-->
     <dimen name="stroke">3</dimen>
     <dimen name="strokeBig">4</dimen>
+    <!--ChatBackGround-->
+    <dimen name="ObjectAlpha">0.4</dimen>
+    <dimen name="backAlpha">0.4</dimen>
 </resources>

@@ -11,10 +11,10 @@ import ir.pepotec.app.awesomeapp.view.uses.DialogProgress
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import kotlinx.android.synthetic.main.fragment_get_phone.*
 
-class FragmentGetPhone :MyFragment(), UserPresenter.UserResult{
+class FragmentGetPhone : MyFragment(), UserPresenter.UserResult {
 
     var signUp = true
-    val progress = DialogProgress()
+    val progress = DialogProgress { checkData() }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_get_phone, container, false)
     }
@@ -25,7 +25,7 @@ class FragmentGetPhone :MyFragment(), UserPresenter.UserResult{
     }
 
     private fun init() {
-        if(!signUp)
+        if (!signUp)
             txtTtlGetPhone.text = "فراموشی رمز عبور"
         btnNextGetPhone.setOnClickListener {
             checkData()
@@ -34,11 +34,9 @@ class FragmentGetPhone :MyFragment(), UserPresenter.UserResult{
 
     private fun checkData() {
         val v = txtGetPhone.text.toString().trim()
-        if(v.length == 11 && v[0] == '0' && TextUtils.isDigitsOnly(v))
-        {
+        if (v.length == 11 && v[0] == '0' && TextUtils.isDigitsOnly(v)) {
             sendPhoneToServer(v)
-        }
-        else
+        } else
             txtGetPhone.apply {
                 requestFocus()
                 setError("لطفا شماره همراه خود را صحیح وارد کنید")
@@ -52,15 +50,13 @@ class FragmentGetPhone :MyFragment(), UserPresenter.UserResult{
     }
 
     override fun resultFromUser(ok: Boolean, message: String) {
-        progress.cancel()
-        if(ok)
-        {
+        if (ok) {
+            progress.cancel()
             val f = FragmentConfirmPhone()
             f.signUp = this@FragmentGetPhone.signUp
             (ctx as ActivityAccount).changeView(f)
-        }
-        else
-        toast(message)
+        } else
+            progress.error(message)
     }
 
 }

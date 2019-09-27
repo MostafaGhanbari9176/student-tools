@@ -2,7 +2,6 @@
 <androidx.cardview.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layoutDirection="rtl"
         app:cardBackgroundColor="@color/dark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,18 +12,18 @@
         app:cardCornerRadius="4dp">
 
     <RelativeLayout
+            android:layoutDirection="rtl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
     >
         <TextView
+                android:padding="8dp"
                 android:layout_alignParentEnd="true"
                 android:id="@+id/txtDateItemNews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
                 android:text="1397-04-04"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/light1"
                 android:textSize="@dimen/txtSmall"/>
 
         <TextView
@@ -38,15 +37,15 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
-                android:textColor="@color/colorAccent"/>
+                android:textColor="@color/light1"/>
 
             <ImageView
                     android:layout_below="@id/txtSubjectItemNews"
                     android:id="@+id/imgItemNews"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorAccent"
-                    app:srcCompat="@mipmap/ic_launcher"/>
+                    android:layout_height="200dp"
+                    app:srcCompat="@drawable/ic_broken_img"
+            />
 
 
         <TextView

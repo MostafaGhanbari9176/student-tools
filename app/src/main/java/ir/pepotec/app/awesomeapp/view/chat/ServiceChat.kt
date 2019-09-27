@@ -6,6 +6,7 @@ import android.os.Binder
 import android.os.Handler
 import android.os.IBinder
 import ir.pepotec.app.awesomeapp.model.chat.*
+import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileDb
 import ir.pepotec.app.awesomeapp.presenter.student.ChatPresenter
 import ir.pepotec.app.awesomeapp.presenter.student.StudentProfilePresenter
 import ir.pepotec.app.awesomeapp.view.uses.App
@@ -20,7 +21,7 @@ class ServiceChat : Service() {
     interface ChatInterface {
         fun newMessage(data: ArrayList<ChatMessageData>) {}
         fun updateSeen(lastSeenId: Int) {}
-        fun lastSeenData(message: String){}
+        fun lastSeenData(message: String) {}
     }
 
     var listener: ChatInterface? = null
@@ -50,7 +51,7 @@ class ServiceChat : Service() {
         ChatListDb().getSingle(firstId)?.let {
             checkUnSuccessful(it.chat_id, it.kind_id)
         } ?: run {
-           startTimer()
+            startTimer()
         }
     }
 
@@ -100,19 +101,22 @@ class ServiceChat : Service() {
     }
 
     private fun getLastSeen() {
-        if(chat_id == -1 || kind_id != "s")
-        {
+        if (chat_id == -1 || kind_id != "s") {
             startTimer()
             return
         }
-        StudentProfilePresenter(object:StudentProfilePresenter.StudentProfileResult{
+        StudentProfilePresenter(object : StudentProfilePresenter.StudentProfileResult {
             override fun result(ok: Boolean, message: String) {
-                if(ok) {
-                    try {
+
+                try {
+                    if (ok) {
+                        if (message != "online")
+                            StudentProfileDb().saveLastSeen(message, chat_id)
                         listener?.lastSeenData(message)
-                    } catch (e: Exception) {
-                    }
-                }
+                    } else
+                        listener?.lastSeenData(StudentProfileDb().getLastSeen(chat_id))
+                } catch (e: Exception) { }
+
                 startTimer()
             }
         }).lastSeen(chat_id)
@@ -178,11 +182,10 @@ class ServiceChat : Service() {
 
     override fun onBind(intent: Intent?): IBinder? = binder
 
-    private fun startTimer()
-    {
+    private fun startTimer() {
         Handler().postDelayed({
             getChatList()
-        },5000)
+        }, 5000)
     }
 
 }

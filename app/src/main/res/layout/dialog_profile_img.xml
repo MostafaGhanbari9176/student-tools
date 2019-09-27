@@ -62,7 +62,7 @@
                     android:layout_gravity="center"
                     android:id="@+id/btnChoseProfileImg"
                     android:textSize="@dimen/txt"
-                    android:textColor="@color/dark"
+                    android:textColor="@color/txtLight"
                     android:text="انتخاب عکس"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="match_parent"

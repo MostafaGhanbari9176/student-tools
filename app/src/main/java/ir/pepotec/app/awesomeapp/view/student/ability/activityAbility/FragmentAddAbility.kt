@@ -18,7 +18,7 @@ class FragmentAddAbility : MyFragment() {
     var resume = ""
     var description = ""
     var abilityId = -1
-    private val progress = DialogProgress()
+    private val progress = DialogProgress{}
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_add_ability, container, false)
     }

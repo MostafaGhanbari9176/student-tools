@@ -18,7 +18,9 @@ import android.content.Context.ALARM_SERVICE
 import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.Point
+import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.transition.Transition
 import com.bumptech.glide.signature.MediaStoreSignature
 import ir.pepotec.app.awesomeapp.model.ApiClient
 import ir.pepotec.app.awesomeapp.model.user.UserDb
@@ -59,8 +61,35 @@ class AF {
             .load(ApiClient.serverAddress + url + "?phone=${UserDb().getUserPhone()}&apiCode=${UserDb().getUserApiCode()}&imgId=$imgId"+if(new) "&new=1" else "")
             .apply(rOption)
             .centerCrop()
-            .error(R.drawable.ic_broken_img)
+            .placeholder(R.drawable.ic_glide_place_holder)
             .into(img)
+    }
+
+    fun setImageWithBounds(img: ImageView, url: String, imgId: Int, new:Boolean, cache: Boolean = false) {
+
+        val rOption = RequestOptions()
+        if (!cache) {
+            rOption.diskCacheStrategy(DiskCacheStrategy.NONE)
+            rOption.skipMemoryCache(true)
+        }
+
+        Glide.with(App.instanse)
+            .asBitmap()
+            .load(ApiClient.serverAddress + url + "?phone=${UserDb().getUserPhone()}&apiCode=${UserDb().getUserApiCode()}&imgId=$imgId"+if(new) "&new=1" else "")
+            .apply(rOption)
+            .centerCrop()
+            .placeholder(R.drawable.ic_glide_place_holder)
+            .into(object:SimpleTarget<Bitmap>(){
+                override fun onResourceReady(b: Bitmap, transition: Transition<in Bitmap>?) {
+                    val div = b.height.toFloat() / b.width
+                    val h = div * img.width
+                    img.apply {
+                        layoutParams.width = img.width
+                        layoutParams.height = h.toInt()
+                        setImageBitmap(b)
+                    }
+                }
+            })
     }
 
     fun setImage(img: ImageView, path: String, cache: Boolean = false) {
@@ -81,23 +110,6 @@ class AF {
         ServerRes.error -> "با عرض پوزش خطایی رخ داده لطفا بعدا امتحان کنید!"
         ServerRes.badReq -> "درخواست اشتباه!"
         else -> "خطایی رخ داده لطفا اتصال اینترنت خودرا چک کرده و مجددا تلاش کنید!"
-    }
-
-    fun setChatAlarm() {
-        val intent = Intent(App.instanse, ServiceChat::class.java)
-        val pendingIntent = PendingIntent.getService(
-            App.instanse, 0, intent, 0
-        )
-
-        val alarmManager = App.instanse.getSystemService(ALARM_SERVICE) as AlarmManager
-
-        alarmManager.setRepeating(
-            AlarmManager.RTC_WAKEUP,
-            System.currentTimeMillis(),
-            60000,
-            pendingIntent
-        )
-
     }
 
 }

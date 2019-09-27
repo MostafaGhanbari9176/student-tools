@@ -10,9 +10,11 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import ir.pepotec.app.awesomeapp.R
+import ir.pepotec.app.awesomeapp.model.blog.Blog
 import ir.pepotec.app.awesomeapp.model.blog.BlogData
 import ir.pepotec.app.awesomeapp.presenter.BlogPresenter
 import ir.pepotec.app.awesomeapp.presenter.student.StudentProfilePresenter
+import ir.pepotec.app.awesomeapp.view.uses.AF
 import ir.pepotec.app.awesomeapp.view.uses.App
 import kotlinx.android.synthetic.main.item_blog.view.*
 import kotlinx.android.synthetic.main.item_blog_expand.view.*
@@ -111,7 +113,7 @@ class AdapterBlog(val data: ArrayList<BlogData>, private val listener: AdapterBl
                 btnReportBlogImg.setOnClickListener {
                     DialogBlogReport(data.m_id)
                 }
-                adapter.setImage(imgPostBlog, data.m_id)
+                adapter.setImage(imgPostBlog, data.m_id, data.expand)
             }
         }
     }
@@ -141,7 +143,7 @@ class AdapterBlog(val data: ArrayList<BlogData>, private val listener: AdapterBl
                 btnReportBlogImgExpand.setOnClickListener {
                     DialogBlogReport(data.m_id)
                 }
-                adapter.setImage(imgPostBlogExpand, data.m_id)
+                adapter.setImage(imgPostBlogExpand, data.m_id, data.expand)
             }
         }
     }
@@ -180,7 +182,7 @@ class AdapterBlog(val data: ArrayList<BlogData>, private val listener: AdapterBl
         else 3
     }
 
-    private fun setUserImg(imgItemBlog: ImageView, userId: Int) {
+    private fun setUserImg(v: ImageView, userId: Int) {
         StudentProfilePresenter(object : StudentProfilePresenter.StudentProfileResult {
             override fun studentImgData(data: ByteArray?) {
                 data?.let {
@@ -191,21 +193,8 @@ class AdapterBlog(val data: ArrayList<BlogData>, private val listener: AdapterBl
         }).downOtherImg(userId)
     }
 
-    private fun setImage(v: ImageView, mId: Int) {
-        BlogPresenter(object : BlogPresenter.BlogResult {
-            override fun blogImgData(data: ByteArray?) {
-                if (data == null || data .isEmpty())
-                    return
-                val b: Bitmap = BitmapFactory.decodeByteArray(data, 0, data.size ?: 0)
-                val div: Float = b.height.toFloat() / b.width
-                val w = v.width
-                val h = div * w
-                v.apply{
-                    layoutParams.height = h.toInt()
-                    setImageBitmap(b)
-                }
-            }
-        }).getImg(mId)
+    private fun setImage(v: ImageView, mId: Int, expand:Boolean) {
+        AF().setImageWithBounds(v, Blog.baseUrl+"img", mId, expand, false)
     }
 
     override fun getItemCount(): Int = data.size

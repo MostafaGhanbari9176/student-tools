@@ -23,7 +23,7 @@
     <TextView
             android:id="@+id/txtSendItem"
             android:textSize="@dimen/txt"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/light"
             android:paddingEnd="12dp"
             android:paddingBottom="8dp"
             android:text="@string/aboutMeInfo"
