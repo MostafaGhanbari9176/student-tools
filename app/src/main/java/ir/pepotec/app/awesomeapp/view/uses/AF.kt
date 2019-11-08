@@ -52,7 +52,7 @@ class AF {
 
     fun setImage(img: ImageView, url: String, imgId: Int, new:Boolean, cache: Boolean = false) {
         val rOption = RequestOptions()
-        if (!cache) {
+        if (/*!cache*/true) {
             rOption.diskCacheStrategy(DiskCacheStrategy.NONE)
             rOption.skipMemoryCache(true)
         }

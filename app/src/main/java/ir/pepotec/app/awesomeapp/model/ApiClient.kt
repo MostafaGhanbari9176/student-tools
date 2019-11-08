@@ -15,7 +15,7 @@ import java.io.File
 class ApiClient {
 
     companion object {
-        val serverAddress = "http://192.168.1.200:8080/AwesomeAppApi/v1/"
+        val serverAddress = "http://pepotec.ir/new_app_api/v1/"
         var retrofit: Retrofit? = null
         var okhttp: OkHttpClient? = null
 

@@ -59,6 +59,7 @@ class FragmentOtherProfile : MyFragment() {
             txtAboutMeOtherProfile.text = about_me
             txtSIdOtherProfile.text = s_id
             txtNameOtherProfile.text = user_name
+            txtFieldOtherProfile.text = fieldName
             txtPhoneOtherProfile.text = phone
             txtEmailOtherProfile.text = email
             txtLastSeenOtherProfile.text = last_date + " " + last_time

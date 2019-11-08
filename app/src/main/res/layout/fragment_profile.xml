@@ -57,12 +57,32 @@
                     android:layout_marginTop="8dp"
                     android:textSize="@dimen/txt"
                     android:textColor="@color/txtDark"
+                    android:text="مهندسی برق"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtMyField"/>
+            <TextView
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="@dimen/txt"
+                    android:textColor="@color/txtDark"
                     android:drawableEnd="@drawable/ic_eye"
                     android:text="09157474087"
                     android:drawablePadding="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/txtMyPhone"/>
+            <TextView
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="@dimen/txt"
+                    android:textColor="@color/txtDark"
+                    android:text="godhelot1@gmail.com"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtMyEmail"/>
         </LinearLayout>
         <LinearLayout
                 android:padding="16dp"

@@ -43,11 +43,10 @@ class StudentProfilePresenter(private val listener: StudentProfileResult) : Stud
     private val phone = UserDb().getUserPhone()
     private val ac = UserDb().getUserApiCode()
 
-    fun addStudent(sId: String, name: String, pass: String) {
-
+    fun addStudent(sId: String, name: String, pass: String, email:String, fieldId:Int) {
 
         //StudentProfileDb().saveData(sId,user_name)
-        StudentProfile(this).addStudent(phone, ac, sId, name, pass)
+        StudentProfile(this).addStudent(phone, ac, sId, name, pass, email, fieldId)
     }
 
     fun search(key: String, num: Int, step: Int) {

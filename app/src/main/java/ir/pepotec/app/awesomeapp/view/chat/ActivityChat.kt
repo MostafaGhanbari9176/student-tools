@@ -34,6 +34,11 @@ class ActivityChat : MyActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.content_common)
         App.instanse = this@ActivityChat
+       // changeView()
+    }
+
+    private fun changeView()
+    {
         chat_id = intent?.extras?.getInt("chat_id") ?: -1
         kind_id = intent?.extras?.getString("kind_id") ?: ""
         if (chat_id == -1)
@@ -62,6 +67,7 @@ class ActivityChat : MyActivity() {
     override fun onResume() {
         super.onResume()
         App.instanse = this
+        changeView()
         StudentProfilePresenter(object : StudentProfilePresenter.StudentProfileResult {}).changeOnline(1)
     }
 

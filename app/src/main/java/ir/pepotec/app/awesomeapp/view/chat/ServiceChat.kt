@@ -1,14 +1,27 @@
 package ir.pepotec.app.awesomeapp.view.chat
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
+import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.media.RingtoneManager
 import android.os.Binder
+import android.os.Build
 import android.os.Handler
 import android.os.IBinder
+import androidx.annotation.DrawableRes
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import ir.pepotec.app.awesomeapp.R
 import ir.pepotec.app.awesomeapp.model.chat.*
 import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileDb
 import ir.pepotec.app.awesomeapp.presenter.student.ChatPresenter
 import ir.pepotec.app.awesomeapp.presenter.student.StudentProfilePresenter
+import ir.pepotec.app.awesomeapp.view.chat.messageList.FragmentMessageList
 import ir.pepotec.app.awesomeapp.view.uses.App
 import java.io.File
 import java.lang.Exception
@@ -115,7 +128,8 @@ class ServiceChat : Service() {
                         listener?.lastSeenData(message)
                     } else
                         listener?.lastSeenData(StudentProfileDb().getLastSeen(chat_id))
-                } catch (e: Exception) { }
+                } catch (e: Exception) {
+                }
 
                 startTimer()
             }
@@ -124,6 +138,7 @@ class ServiceChat : Service() {
 
     private fun newMessageData(data: ArrayList<ChatRes>) {
         for (o in data) {
+
             if (o.messageList.isNullOrEmpty())
                 continue
             for (o2 in o.messageList)
@@ -131,6 +146,8 @@ class ServiceChat : Service() {
             ChatMessageDb(o.chat_id, o.kind_id).saveData(o.messageList)
             if (chat_id == o.chat_id && kind_id == o.kind_id)
                 listener?.newMessage(o.messageList)
+            else
+                pushNotif(ChatListDb().getSubject(o.chat_id, o.kind_id), o.chat_id, o.messageList.size, o.kind_id)
             if (o.lastSeenId != -1) {
                 ChatMessageDb(o.chat_id, o.kind_id).updateSeen(o.lastSeenId)
                 listener?.updateSeen(o.lastSeenId)
@@ -138,6 +155,47 @@ class ServiceChat : Service() {
 
 
         }
+    }
+
+    private fun pushNotif(chatSub: String, chat_id: Int, num: Int, kind_id: String) {
+
+        val intent = Intent(this, ActivityChat::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            putExtra("kind_id", kind_id)
+            putExtra("chat_id", chat_id)
+        }
+
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            chat_id,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val builder = NotificationCompat.Builder(this, packageName)
+        builder.apply {
+            setSmallIcon(R.drawable.ic_notif)
+            setContentTitle(chatSub)
+            setAutoCancel(true)
+            //setStyle(NotificationCompat.InboxStyle())
+            setContentText("$num پیام جدید")
+            setContentIntent(pendingIntent)
+            setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+            setLights(Color.argb(255, 33, 150, 243), 200, 500)
+            priority = NotificationCompat.PRIORITY_DEFAULT
+        }
+        val notifManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "channel_name"
+            val descriptionText = "channel_description"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(packageName, name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            notifManager.createNotificationChannel(channel)
+        }
+        notifManager.notify(chat_id, builder.build())
     }
 
     private fun pathProssecing(data: ChatMessageData) {

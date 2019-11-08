@@ -4,6 +4,7 @@ data class StudentProfileData
     (
     val s_id: String,
     val email: String,
+    val fieldName: String,
     val about_me: String,
     val phone: String,
     val last_date: String,

@@ -1,6 +1,9 @@
 package ir.pepotec.app.awesomeapp.view.account
 
+import android.accounts.AccountManager
+import android.app.Activity
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -45,4 +48,14 @@ class ActivityAccount : MyActivity() {
             .setPositiveButton("ایجاد حساب کاربری",DialogInterface.OnClickListener { dialog, which -> firstPage() })
             .show()
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == Activity.RESULT_OK)
+        {
+            if(requestCode == 1)
+                (backHistory.peek() as FragmentGetStudentData).emailAddress = data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME) ?: ""
+        }
+    }
+
 }

@@ -94,6 +94,8 @@ class FragmentMyProfile : MyFragment() {
                     txtMyStudentId.text = data?.s_id ?: "!"
                     txtMyName.text = data?.user_name ?: "!"
                     txtMyPhone.text = phone
+                    txtMyEmail.text = data?.email
+                    txtMyField.text = data?.fieldName
 
                 } else {
                     progress.error(message)
@@ -107,10 +109,14 @@ class FragmentMyProfile : MyFragment() {
         val sId = StudentProfileDb().getStudentId()
         val name = StudentProfileDb().getStudentName()
         val phone = UserDb().getUserPhone()
+        val email = StudentProfileDb().getStudentEamil()
+        val field = StudentProfileDb().getStudentFieldName()
 
         txtMyStudentId.text = sId
         txtMyName.text = name
         txtMyPhone.text = phone
+        txtMyEmail.text = email
+        txtMyField.text = field
     }
 
     private fun setImage(new: Boolean) {

@@ -16,7 +16,9 @@ interface StudentProfileApi {
         @Field("apiCode") apiCode: String,
         @Field("sId") studentId: String,
         @Field("user_name") name: String,
-        @Field("pass") pass: String
+        @Field("pass") pass: String,
+        @Field("email") email: String,
+        @Field("fieldId") fieldId: Int
     ): Call<ServerRes>
 
     @FormUrlEncoded

@@ -84,6 +84,26 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                 </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnChooseEmail"
+                        android:text="وارد کردن ایمیل"
+                        android:layout_marginBottom="16dp"
+                        app:backgroundTint="@color/colorAccent"
+                        android:textColor="@color/txtLight"
+                        android:padding="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                />
+                <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnChooseField"
+                        android:text="وارد کردن رشته"
+                        android:layout_marginBottom="16dp"
+                        app:backgroundTint="@color/colorAccent"
+                        android:textColor="@color/txtLight"
+                        android:padding="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                />
                 <com.google.android.material.textfield.TextInputLayout
                         android:layout_marginBottom="16dp"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

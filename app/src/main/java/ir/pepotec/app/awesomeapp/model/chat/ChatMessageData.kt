@@ -3,6 +3,7 @@ package ir.pepotec.app.awesomeapp.model.chat
 data class ChatMessageData(
     val m_id:Int,
     val user_id: Int,
+    //val user_sub:String,
     var its_my:Boolean,
     val send_date:String,
     val send_time:String,

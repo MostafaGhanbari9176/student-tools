@@ -6,16 +6,25 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.gms.auth.GoogleAuthUtil
 import ir.pepotec.app.awesomeapp.R
-import ir.pepotec.app.awesomeapp.model.student.profile.StudentProfileDb
 import ir.pepotec.app.awesomeapp.presenter.student.StudentProfilePresenter
+import ir.pepotec.app.awesomeapp.view.account.studentField.DialogField
 import ir.pepotec.app.awesomeapp.view.main.ActivityMain
 import ir.pepotec.app.awesomeapp.view.uses.DialogProgress
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 import kotlinx.android.synthetic.main.fragment_complete_account.*
 import java.util.regex.Pattern
+import com.google.android.gms.common.AccountPicker
 
 class FragmentGetStudentData : MyFragment() {
+
+    private var fieldId = -1
+    var emailAddress = ""
+        set(value) {
+            btnChooseEmail.text = value
+            field = value
+        }
 
     private val progress = DialogProgress { checkData() }
 
@@ -32,6 +41,24 @@ class FragmentGetStudentData : MyFragment() {
         btnNextCompleteAccount.setOnClickListener {
             checkData()
         }
+        btnChooseField.setOnClickListener {
+            DialogField { fieldId, fieldName ->
+                this@FragmentGetStudentData.fieldId = fieldId
+                btnChooseField.text = fieldName
+            }
+        }
+        btnChooseEmail.setOnClickListener {
+            choseEmail()
+        }
+    }
+
+    private fun choseEmail() {
+        val googlePicker = AccountPicker
+            .newChooseAccountIntent(
+                null, null, arrayOf(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE),
+                true, null, null, null, null
+            )
+        (ctx as ActivityAccount).startActivityForResult(googlePicker, 1)
     }
 
     private fun checkData() {
@@ -49,6 +76,20 @@ class FragmentGetStudentData : MyFragment() {
             txtGetName.apply {
                 requestFocus()
                 setError(if (text.length == 0) "لطفا پر کنید" else "فقط حروف الفبا,اعداد و خط تیره مجاز می باشد")
+            }
+            return
+        }
+        if (emailAddress.isEmpty()) {
+            btnChooseEmail.apply {
+                requestFocus()
+                setError("لطفا ایمیل خودرا وارد کنید")
+            }
+            return
+        }
+        if (fieldId == -1) {
+            btnChooseField.apply {
+                requestFocus()
+                setError("لطفا رشته خودرا انتخاب کنید")
             }
             return
         }
@@ -99,7 +140,7 @@ class FragmentGetStudentData : MyFragment() {
                 } else
                     progress.error(message)
             }
-        }).addStudent(sId, name, pass)
+        }).addStudent(sId, name, pass, emailAddress, fieldId)
 
     }
 }

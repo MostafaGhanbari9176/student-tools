@@ -34,9 +34,9 @@ class StudentProfile(private val listener: StudentProfileResponse) {
 
     private val api: StudentProfileApi = ApiClient.getClient().create(StudentProfileApi::class.java)
 
-    fun addStudent(phone: String, apiCode: String, sId: String, name: String, pass: String) {
+    fun addStudent(phone: String, apiCode: String, sId: String, name: String, pass: String, email: String, fieldId: Int) {
 
-        val req = api.addStudent(phone, apiCode, sId, name, pass)
+        val req = api.addStudent(phone, apiCode, sId, name, pass, email, fieldId)
 
         req.enqueue(object : Callback<ServerRes> {
             override fun onFailure(call: Call<ServerRes>, t: Throwable) {
