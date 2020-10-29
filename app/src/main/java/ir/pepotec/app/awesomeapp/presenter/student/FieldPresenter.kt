@@ -1,5 +1,6 @@
 package ir.pepotec.app.awesomeapp.presenter.student
 
+import androidx.annotation.Keep
 import com.google.gson.Gson
 import ir.pepotec.app.awesomeapp.model.ApiClient
 import ir.pepotec.app.awesomeapp.model.ServerRes
@@ -13,7 +14,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
 class FieldPresenter(private val listener: Res) {
-
+    @Keep
     data class FieldData(
         val fieldId: Int,
         val name: String,

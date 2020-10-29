@@ -1,5 +1,7 @@
 package ir.pepotec.app.awesomeapp.model.student.workSample
 
+import androidx.annotation.Keep
+
 /*
 *   status
 *     {
@@ -10,6 +12,7 @@ package ir.pepotec.app.awesomeapp.model.student.workSample
 *         4 -> delete
 *     }
 * */
+@Keep
 data class WorkSampleData(
     val work_sample_id: String,
     val subject: String,
@@ -22,6 +25,7 @@ data class WorkSampleData(
     val img_num: Int
 )
 
+@Keep
 data class workSampleList(
     val work_sample_id: Int,
     val seen_num:Int,

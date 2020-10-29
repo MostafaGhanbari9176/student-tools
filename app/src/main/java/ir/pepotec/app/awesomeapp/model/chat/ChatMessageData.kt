@@ -1,5 +1,7 @@
 package ir.pepotec.app.awesomeapp.model.chat
+import androidx.annotation.Keep
 
+@Keep
 data class ChatMessageData(
     val m_id:Int,
     val user_id: Int,
@@ -16,6 +18,7 @@ data class ChatMessageData(
     var animating:Boolean = false
 )
 
+@Keep
 data class ChatListData(
     val chat_id:Int,
     val kind_id:String,
@@ -23,12 +26,14 @@ data class ChatListData(
     val message:String
 )
 
+@Keep
 data class ChatReq(
     val chat_id:Int,
     val kind_id:String,
     val lastId:Int
 )
 
+@Keep
 data class ChatRes(
     val chat_id:Int,
     val kind_id:String,

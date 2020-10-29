@@ -15,7 +15,7 @@ import java.io.File
 class ApiClient {
 
     companion object {
-        val serverAddress = "http://pepotec.ir/new_app_api/v1/"
+        val serverAddress = "https://mostafaghanbari.ir/havij/v1/"
         var retrofit: Retrofit? = null
         var okhttp: OkHttpClient? = null
 
@@ -37,7 +37,7 @@ class ApiClient {
             val myCache = Cache(dir, cacheSize)
             return OkHttpClient.Builder()
                 .cache(myCache)
-                .addInterceptor(object:Interceptor{
+                .addInterceptor(object: Interceptor {
                     override fun intercept(chain: Interceptor.Chain): Response {
                         val orgResponse = chain.proceed(chain.request())
                         if(hasNetwork(App.instanse) == true)

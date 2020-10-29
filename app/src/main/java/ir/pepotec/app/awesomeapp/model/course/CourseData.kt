@@ -1,5 +1,7 @@
 package ir.pepotec.app.awesomeapp.model.course
+import androidx.annotation.Keep
 
+@Keep
 data class CourseData(
     val c_id:Int,
     val c_name:String,
@@ -17,6 +19,7 @@ data class CourseData(
 
 )
 
+@Keep
 data class CourseListData(
     val g_id:Int,
     val g_name:String,

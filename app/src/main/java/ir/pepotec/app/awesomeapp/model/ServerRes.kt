@@ -1,5 +1,8 @@
 package ir.pepotec.app.awesomeapp.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class ServerRes(val code:Int, val message:String, val data:ArrayList<String>)
 {
     companion object {

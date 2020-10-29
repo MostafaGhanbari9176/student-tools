@@ -111,7 +111,7 @@ class ActivityChat : MyActivity() {
             MediaStore.Images.Media.getBitmap(contentResolver, uri)
         else {
             val extra = data?.extras
-            extra!!.getParcelable("data")
+            extra!!.getParcelable("data")!!
         }
 
         val f = AF().convertBitMapToFile(bitmap, this, "groupImg")

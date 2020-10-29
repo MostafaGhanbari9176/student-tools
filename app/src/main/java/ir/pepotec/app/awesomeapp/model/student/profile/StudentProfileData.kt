@@ -1,5 +1,7 @@
 package ir.pepotec.app.awesomeapp.model.student.profile
+import androidx.annotation.Keep
 
+@Keep
 data class StudentProfileData
     (
     val s_id: String,

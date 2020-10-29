@@ -1,5 +1,8 @@
 package ir.pepotec.app.awesomeapp.model.user
 
+import androidx.annotation.Keep
+
+@Keep
 data class UserData(
     val phone: String,
     val api_code: String,

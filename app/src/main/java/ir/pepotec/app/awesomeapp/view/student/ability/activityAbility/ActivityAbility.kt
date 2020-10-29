@@ -31,7 +31,7 @@ class ActivityAbility : MyActivity() {
                 bitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
             else {
                 val extra = data?.extras
-                bitmap = extra!!.getParcelable("data")
+                bitmap = extra!!.getParcelable("data")!!
             }
             when(requestCode)
             {

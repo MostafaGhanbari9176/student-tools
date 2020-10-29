@@ -1,5 +1,7 @@
 package ir.pepotec.app.awesomeapp.model.groupChat
+import androidx.annotation.Keep
 
+@Keep
 data class GroupChatData (
     val g_id:Int,
     val g_name:String,

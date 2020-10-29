@@ -1,5 +1,7 @@
 package ir.pepotec.app.awesomeapp.model.news
+import androidx.annotation.Keep
 
+@Keep
 data class NewsData(
     val n_id:Int,
     val n_sub:String,
@@ -15,18 +17,21 @@ data class NewsData(
     val status:Int
 )
 
+@Keep
 data class NewsListData(
     val g_id:Int,
     val g_name:String,
     val newsData:ArrayList<NewsData>
 )
 
+@Keep
 data class AgencyData(
     val a_id:Int,
     val a_sub:String,
     val a_link:String
 )
 
+@Keep
 data class AgencyList(
     val agencyData:ArrayList<AgencyData>
 )

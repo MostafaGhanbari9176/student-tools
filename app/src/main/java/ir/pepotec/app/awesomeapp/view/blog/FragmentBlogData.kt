@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ir.pepotec.app.awesomeapp.model.blog.BlogData
 import ir.pepotec.app.awesomeapp.presenter.BlogPresenter
+import ir.pepotec.app.awesomeapp.view.uses.DialogProgress
 import ir.pepotec.app.awesomeapp.view.uses.MyFragment
 
 class FragmentBlogData : MyFragment(), AdapterBlog.AdapterBlogEvent {
@@ -17,7 +18,12 @@ class FragmentBlogData : MyFragment(), AdapterBlog.AdapterBlogEvent {
     private var step = 0
     private var num = 10
     private var endOfData = false
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    private val progress = DialogProgress { getData() }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return RecyclerView(ctx).apply {
             layoutDirection = View.LAYOUT_DIRECTION_RTL
             layoutParams = RecyclerView.LayoutParams(
@@ -34,8 +40,10 @@ class FragmentBlogData : MyFragment(), AdapterBlog.AdapterBlogEvent {
     private fun getData() {
         if (endOfData)
             return
+        progress.show()
         BlogPresenter(object : BlogPresenter.BlogResult {
             override fun blogResult(ok: Boolean, message: String, data: ArrayList<BlogData>?) {
+                progress.cancel()
                 if (ok) {
                     setUpRV(data!!)
                     if (data.size == 0)
@@ -69,7 +77,7 @@ class FragmentBlogData : MyFragment(), AdapterBlog.AdapterBlogEvent {
         adapter?.let {
             val v = it.data[position]
             v.liked = !(it.data[position].liked)
-            if(v.liked)
+            if (v.liked)
                 v.like_num++
             else
                 v.like_num--
